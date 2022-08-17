@@ -19,17 +19,10 @@ public partial class Program
                 WriteFormatter.Warning("recurseDepth is set, but recursion is not specified. Did you forget -r?");
             }
 
-            string absolutePath;
-            
-            if (IsAbsolutePath(filePath))
-            {
-                absolutePath = filePath;
-            }
-            else
-            {
-                absolutePath = Path.Join(Directory.GetCurrentDirectory(), filePath);
-            }
-            
+
+
+            var absolutePath = PathHelper.GetAbsolute(filePath);
+
             if (isRecursive)
             {
                 if (Directory.Exists(absolutePath))
@@ -60,17 +53,12 @@ public partial class Program
 
         private int TagFileEnumerable(IEnumerable<string> fileNames)
         {
-            return AppData.IndexFiles(fileNames) ? 0 : 1;
+            return ExceptionWrapper.TryExecute(() => AppData.IndexFiles(fileNames));
         }
 
         private int TagFile(string absolutePath)
         {
-            return AppData.IndexFiles(new[] { absolutePath }) ? 0 : 1;
-        }
-
-        private bool IsAbsolutePath(string path)
-        {
-            return Path.IsPathRooted(path) || Path.IsPathFullyQualified(path);
+            return ExceptionWrapper.TryExecute(() => AppData.IndexFiles(new[] { absolutePath }));
         }
 
         private IEnumerable<string> EnumerateFilesToDepth(string directory, int targetDepth)

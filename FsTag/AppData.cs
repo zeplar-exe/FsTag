@@ -2,18 +2,15 @@
 
 public static class AppData
 {
+    private const string DefaultSession = "__default";
     private const string DirectoryName = "fstag";
     private static string RootDirectory => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
     private static string DataDirectory => Path.Join(RootDirectory, DirectoryName);
 
-    public static bool IndexFiles(IEnumerable<string> fileNames)
+    public static void IndexFiles(IEnumerable<string> fileNames)
     {
         var set = fileNames.ToHashSet();
-        var path = Path.Join(DataDirectory, "sessions/__default");
-        var file = Path.Join(path, "index.nsv");
-
-        EnsureDirectory(path);
-        EnsureFile(file);
+        var file = IndexOfSession(DefaultSession);
 
         foreach (var item in EnumerateIndex())
         {
@@ -37,17 +34,11 @@ public static class AppData
             writer.WriteLine(item);
             Console.WriteLine($"Added '{item}' to tag index.");
         }
-
-        return true;
     }
 
     public static IEnumerable<string> EnumerateIndex()
     {
-        var path = Path.Join(DataDirectory, "sessions/__default");
-        var file = Path.Join(path, "index.nsv");
-
-        EnsureDirectory(path);
-        EnsureFile(file);
+        var file = IndexOfSession(DefaultSession);
 
         using var reader = new StreamReader(file);
 
@@ -55,6 +46,46 @@ public static class AppData
         {
             yield return line;
         }
+    }
+
+    public static void ClearIndex()
+    {
+        var file = IndexOfSession(DefaultSession);
+        
+        File.WriteAllText(file, string.Empty);
+        
+        Console.WriteLine("Successfully cleared tag index.");
+    }
+
+    public static void RemoveFromIndex(string fileName)
+    {
+        var index = IndexOfSession(DefaultSession);
+        var tempIndex = index + ".tmp";
+
+        using (var reader = new StreamReader(index))
+        {
+            using var tempStream = File.OpenWrite(tempIndex);
+            using var writer = new StreamWriter(tempStream);
+
+            while (reader.ReadLine() is {} line)
+            {
+                if (line != fileName)
+                {
+                    writer.WriteLine(line);
+                }
+            }
+        }
+
+        File.Delete(index);
+        
+        using (var destination = File.OpenWrite(index))
+        {
+            using var source = File.OpenRead(tempIndex);
+
+            source.CopyTo(destination);
+        }
+        
+        File.Delete(tempIndex);
     }
 
     private static void EnsureDirectory(string directory)
@@ -66,5 +97,16 @@ public static class AppData
     {
         if (!File.Exists(file))
             File.Create(file).Dispose();
+    }
+
+    private static string IndexOfSession(string session)
+    {
+        var path = Path.Join(DataDirectory, $"sessions/{session}");
+        var file = Path.Join(path, "index.nsv");
+
+        EnsureDirectory(path);
+        EnsureFile(file);
+
+        return file;
     }
 }
