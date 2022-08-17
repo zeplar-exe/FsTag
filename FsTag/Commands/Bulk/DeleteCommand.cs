@@ -1,5 +1,7 @@
 ﻿using CommandDotNet;
 
+using Microsoft.VisualBasic.FileIO;
+
 namespace FsTag;
 
 public partial class Program
@@ -11,26 +13,31 @@ public partial class Program
         public class DeleteCommand
         {
             [DefaultCommand]
-            public int Execute([Option('a', "all")] bool all)
+            public int Execute(
+                [Option('r', "recycle")] bool recycle)
             {
-                if (all)
+                foreach (var file in AppData.EnumerateIndex())
                 {
-                    foreach (var file in AppData.EnumerateIndex())
+                    if (File.Exists(file))
                     {
-                        if (File.Exists(file))
+                        if (recycle)
                         {
-                            File.Delete(file);
-                            
-                            WriteFormatter.Info($"Deleted '{file}'.");
+                            FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                         }
                         else
                         {
-                            WriteFormatter.Warning($"The file '{file}' does not exist.");
+                            File.Delete(file);
+                        
+                            WriteFormatter.Info($"Deleted '{file}'.");
                         }
                     }
-                    
-                    AppData.ClearIndex();
+                    else
+                    {
+                        WriteFormatter.Warning($"The file '{file}' does not exist.");
+                    }
                 }
+                
+                AppData.ClearIndex();
                 
                 return 0;
             }
