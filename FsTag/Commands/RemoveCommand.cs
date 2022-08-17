@@ -15,6 +15,11 @@ public partial class Program
         {
             if (all)
             {
+                if (filePath != null)
+                {
+                    WriteFormatter.Warning("The filePath will be ignored because -a is specified.");
+                }
+                
                 return ExceptionWrapper.TryExecute(AppData.ClearIndex);
             }
 
