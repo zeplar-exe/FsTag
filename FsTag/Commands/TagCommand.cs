@@ -12,14 +12,12 @@ public partial class Program
         public int Execute(
             string filePath, 
             [Option('r', "recursive")] bool isRecursive, 
-            [Option("recurseDepth")] int? recurseDepth)
+            [Option("recurseDepth")] int recurseDepth = -1)
         {
-            if (!isRecursive && recurseDepth != null)
+            if (!isRecursive && recurseDepth != -1)
             {
                 WriteFormatter.Warning("recurseDepth is set, but recursion is not specified. Did you forget -r?");
             }
-
-
 
             var absolutePath = PathHelper.GetAbsolute(filePath);
 
@@ -27,18 +25,9 @@ public partial class Program
             {
                 if (Directory.Exists(absolutePath))
                 {
-                    if (recurseDepth != null)
-                    {
-                        var enumerable = EnumerateFilesToDepth(absolutePath, recurseDepth.Value);
+                    var enumerable = FileSystemHelper.EnumerateFilesToDepth(absolutePath, recurseDepth);
 
-                        return TagFileEnumerable(enumerable);
-                    }
-                    else
-                    {
-                        var enumerable = Directory.EnumerateFiles(absolutePath, "*", SearchOption.AllDirectories);
-
-                        return TagFileEnumerable(enumerable);
-                    }
+                    return TagFileEnumerable(enumerable);
                 }
                 else
                 {
@@ -59,36 +48,6 @@ public partial class Program
         private int TagFile(string absolutePath)
         {
             return ExceptionWrapper.TryExecute(() => AppData.IndexFiles(new[] { absolutePath }));
-        }
-
-        private IEnumerable<string> EnumerateFilesToDepth(string directory, int targetDepth)
-        {
-            if (targetDepth == 0)
-                yield break;
-
-            foreach (var file in EnumerateFilesToDepth(directory, targetDepth, 0))
-            {
-                yield return file;
-            }
-        }
-        
-        private IEnumerable<string> EnumerateFilesToDepth(string directory, int maxDepth, int depth)
-        {
-            foreach (var file in Directory.EnumerateFiles(directory))
-            {
-                yield return file;
-            }
-            
-            if (depth != maxDepth)
-            {
-                foreach (var dir in Directory.EnumerateDirectories(directory))
-                {
-                    foreach (var file in EnumerateFilesToDepth(dir, maxDepth, depth + 1))
-                    {
-                        yield return file;
-                    }
-                }
-            }
         }
     }
 }

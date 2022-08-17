@@ -57,10 +57,13 @@ public static class AppData
         Console.WriteLine("Successfully cleared tag index.");
     }
 
-    public static void RemoveFromIndex(string fileName)
+    public static void RemoveFromIndex(IEnumerable<string> fileNames)
     {
+        var names = fileNames.ToHashSet();
+
         var index = IndexOfSession(DefaultSession);
         var tempIndex = index + ".tmp";
+        var removedAny = false;
 
         using (var reader = new StreamReader(index))
         {
@@ -69,11 +72,23 @@ public static class AppData
 
             while (reader.ReadLine() is {} line)
             {
-                if (line != fileName)
+                if (names.Contains(line))
+                {
+                    Console.WriteLine($"Removing '{line}'.");
+                    removedAny = true;
+                }
+                else
                 {
                     writer.WriteLine(line);
                 }
             }
+        }
+
+        if (!removedAny)
+        {
+            WriteFormatter.Info("Nothing to remove. Terminating early.");
+            
+            return;
         }
 
         File.Delete(index);

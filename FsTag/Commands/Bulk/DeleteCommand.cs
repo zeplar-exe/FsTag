@@ -28,6 +28,8 @@ public partial class Program
                             WriteFormatter.Warning($"The file '{file}' does not exist.");
                         }
                     }
+                    
+                    AppData.ClearIndex();
                 }
                 
                 return 0;
