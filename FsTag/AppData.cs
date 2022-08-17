@@ -15,12 +15,9 @@ public static class AppData
         EnsureDirectory(path);
         EnsureFile(file);
 
-        using (var reader = new StreamReader(file))
+        foreach (var item in EnumerateIndex())
         {
-            while (reader.ReadLine() is {} line) // obscure as hell syntax bro, basically just while it isn't null
-            {
-                set.Remove(line);
-            }
+            set.Remove(item);
         }
 
         using var writer = new StreamWriter(file, append: true);
@@ -41,6 +38,22 @@ public static class AppData
         return true;
     }
 
+    public static IEnumerable<string> EnumerateIndex()
+    {
+        var path = Path.Join(DataDirectory, "sessions/__default");
+        var file = Path.Join(path, "index.nsv");
+
+        EnsureDirectory(path);
+        EnsureFile(file);
+
+        using var reader = new StreamReader(file);
+
+        while (reader.ReadLine() is {} line) // obscure as hell syntax bro, basically just while it isn't null
+        {
+            yield return line;
+        }
+    }
+
     private static void EnsureDirectory(string directory)
     {
         Directory.CreateDirectory(directory);
@@ -48,6 +61,7 @@ public static class AppData
 
     private static void EnsureFile(string file)
     {
-        File.Create(file).Dispose();
+        if (!File.Exists(file))
+            File.Create(file).Dispose();
     }
 }

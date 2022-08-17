@@ -103,4 +103,18 @@ public class Program
             }
         }
     }
+
+    [Command("print")]
+    public int Print([Option("delimiter")] string delimiter = ";")
+    {
+        foreach (var item in AppData.EnumerateIndex())
+        {
+            Console.Write(item);
+            Console.Write(delimiter);
+        }
+        
+        Console.WriteLine();
+
+        return 0;
+    }
 }
