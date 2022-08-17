@@ -17,7 +17,10 @@ public static class AppData
 
         foreach (var item in EnumerateIndex())
         {
-            set.Remove(item);
+            if (set.Remove(item))
+            {
+                WriteFormatter.Info($"'{item}' already exists in the tag index.");
+            }
         }
 
         using var writer = new StreamWriter(file, append: true);
