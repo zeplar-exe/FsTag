@@ -61,29 +61,12 @@ public class Program
 
     private int TagFileEnumerable(IEnumerable<string> fileNames)
     {
-        foreach (var file in fileNames)
-        {
-            var result = TagFile(file);
-
-            if (result != 0)
-                return result;
-        }
-
-        return 0;
+        return AppData.IndexFiles(fileNames) ? 0 : 1;
     }
 
     private int TagFile(string absolutePath)
     {
-        if (!File.Exists(absolutePath))
-        {
-            WriteFormatter.Error($"The file '{absolutePath}' does not exist.");
-            
-            return 1;
-        }
-        
-        Console.WriteLine($"Added '{absolutePath}' to tag index.");
-
-        return 0;
+        return AppData.IndexFiles(new[] { absolutePath }) ? 0 : 1;
     }
 
     private bool IsAbsolutePath(string path)
