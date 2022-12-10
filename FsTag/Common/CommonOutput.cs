@@ -1,5 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
+using FsTag.Filters;
+using FsTag.Helpers;
+
 namespace FsTag.Common;
 
 public static class CommonOutput

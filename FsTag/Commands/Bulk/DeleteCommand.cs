@@ -1,5 +1,7 @@
 ﻿using CommandDotNet;
 
+using FsTag.Helpers;
+
 using Microsoft.VisualBasic.FileIO;
 
 namespace FsTag;

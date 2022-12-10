@@ -1,4 +1,6 @@
-﻿namespace FsTag;
+﻿using FsTag.Helpers;
+
+namespace FsTag;
 
 public static class AppData
 {

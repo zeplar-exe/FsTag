@@ -1,4 +1,4 @@
-﻿namespace FsTag;
+﻿namespace FsTag.Helpers;
 
 public static class WriteFormatter
 {

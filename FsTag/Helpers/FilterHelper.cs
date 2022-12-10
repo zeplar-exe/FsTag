@@ -1,4 +1,6 @@
-﻿namespace FsTag;
+﻿using FsTag.Filters;
+
+namespace FsTag.Helpers;
 
 public static class FilterHelper
 {

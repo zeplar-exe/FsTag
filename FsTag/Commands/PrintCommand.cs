@@ -3,6 +3,7 @@
 using CommandDotNet;
 
 using FsTag.Common;
+using FsTag.Helpers;
 
 namespace FsTag;
 

@@ -1,6 +1,7 @@
 ﻿using CommandDotNet;
 
 using FsTag.Extensions;
+using FsTag.Helpers;
 
 namespace FsTag;
 
