@@ -54,7 +54,7 @@ public static class AppData
         
         File.WriteAllText(file, string.Empty);
         
-        Console.WriteLine("Successfully cleared tag index.");
+        WriteFormatter.Info("Successfully cleared tag index.");
     }
 
     public static void RemoveFromIndex(IEnumerable<string> fileNames)
@@ -74,7 +74,7 @@ public static class AppData
             {
                 if (names.Contains(line))
                 {
-                    Console.WriteLine($"Removing '{line}'.");
+                    WriteFormatter.Info($"Removing '{line}' from the index.");
                     removedAny = true;
                 }
                 else

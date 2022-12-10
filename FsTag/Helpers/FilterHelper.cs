@@ -29,7 +29,7 @@ public static class FilterHelper
             }
             else
             {
-                WriteFormatter.Warning($"The directory '{filter}' does not exist.");
+                WriteFormatter.Warning($"The directory '{file}' does not exist.");
             }
         }
     }
