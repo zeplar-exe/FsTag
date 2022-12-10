@@ -15,7 +15,7 @@ public partial class Program
         [DefaultCommand]
         public int Interactive()
         {
-            Console.WriteLine("Nothing yet.");
+            WriteFormatter.Plain("Nothing yet.");
             
             return 0;
         }
@@ -64,7 +64,7 @@ public partial class Program
             realUnderDir.CreateFile("_abc_123_.txt");
             realUnderDir.CreateFile("abc_123.jpg");
             
-            Console.WriteLine($"Created {TestDirectoryName} in the current directory.");
+            WriteFormatter.Info($"Created {TestDirectoryName} in the current directory.");
 
             return 0;
         }
@@ -78,7 +78,7 @@ public partial class Program
             {
                 Directory.Delete(path, true);
                 
-                Console.WriteLine($"Deleted {TestDirectoryName} in the current directory.");
+                WriteFormatter.Info($"Deleted {TestDirectoryName} in the current directory.");
             }
             else
             {

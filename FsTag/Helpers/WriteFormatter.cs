@@ -2,6 +2,11 @@
 
 public static class WriteFormatter
 {
+    public static void Plain(string text)
+    {
+        Console.WriteLine(text);
+    }
+    
     public static void Info(string text)
     {
         var originalForeground = Console.ForegroundColor;
@@ -27,5 +32,10 @@ public static class WriteFormatter
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine($"Error: {text}");
         Console.ForegroundColor = originalForeground;
+    }
+    
+    public static void NewLine()
+    {
+        Console.WriteLine();
     }
 }

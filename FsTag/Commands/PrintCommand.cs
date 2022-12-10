@@ -27,14 +27,14 @@ public partial class Program
                 foreach (var item in AppData.EnumerateIndex())
                 {
                     if (!first)
-                        Console.Write(delimiter);
+                        WriteFormatter.Plain(delimiter);
                     
-                    Console.Write(item);
+                    WriteFormatter.Plain(item);
 
                     first = false;
                 }
                 
-                Console.WriteLine();
+                WriteFormatter.NewLine();
 
                 return 0;
             });

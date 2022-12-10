@@ -32,7 +32,7 @@ public static class AppData
             }
             
             writer.WriteLine(item);
-            Console.WriteLine($"Added '{item}' to tag index.");
+            WriteFormatter.Info($"Added '{item}' to tag index.");
         }
     }
 
