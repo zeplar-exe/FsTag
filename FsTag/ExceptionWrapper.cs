@@ -12,7 +12,7 @@ public static class ExceptionWrapper
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            WriteFormatter.Error(e.Message);
 
             return 1;
         }
@@ -30,7 +30,7 @@ public static class ExceptionWrapper
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            WriteFormatter.Error(e.Message);
 
             return false;
         }

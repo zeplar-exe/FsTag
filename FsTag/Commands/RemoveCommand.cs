@@ -1,5 +1,7 @@
 ﻿using CommandDotNet;
 
+using FsTag.Common;
+
 namespace FsTag;
 
 public partial class Program
@@ -10,60 +12,28 @@ public partial class Program
     {
         [DefaultCommand]
         public int Execute(
-            string? filePath,
+            PathFilter? filter,
             [Option('a', "all")] bool all,
             [Option('r', "recursive")] bool isRecursive,
             [Option("recurseDepth")] int recurseDepth = -1)
         {
             if (all)
             {
-                if (filePath != null)
-                {
-                    WriteFormatter.Warning("filePath will be ignored because -a is specified.");
-                }
-                
-                if (isRecursive)
-                {
-                    WriteFormatter.Warning("-r will be ignored because -a is specified.");
-                }
-                
-                if (recurseDepth != -1)
-                {
-                    WriteFormatter.Warning("recurseDepth will be ignored because -a is specified.");
-                }
+                CommonOutput.WarnWhenXIgnoredBecauseYIsSpecified(filter, all);
+                CommonOutput.WarnWhenXIgnoredBecauseYIsSpecified(isRecursive, all);
+                CommonOutput.WarnWhenXIgnoredBecauseYIsSpecified(recurseDepth, all);
                 
                 return ExceptionWrapper.TryExecute(AppData.ClearIndex);
             }
             
-            if (!isRecursive && recurseDepth != -1)
-            {
-                WriteFormatter.Warning("recurseDepth is set, but recursion is not specified. Did you forget -r?");
-            }
+            CommonOutput.WarnIfRecurseDepthWithoutRecursion(isRecursive, recurseDepth);
             
-            if (filePath == null)
+            if (CommonOutput.ErrorIfFilterNull(filter))
             {
-                WriteFormatter.Error("Expected a filePath. Maybe you forgot -a?");
-                
                 return 1;
             }
 
-            var absolutePath = PathHelper.GetAbsolute(filePath);
-
-            IEnumerable<string> removeEnumerable = new[] { absolutePath };
-
-            if (isRecursive)
-            {
-                if (!Directory.Exists(absolutePath))
-                {
-                    WriteFormatter.Error($"The directory '{absolutePath}' does not exist.");
-
-                    return 1;
-                }
-                
-                removeEnumerable = FileSystemHelper.EnumerateFilesToDepth(absolutePath, recurseDepth);
-            }
-
-            return ExceptionWrapper.TryExecute(() => AppData.RemoveFromIndex(removeEnumerable));
+            return FilterHelper.ExecuteOnFilterItems(filter, isRecursive, recurseDepth, AppData.RemoveFromIndex);
         }
     }
 }
