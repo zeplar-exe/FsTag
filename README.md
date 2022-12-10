@@ -1,12 +1,15 @@
-# Project Title
+# FsTag
 
 ![license](https://img.shields.io/github/license/zeplar-exe/FsTag)
 
-Simple overview of use/purpose.
+FsTag is a utility command line interface (CLI) for performing bulk operations on files. With FsTag, you can quickly and easily tag, rename, move, and otherwise manage large numbers of files from the command line.
 
-## Description
+## Features
 
-An in-depth paragraph about your project and overview of use.
+- Easy to use, intuitive syntax for common file operations.
+- Support for tagging files with multiple tags.
+- Flexible and powerful search functionality for finding and managing specific groups of files.
+- [Planned] Cross-platform compatibility (Windows, macOS, and Linux).
 
 ## Getting Started
 
@@ -15,7 +18,7 @@ An in-depth paragraph about your project and overview of use.
 * How/where to download your program
 * Any modifications needed to be made to files/folders
 
-### Executing program
+### Usage
 
 * How to run the program
 * Step-by-step bullets
@@ -31,22 +34,7 @@ code blocks for commands
 > fstag --help
 ```
 
-Any advise for common problems or issues.
+Any advice for common problems or issues.
 ```
 command to run if program contains helper info
 ```
-
-## Authors
-
-Contributors names and contact info
-
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie)
-
-## Version History
-
-* 0.2
-    * Various bug fixes and optimizations
-    * See [commit change]() or See [release history]()
-* 0.1
-    * Initial Release
