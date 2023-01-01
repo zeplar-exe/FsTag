@@ -4,6 +4,8 @@ public abstract class PrefixBasedPathFilterParser : PathFilterParser
 {
     private string Prefix { get; }
 
+    protected string CurrentDirectory => Directory.GetCurrentDirectory();
+
     protected PrefixBasedPathFilterParser(string prefix)
     {
         Prefix = prefix;

@@ -17,6 +17,7 @@ public class PathFilter
         ParserContainer.Add<AbsoluteFilterParser>();
         ParserContainer.Add<RelativeFilterParser>();
         ParserContainer.Add<FormattedFilterParser>();
+        ParserContainer.Add<RegexFilterParser>();
     }
 
     public IEnumerable<string> EnumerateFiles()

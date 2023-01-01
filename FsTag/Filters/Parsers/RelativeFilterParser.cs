@@ -9,6 +9,6 @@ public class RelativeFilterParser : PrefixBasedPathFilterParser
     
     public override IEnumerable<string> EnumerateFilesByTrimmed(string trimmedFilter)
     {
-        yield return Path.Join(Directory.GetCurrentDirectory(), trimmedFilter);
+        yield return Path.Join(CurrentDirectory, trimmedFilter);
     }
 }
