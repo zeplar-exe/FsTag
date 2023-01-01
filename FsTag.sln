@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FsTag", "FsTag\FsTag.csproj", "{96989394-DBFA-43EB-B900-65C2A326B0DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FsTag.Tests", "FsTag.Tests\FsTag.Tests.csproj", "{7D0B870C-0CA0-4AF5-BB03-ED687F528DFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{96989394-DBFA-43EB-B900-65C2A326B0DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96989394-DBFA-43EB-B900-65C2A326B0DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96989394-DBFA-43EB-B900-65C2A326B0DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D0B870C-0CA0-4AF5-BB03-ED687F528DFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D0B870C-0CA0-4AF5-BB03-ED687F528DFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D0B870C-0CA0-4AF5-BB03-ED687F528DFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D0B870C-0CA0-4AF5-BB03-ED687F528DFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
