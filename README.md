@@ -11,30 +11,15 @@ FsTag is a utility command line interface (CLI) for performing bulk operations o
 - Flexible and powerful search functionality for finding and managing specific groups of files.
 - [Planned] Cross-platform compatibility (Windows, macOS, and Linux).
 
-## Getting Started
-
-### Installing
+## Installing
 
 * How/where to download your program
 * Any modifications needed to be made to files/folders
 
-### Usage
+## Usage
 
 * How to run the program
 * Step-by-step bullets
 ```
 code blocks for commands
-```
-
-## Help
-
-```
-> fstag help
-> fstag -h
-> fstag --help
-```
-
-Any advice for common problems or issues.
-```
-command to run if program contains helper info
 ```
