@@ -8,7 +8,7 @@ namespace FsTag;
 
 public partial class Program
 {
-    [Command("rm")]
+    [Command("rm", Description = "Removes files from the index based on the provided filter.")]
     [Subcommand]
     public class RemoveCommand
     {

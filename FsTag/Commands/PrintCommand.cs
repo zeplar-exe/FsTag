@@ -9,48 +9,24 @@ namespace FsTag;
 
 public partial class Program
 {
-    [Command("print")]
+    [Command("print", Description = "Print files that are currently tagged (in the index).")]
     [Subcommand]
     public class PrintCommand
     {
-        private static readonly Regex DelimiterRegex = new("delimiter:(.*)");
-        
         [DefaultCommand]
-        public int Execute(string format = "delimiter:;")
+        public int Execute(
+            [Option("delimiter", Description = "Delimiter between file paths.")] string delimiter = ";",
+            [Option("glob", Description = "The glob format to filter files.")] string glob = "*")
         {
-            var builder = new FormatPairBuilder();
-
-            builder.HandleFormat(DelimiterRegex).With(match =>
+            foreach (var item in AppData.EnumerateIndex())
             {
-                var delimiter = match.Groups[1].Value;
-                var first = true;
-
-                foreach (var item in AppData.EnumerateIndex())
-                {
-                    if (!first)
-                        WriteFormatter.Plain(delimiter);
-                    
-                    WriteFormatter.Plain(item);
-
-                    first = false;
-                }
+                if (!Glob.IsMatch(glob, item))
+                    continue;
                 
-                WriteFormatter.NewLine();
-
-                return 0;
-            });
-
-            var pairs = builder.Build();
-
-            foreach (var formatPair in pairs)
-            {
-                var match = formatPair.Regex.Match(format);
-
-                if (match.Success)
-                    return formatPair.Handle(match);
+                WriteFormatter.Plain(item + delimiter);
             }
-            
-            WriteFormatter.Error($"'{format}' is unrecognized as a print format.");
+                
+            WriteFormatter.NewLine();
 
             return 0;
         }

@@ -7,6 +7,8 @@ public partial class Program
 {
     public static int Main(string[] args)
     {
-        return new AppRunner<Program>().Run(args);
+        var runner = new AppRunner<Program>();
+
+        return runner.Run(args);
     }
 }

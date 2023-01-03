@@ -8,7 +8,7 @@ namespace FsTag;
 
 public partial class Program
 {
-    [Command("tag")]
+    [Command("tag", Description = "Adds files to the index based on the provided filter.")]
     [Subcommand]
     public class TagCommand
     {
