@@ -14,7 +14,6 @@ public partial class Program
         public int Execute()
         {
             var removed = AppData.EnumerateIndex().Where(tag => !File.Exists(tag));
-
             AppData.RemoveFromIndex(removed);
 
             return 0;
