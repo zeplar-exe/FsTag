@@ -1,5 +1,8 @@
 ﻿using FsTag.Helpers;
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 namespace FsTag;
 
 public static class AppData
@@ -12,7 +15,7 @@ public static class AppData
     public static void IndexFiles(IEnumerable<string> fileNames)
     {
         var set = fileNames.ToHashSet();
-        var file = IndexOfSession(DefaultSession);
+        var file = IndexFile(DefaultSession);
 
         foreach (var item in EnumerateIndex())
         {
@@ -40,11 +43,11 @@ public static class AppData
 
     public static IEnumerable<string> EnumerateIndex()
     {
-        var file = IndexOfSession(DefaultSession);
+        var file = IndexFile(DefaultSession);
 
         using var reader = new StreamReader(file);
 
-        while (reader.ReadLine() is {} line) // obscure as hell syntax bro, basically just while it isn't null
+        while (reader.ReadLine() is {} line)
         {
             yield return line;
         }
@@ -52,7 +55,7 @@ public static class AppData
 
     public static void ClearIndex()
     {
-        var file = IndexOfSession(DefaultSession);
+        var file = IndexFile(DefaultSession);
         
         File.WriteAllText(file, string.Empty);
         
@@ -63,7 +66,7 @@ public static class AppData
     {
         var names = fileNames.ToHashSet();
 
-        var index = IndexOfSession(DefaultSession);
+        var index = IndexFile(DefaultSession);
         var tempIndex = index + ".tmp";
         var removedAny = false;
 
@@ -94,15 +97,92 @@ public static class AppData
         }
 
         File.Delete(index);
-        
-        using (var destination = File.OpenWrite(index))
-        {
-            using var source = File.OpenRead(tempIndex);
+        File.Move(tempIndex, index);
+    }
 
-            source.CopyTo(destination);
+    public static JObject? GetConfigs()
+    {
+        var config = ConfigFile(DefaultSession);
+        JObject json;
+
+        try
+        {
+            json = JObject.Parse(File.ReadAllText(config));
+        }
+        catch (JsonReaderException e)
+        {
+            WriteFormatter.Error($"A JsonReaderException occured while reading {config}: {e}");
+            WriteFormatter.Plain("This usually means your config file is corrupted. Either attempt " +
+                                 "to fix it, or use 'fstag config clear' to reset the config file.");
+
+            return null;
+        }
+
+        return json;
+    }
+
+    public static string? GetConfig(string key)
+    {
+        return GetConfigs()?.TryGetValue(key, out var value) ?? false ? value.Value<string>() : null;
+    }
+
+    public static void UpdateConfig(string key, string value)
+    {
+        var json = GetConfigs();
+
+        if (json == null)
+        {
+            WriteFormatter.Error("Could not update config due to an invalid config JSON.");
+            
+            return;
         }
         
-        File.Delete(tempIndex);
+        json[key] = value;
+        
+        var config = ConfigFile(DefaultSession);
+        using var writer = new JsonTextWriter(new StreamWriter(config));
+        json.WriteTo(writer);
+        
+        writer.Flush();
+    }
+    
+    public static void ClearConfig()
+    {
+        var config = ConfigFile(DefaultSession);
+        var json = new JObject();
+        var writer = new JsonTextWriter(new StreamWriter(config));
+        json.WriteTo(writer);
+        
+        WriteFormatter.Info("Successfully cleared configuration.");
+    }
+    
+    private static string IndexFile(string session)
+    {
+        var path = Path.Join(DataDirectory, $"sessions/{session}");
+        var file = Path.Join(path, "index.nsv");
+
+        EnsureDirectory(path);
+        EnsureFile(file);
+
+        return file;
+    }
+    
+    private static string ConfigFile(string session)
+    {
+        var path = Path.Join(DataDirectory, $"sessions/{session}");
+        var file = Path.Join(path, "config.json");
+
+        EnsureDirectory(path);
+        EnsureFile(file);
+
+        var info = new FileInfo(file);
+
+        if (info.Length == 0)
+        {
+            File.WriteAllText(file, "{}");
+        }
+
+        return file;
     }
 
     private static void EnsureDirectory(string directory)
@@ -114,16 +194,5 @@ public static class AppData
     {
         if (!File.Exists(file))
             File.Create(file).Dispose();
-    }
-
-    private static string IndexOfSession(string session)
-    {
-        var path = Path.Join(DataDirectory, $"sessions/{session}");
-        var file = Path.Join(path, "index.nsv");
-
-        EnsureDirectory(path);
-        EnsureFile(file);
-
-        return file;
     }
 }

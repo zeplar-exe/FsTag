@@ -18,21 +18,17 @@ public static class ExceptionWrapper
         }
     }
     
-    public static bool TryExecute<TResult>(Func<TResult> method, out TResult? result)
+    public static int TryExecute(Func<int> method)
     {
-        result = default;
-        
         try
         {
-            result = method.Invoke();
-
-            return true;
+            return method.Invoke();
         }
         catch (Exception e)
         {
             WriteFormatter.Error(e.Message);
 
-            return false;
+            return 1;
         }
     }
 }

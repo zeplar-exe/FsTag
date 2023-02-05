@@ -18,30 +18,38 @@ public partial class Program
             public int Execute(
                 [Option('r', "recycle")] bool recycle)
             {
-                foreach (var file in AppData.EnumerateIndex())
+                return ExceptionWrapper.TryExecute(() =>
                 {
-                    if (File.Exists(file))
+                    foreach (var file in AppData.EnumerateIndex())
                     {
-                        if (recycle)
+                        if (File.Exists(file))
                         {
-                            FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                            try
+                            {
+                                if (recycle)
+                                {
+                                    FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                                }
+                                else
+                                {
+                                    File.Delete(file);
+                        
+                                    WriteFormatter.Info($"Deleted '{file}'.");
+                                }
+                            }
+                            catch (UnauthorizedAccessException)
+                            {
+                                WriteFormatter.Warning($"Not authorized to delete '{file}', skipping.");
+                            }
                         }
                         else
                         {
-                            File.Delete(file);
-                        
-                            WriteFormatter.Info($"Deleted '{file}'.");
+                            WriteFormatter.Warning($"The file '{file}' does not exist.");
                         }
                     }
-                    else
-                    {
-                        WriteFormatter.Warning($"The file '{file}' does not exist.");
-                    }
-                }
                 
-                AppData.ClearIndex();
-                
-                return 0;
+                    AppData.ClearIndex();
+                });
             }
         }
     }
