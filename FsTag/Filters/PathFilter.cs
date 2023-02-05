@@ -16,7 +16,7 @@ public class PathFilter
         ParserContainer = new FilterParserContainer();
         ParserContainer.Add<AbsoluteFilterParser>();
         ParserContainer.Add<RelativeFilterParser>();
-        ParserContainer.Add<FormattedFilterParser>();
+        ParserContainer.Add<GlobFilterParser>();
         ParserContainer.Add<RegexFilterParser>();
     }
 

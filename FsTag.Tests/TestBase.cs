@@ -7,10 +7,4 @@ public abstract class TestBase
     {
         Executable.Setup();
     }
-
-    [TearDown]
-    public void TearDown()
-    {
-        Executable.Teardown();
-    }
 }

@@ -3,6 +3,7 @@
 using CommandDotNet;
 
 using FsTag.Common;
+using FsTag.Filters;
 using FsTag.Helpers;
 
 namespace FsTag;
@@ -15,14 +16,10 @@ public partial class Program
     {
         [DefaultCommand]
         public int Execute(
-            [Option("delimiter", Description = "Delimiter between file paths.")] string delimiter = ";",
-            [Option("glob", Description = "The glob format to filter files.")] string glob = "*")
+            [Option("delimiter", Description = "Delimiter between index items.")] string delimiter = ";")
         {
             foreach (var item in AppData.EnumerateIndex())
             {
-                if (!Glob.IsMatch(glob, item))
-                    continue;
-                
                 WriteFormatter.Plain(item + delimiter);
             }
                 
