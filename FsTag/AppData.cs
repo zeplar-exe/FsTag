@@ -15,7 +15,7 @@ public static class AppData
     public static void IndexFiles(IEnumerable<string> fileNames)
     {
         var set = fileNames.ToHashSet();
-        var file = IndexFile(DefaultSession);
+        var file = GetIndexFilePath(DefaultSession);
 
         foreach (var item in EnumerateIndex())
         {
@@ -43,7 +43,7 @@ public static class AppData
 
     public static IEnumerable<string> EnumerateIndex()
     {
-        var file = IndexFile(DefaultSession);
+        var file = GetIndexFilePath(DefaultSession);
 
         using var reader = new StreamReader(file);
 
@@ -55,7 +55,7 @@ public static class AppData
 
     public static void ClearIndex()
     {
-        var file = IndexFile(DefaultSession);
+        var file = GetIndexFilePath(DefaultSession);
         
         File.WriteAllText(file, string.Empty);
         
@@ -66,7 +66,7 @@ public static class AppData
     {
         var names = fileNames.ToHashSet();
 
-        var index = IndexFile(DefaultSession);
+        var index = GetIndexFilePath(DefaultSession);
         var tempIndex = index + ".tmp";
         var removedAny = false;
 
@@ -100,9 +100,9 @@ public static class AppData
         File.Move(tempIndex, index);
     }
 
-    public static JObject? GetConfigs()
+    public static ConfigJsonWrapper? GetConfig()
     {
-        var config = ConfigFile(DefaultSession);
+        var config = GetConfigFilePath();
         JObject json;
 
         try
@@ -113,76 +113,48 @@ public static class AppData
         {
             WriteFormatter.Error($"A JsonReaderException occured while reading {config}: {e}");
             WriteFormatter.Plain("This usually means your config file is corrupted. Either attempt " +
-                                 "to fix it, or use 'fstag config clear' to reset the config file.");
+                                 "to fix it, or use 'fstag config clear' to *clear* the config file.");
 
             return null;
         }
-
-        return json;
+        
+        return new ConfigJsonWrapper(json);
     }
 
-    public static string? GetConfig(string key)
+    public static void WriteConfig(JObject json)
     {
-        return GetConfigs()?.TryGetValue(key, out var value) ?? false ? value.Value<string>() : null;
-    }
-
-    public static void UpdateConfig(string key, string value)
-    {
-        var json = GetConfigs();
-
-        if (json == null)
-        {
-            WriteFormatter.Error("Could not update config due to an invalid config JSON.");
-            
-            return;
-        }
-        
-        json[key] = value;
-        
-        var config = ConfigFile(DefaultSession);
+        var config = GetConfigFilePath();
         using var writer = new JsonTextWriter(new StreamWriter(config));
         json.WriteTo(writer);
         
         writer.Flush();
     }
     
-    public static void ClearConfig()
+    private static string GetIndexFilePath(string session)
     {
-        var config = ConfigFile(DefaultSession);
-        var json = new JObject();
-        var writer = new JsonTextWriter(new StreamWriter(config));
-        json.WriteTo(writer);
+        var directoryPath = Path.Join(DataDirectory, $"sessions/{session}");
+        var filePath = Path.Join(directoryPath, "index.nsv");
+
+        EnsureDirectory(directoryPath);
+        EnsureFile(filePath);
+
+        return filePath;
+    }
+    
+    private static string GetConfigFilePath()
+    {
+        var filePath = Path.Join(DataDirectory, "config.json");
         
-        WriteFormatter.Info("Successfully cleared configuration.");
-    }
-    
-    private static string IndexFile(string session)
-    {
-        var path = Path.Join(DataDirectory, $"sessions/{session}");
-        var file = Path.Join(path, "index.nsv");
+        EnsureFile(filePath);
 
-        EnsureDirectory(path);
-        EnsureFile(file);
-
-        return file;
-    }
-    
-    private static string ConfigFile(string session)
-    {
-        var path = Path.Join(DataDirectory, $"sessions/{session}");
-        var file = Path.Join(path, "config.json");
-
-        EnsureDirectory(path);
-        EnsureFile(file);
-
-        var info = new FileInfo(file);
+        var info = new FileInfo(filePath);
 
         if (info.Length == 0)
         {
-            File.WriteAllText(file, "{}");
+            File.WriteAllText(filePath, "{}");
         }
 
-        return file;
+        return filePath;
     }
 
     private static void EnsureDirectory(string directory)

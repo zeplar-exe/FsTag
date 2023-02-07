@@ -16,13 +16,13 @@ public partial class Program
     {
         [DefaultCommand]
         public int Execute(
-            [Option("delimiter", Description = "Delimiter between index items.")] string delimiter = ";")
+            [Option('d', "delimiter", Description = "Delimiter between index items.")] string delimiter = ";")
         {
             return ExceptionWrapper.TryExecute(() =>
             {
                 foreach (var item in AppData.EnumerateIndex())
                 {
-                    WriteFormatter.Plain(item + delimiter);
+                    WriteFormatter.PlainNoLine(item + delimiter);
                 }
 
                 WriteFormatter.NewLine();

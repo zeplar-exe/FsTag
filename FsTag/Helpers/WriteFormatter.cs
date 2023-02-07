@@ -7,6 +7,11 @@ public static class WriteFormatter
         Console.WriteLine(text);
     }
     
+    public static void PlainNoLine(string text)
+    {
+        Console.Write(text);
+    }
+    
     public static void Info(string text)
     {
         WriteWithColor($"Info: {text}", ConsoleColor.White);

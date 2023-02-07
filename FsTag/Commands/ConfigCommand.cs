@@ -2,6 +2,9 @@
 
 using FsTag.Helpers;
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 namespace FsTag;
 
 public partial class Program
@@ -11,20 +14,22 @@ public partial class Program
     public class ConfigCommand
     {
         [DefaultCommand]
-        public int Execute(string delimiter = ";")
+        public int Execute([Option('d', "delimiter")] string delimiter = ";")
         {
             return ExceptionWrapper.TryExecute(() =>
             {
-                var config = AppData.GetConfigs();
+                var config = AppData.GetConfig();
                 
                 if (config == null)
                     return 1;
+
+                var enumerable = (IEnumerable<KeyValuePair<string, JToken?>>)config;
                 
-                foreach (var item in config)
+                foreach (var item in enumerable.ToArray())
                 {
-                    var format = $"{item.Key}=\"{item.Value}\"";
+                    var format = $"{item.Key}={item.Value?.ToString(GetJsonFormatting(config)) ?? "null"}";
                     
-                    WriteFormatter.Plain(format + delimiter);
+                    WriteFormatter.PlainNoLine(format + delimiter);
                 }
 
                 WriteFormatter.NewLine();
@@ -34,29 +39,66 @@ public partial class Program
         }
         
         [Command("get")]
-        public int Get(string key, [Option("ctx")] string context = ".")
+        public int Get(string key)
         {
             return ExceptionWrapper.TryExecute(() =>
             {
-                WriteFormatter.Plain(AppData.GetConfig(key) ?? "null");
+                var json = AppData.GetConfig();
+                
+                if (json == null)
+                    return;
+                
+                var value = json[key]?.ToString(GetJsonFormatting(json)) ?? "null";
+
+                WriteFormatter.Plain(value);
             });
         }
         
         [Command("set")]
-        public int Set(string key, string value, [Option("ctx")] string context = ".")
+        public int Set(string key, string value)
         {
             return ExceptionWrapper.TryExecute(() =>
             {
-                AppData.UpdateConfig(key, value);
+                var config = AppData.GetConfig();
                 
-                WriteFormatter.Plain($"{key}=\"{value}\"");
+                if (config == null)
+                    return 1;
+
+                JToken valueToken;
+
+                try
+                {
+                    valueToken = JToken.Parse(value);
+                }
+                catch (JsonReaderException e)
+                {
+                    WriteFormatter.Error($"'{value}' is not valid JSON: {e.Message}");
+                    
+                    return 1;
+                }
+
+                config[key] = valueToken;
+
+                AppData.WriteConfig(config);
+                
+                WriteFormatter.Plain($"{key}={valueToken.ToString(GetJsonFormatting(config))}");
+
+                return 0;
             });
         }
         
         [Command("clear")]
-        public int Clear([Option("ctx")] string context = ".")
+        public int Clear()
         {
-            return ExceptionWrapper.TryExecute(AppData.ClearConfig);
+            return ExceptionWrapper.TryExecute(() =>
+            {
+                AppData.WriteConfig(new JObject());
+            });
+        }
+
+        private static Formatting GetJsonFormatting(ConfigJsonWrapper wrapper)
+        {
+            return wrapper.FormatJsonOutput ? Formatting.Indented : Formatting.None;
         }
     }
 }
