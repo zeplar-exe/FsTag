@@ -25,7 +25,7 @@ public partial class Program
     [DefaultCommand]
     public int Execute(PathFilter filter, 
         [Option('r', "recursive")] bool isRecursive, 
-        [Option("recurseDepth")] int recurseDepth = -1)
+        [Option("recurseDepth")] uint? recurseDepth = null)
     {
         return new TagCommand().Execute(filter, isRecursive, recurseDepth);
     }

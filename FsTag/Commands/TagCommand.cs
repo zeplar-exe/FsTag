@@ -16,11 +16,11 @@ public partial class Program
         public int Execute(
             PathFilter filter, 
             [Option('r', "recursive")] bool isRecursive, 
-            [Option("recurseDepth")] int recurseDepth = -1)
+            [Option("recurseDepth")] uint? recurseDepth = null)
         {
             CommonOutput.WarnIfRecurseDepthWithoutRecursion(isRecursive, recurseDepth);
             
-            return FilterHelper.ExecuteOnFilterItems(filter, isRecursive, recurseDepth, AppData.IndexFiles);
+            return FilterHelper.ExecuteOnFilterItems(filter, isRecursive, recurseDepth ?? 0, AppData.IndexFiles);
         }
     }
 }

@@ -4,7 +4,7 @@ namespace FsTag.Helpers;
 
 public static class FilterHelper
 {
-    public static int ExecuteOnFilterItems(PathFilter filter, bool isRecursive, int recurseDepth, Action<IEnumerable<string>> action)
+    public static int ExecuteOnFilterItems(PathFilter filter, bool isRecursive, uint recurseDepth, Action<IEnumerable<string>> action)
     {
         if (isRecursive)
         {
@@ -16,7 +16,7 @@ public static class FilterHelper
         return ExceptionWrapper.TryExecute(() => action.Invoke(filter.EnumerateFiles()));
     }
     
-    public static IEnumerable<string> GetFilesRecursive(PathFilter filter, int recurseDepth)
+    public static IEnumerable<string> GetFilesRecursive(PathFilter filter, uint recurseDepth)
     {
         foreach (var file in filter.EnumerateFiles())
         {

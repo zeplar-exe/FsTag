@@ -2,7 +2,7 @@
 
 public static class FileSystemHelper
 {
-    public static IEnumerable<string> EnumerateFilesToDepth(string directory, int targetDepth)
+    public static IEnumerable<string> EnumerateFilesToDepth(string directory, uint targetDepth)
     {
         foreach (var file in EnumerateFilesToDepth(directory, targetDepth, 0))
         {
@@ -10,7 +10,7 @@ public static class FileSystemHelper
         }
     }
         
-    private static IEnumerable<string> EnumerateFilesToDepth(string directory, int maxDepth, int depth)
+    private static IEnumerable<string> EnumerateFilesToDepth(string directory, uint maxDepth, uint depth)
     {
         foreach (var file in Directory.EnumerateFiles(directory))
         {

@@ -19,9 +19,9 @@ public static class CommonOutput
         return false;
     }
     
-    public static void WarnIfRecurseDepthWithoutRecursion(bool isRecursive, int recurseDepth)
+    public static void WarnIfRecurseDepthWithoutRecursion(bool isRecursive, uint? recurseDepth)
     {
-        if (!isRecursive && recurseDepth != -1)
+        if (!isRecursive && recurseDepth != null)
         {
             WriteFormatter.Warning("recurseDepth is set, but recursion is not specified. Did you forget -r?");
         }

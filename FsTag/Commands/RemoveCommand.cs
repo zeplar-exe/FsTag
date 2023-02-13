@@ -17,7 +17,7 @@ public partial class Program
             PathFilter? filter,
             [Option('a', "all")] bool all,
             [Option('r', "recursive")] bool isRecursive,
-            [Option("recurseDepth")] int recurseDepth = -1)
+            [Option("recurseDepth")] uint? recurseDepth = null)
         {
             if (all)
             {
@@ -35,7 +35,7 @@ public partial class Program
                 return 1;
             }
 
-            return FilterHelper.ExecuteOnFilterItems(filter, isRecursive, recurseDepth, AppData.RemoveFromIndex);
+            return FilterHelper.ExecuteOnFilterItems(filter, isRecursive, recurseDepth ?? 0, AppData.RemoveFromIndex);
         }
     }
 }
