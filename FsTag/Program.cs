@@ -20,7 +20,12 @@ public partial class Program
     // This method exists purely for unit testing purposes
     public static int MainMethod(string[] args)
     {
-        var runner = new AppRunner<Program>();
+        var settings = new AppSettings
+        {
+            Localize = key => key
+        };
+        
+        var runner = new AppRunner<Program>(settings);
 
         return runner.Run(args);
     }
@@ -39,6 +44,9 @@ public partial class Program
         }
         catch (Exception e)
         {
+            e = e.InnerException ?? e;
+            // Anonymous methods like above usually don't return the exception directly
+            
             WriteFormatter.Error(e.Message);
 
             return Task.FromResult(1);

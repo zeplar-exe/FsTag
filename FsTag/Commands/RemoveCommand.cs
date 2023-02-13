@@ -21,9 +21,12 @@ public partial class Program
         {
             if (all)
             {
-                CommonOutput.WarnWhenXIgnoredBecauseYIsSpecified(filter, all);
-                CommonOutput.WarnWhenXIgnoredBecauseYIsSpecified(isRecursive, all);
-                CommonOutput.WarnWhenXIgnoredBecauseYIsSpecified(recurseDepth, all);
+                if (filter != null)
+                    CommonOutput.WarnXIgnoredBecauseYIsSpecified(filter, all);
+                if (isRecursive)
+                    CommonOutput.WarnXIgnoredBecauseYIsSpecified(isRecursive, all);
+                if (recurseDepth != null)
+                    CommonOutput.WarnXIgnoredBecauseYIsSpecified(recurseDepth, all);
                 
                 AppData.ClearIndex();
 

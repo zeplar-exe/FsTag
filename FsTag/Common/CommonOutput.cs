@@ -27,7 +27,7 @@ public static class CommonOutput
         }
     }
 
-    public static void WarnWhenXIgnoredBecauseYIsSpecified(object? x, bool y)
+    public static void WarnXIgnoredBecauseYIsSpecified(object? x, bool y)
     {
         if (y)
         {
