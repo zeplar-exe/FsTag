@@ -18,15 +18,14 @@ public partial class Program
         public int Execute(
             [Option('d', "delimiter", Description = "Delimiter between index items.")] string delimiter = ";")
         {
-            return ExceptionWrapper.TryExecute(() =>
+            foreach (var item in AppData.EnumerateIndex())
             {
-                foreach (var item in AppData.EnumerateIndex())
-                {
-                    WriteFormatter.PlainNoLine(item + delimiter);
-                }
+                WriteFormatter.PlainNoLine(item + delimiter);
+            }
 
-                WriteFormatter.NewLine();
-            });
+            WriteFormatter.NewLine();
+
+            return 0;
         }
     }
 }

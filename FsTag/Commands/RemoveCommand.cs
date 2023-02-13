@@ -25,12 +25,14 @@ public partial class Program
                 CommonOutput.WarnWhenXIgnoredBecauseYIsSpecified(isRecursive, all);
                 CommonOutput.WarnWhenXIgnoredBecauseYIsSpecified(recurseDepth, all);
                 
-                return ExceptionWrapper.TryExecute(AppData.ClearIndex);
+                AppData.ClearIndex();
+
+                return 0;
             }
             
             CommonOutput.WarnIfRecurseDepthWithoutRecursion(isRecursive, recurseDepth);
             
-            if (CommonOutput.ErrorIfFilterNull(filter))
+            if (CommonOutput.ErrorIfFilterNullAndNotAll(filter))
             {
                 return 1;
             }

@@ -1,7 +1,7 @@
-﻿namespace FsTag.Tests;
+﻿namespace FsTag.Tests.CommandTests;
 
 [TestFixture]
-public class TagTests : TestBase
+public class Tag : TestBase
 {
     const string TestFileName = "test/test1.txt";
     
@@ -17,7 +17,7 @@ public class TagTests : TestBase
     }
     
     [Test]
-    public void TestTagWithoutVerb()
+    public void TestTagDefaultCommand()
     {
         Executable.DisplayCommandOutput = true;
         

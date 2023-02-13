@@ -9,11 +9,15 @@ public static class FilterHelper
         if (isRecursive)
         {
             var files = GetFilesRecursive(filter, recurseDepth);
-                
-            return ExceptionWrapper.TryExecute(() => action.Invoke(files));
+
+            action.Invoke(files);
+
+            return 0;
         }
 
-        return ExceptionWrapper.TryExecute(() => action.Invoke(filter.EnumerateFiles()));
+        action.Invoke(filter.EnumerateFiles());
+
+        return 0;
     }
     
     public static IEnumerable<string> GetFilesRecursive(PathFilter filter, uint recurseDepth)

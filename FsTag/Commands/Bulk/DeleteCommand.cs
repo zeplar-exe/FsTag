@@ -18,38 +18,37 @@ public partial class Program
             public int Execute(
                 [Option('r', "recycle")] bool recycle)
             {
-                return ExceptionWrapper.TryExecute(() =>
+                foreach (var file in AppData.EnumerateIndex())
                 {
-                    foreach (var file in AppData.EnumerateIndex())
+                    if (File.Exists(file))
                     {
-                        if (File.Exists(file))
+                        try
                         {
-                            try
+                            if (recycle)
                             {
-                                if (recycle)
-                                {
-                                    FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
-                                }
-                                else
-                                {
-                                    File.Delete(file);
-                        
-                                    WriteFormatter.Info($"Deleted '{file}'.");
-                                }
+                                FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                             }
-                            catch (UnauthorizedAccessException)
+                            else
                             {
-                                WriteFormatter.Warning($"Not authorized to delete '{file}', skipping.");
+                                File.Delete(file);
+                    
+                                WriteFormatter.Info($"Deleted '{file}'.");
                             }
                         }
-                        else
+                        catch (UnauthorizedAccessException)
                         {
-                            WriteFormatter.Warning($"The file '{file}' does not exist.");
+                            WriteFormatter.Warning($"Not authorized to delete '{file}', skipping.");
                         }
                     }
-                
-                    AppData.ClearIndex();
-                });
+                    else
+                    {
+                        WriteFormatter.Warning($"The file '{file}' does not exist.");
+                    }
+                }
+            
+                AppData.ClearIndex();
+
+                return 0;
             }
         }
     }

@@ -7,7 +7,7 @@ namespace FsTag.Common;
 
 public static class CommonOutput
 {
-    public static bool ErrorIfFilterNull([NotNullWhen(false)] PathFilter? filter)
+    public static bool ErrorIfFilterNullAndNotAll([NotNullWhen(false)] PathFilter? filter)
     {
         if (filter == null)
         {
