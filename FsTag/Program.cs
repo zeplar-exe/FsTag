@@ -9,6 +9,9 @@ namespace FsTag;
 [Command]
 public partial class Program
 {
+    public static bool Verbose { get; set; }
+    public static bool Quiet { get; set; }
+    
     public static int Main(string[] args)
     {
         return MainMethod(args);
@@ -20,6 +23,26 @@ public partial class Program
         var runner = new AppRunner<Program>();
 
         return runner.Run(args);
+    }
+    
+    // https://commanddotnet.bilal-fazlani.com/extensibility/interceptors/
+    public Task<int> Interceptor(InterceptorExecutionDelegate next, 
+        [Option('q', "quiet", AssignToExecutableSubcommands = true)] bool quiet,
+        [Option('v', "verbose", AssignToExecutableSubcommands = true)] bool verbose)
+    {
+        Quiet = quiet;
+        Verbose = verbose;
+        
+        try
+        {
+            return next.Invoke();
+        }
+        catch (Exception e)
+        {
+            WriteFormatter.Error(e.Message);
+
+            return Task.FromResult(1);
+        }
     }
     
     [DefaultCommand]

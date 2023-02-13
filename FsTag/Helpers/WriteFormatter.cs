@@ -4,12 +4,14 @@ public static class WriteFormatter
 {
     public static void Plain(string text)
     {
-        Console.WriteLine(text);
+        if (!Program.Quiet)
+            Console.WriteLine(text);
     }
     
     public static void PlainNoLine(string text)
     {
-        Console.Write(text);
+        if (!Program.Quiet)
+            Console.Write(text);
     }
     
     public static void Info(string text)
@@ -29,6 +31,9 @@ public static class WriteFormatter
 
     private static void WriteWithColor(string text, ConsoleColor color)
     {
+        if (Program.Quiet)
+            return;
+        
         var originalForeground = Console.ForegroundColor;
         
         Console.ForegroundColor = color;
@@ -38,6 +43,9 @@ public static class WriteFormatter
     
     public static void NewLine()
     {
+        if (Program.Quiet)
+            return;
+        
         Console.WriteLine();
     }
 }

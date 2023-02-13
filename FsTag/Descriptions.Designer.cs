@@ -58,5 +58,14 @@ namespace FsTag {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adds files to the current session index based on the provided filter..
+        /// </summary>
+        internal static string TagCommand {
+            get {
+                return ResourceManager.GetString("TagCommand", resourceCulture);
+            }
+        }
     }
 }

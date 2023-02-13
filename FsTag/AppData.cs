@@ -7,15 +7,17 @@ namespace FsTag;
 
 public static class AppData
 {
-    private const string DefaultSession = "__default";
     private const string DirectoryName = "fstag";
     private static string RootDirectory => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
     private static string DataDirectory => Path.Join(RootDirectory, DirectoryName);
+    private static string CurrentSession => GetConfig()?.SessionDirectory ?? DefaultSession;
+    
+    public const string DefaultSession = "__default";
 
     public static void IndexFiles(IEnumerable<string> fileNames)
     {
         var set = fileNames.ToHashSet();
-        var file = GetIndexFilePath(DefaultSession);
+        var file = GetIndexFilePath();
 
         foreach (var item in EnumerateIndex())
         {
@@ -43,7 +45,7 @@ public static class AppData
 
     public static IEnumerable<string> EnumerateIndex()
     {
-        var file = GetIndexFilePath(DefaultSession);
+        var file = GetIndexFilePath();
 
         using var reader = new StreamReader(file);
 
@@ -55,7 +57,7 @@ public static class AppData
 
     public static void ClearIndex()
     {
-        var file = GetIndexFilePath(DefaultSession);
+        var file = GetIndexFilePath();
         
         File.WriteAllText(file, string.Empty);
         
@@ -66,8 +68,8 @@ public static class AppData
     {
         var names = fileNames.ToHashSet();
 
-        var index = GetIndexFilePath(DefaultSession);
-        var tempIndex = index + ".tmp";
+        var index = GetIndexFilePath();
+        var tempIndex = Path.GetTempFileName();
         var removedAny = false;
 
         using (var reader = new StreamReader(index))
@@ -129,13 +131,21 @@ public static class AppData
         
         writer.Flush();
     }
-    
-    private static string GetIndexFilePath(string session)
-    {
-        var directoryPath = Path.Join(DataDirectory, $"sessions/{session}");
-        var filePath = Path.Join(directoryPath, "index.nsv");
 
-        EnsureDirectory(directoryPath);
+    public static string GetSessionDirectory()
+    {
+        var path = Path.Join(DataDirectory, $"sessions/{CurrentSession}");
+        
+        EnsureDirectory(path);
+
+        return path;
+    }
+    
+    private static string GetIndexFilePath()
+    {
+        var directoryPath = GetSessionDirectory();
+        var filePath = Path.Join(directoryPath, "index.nsv");
+        
         EnsureFile(filePath);
 
         return filePath;

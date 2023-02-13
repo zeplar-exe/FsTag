@@ -5,6 +5,8 @@ namespace FsTag;
 public sealed class ConfigJsonWrapper : JObject
 {
     public bool FormatJsonOutput => GetOrDefault<bool>("format_json_output", new JValue(false));
+    public string SessionDirectory => GetOrDefault<string>("session_name", new JValue(AppData.DefaultSession)) 
+                                      ?? AppData.DefaultSession;
 
     public ConfigJsonWrapper(JObject original)
     {
