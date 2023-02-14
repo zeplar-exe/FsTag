@@ -7,7 +7,7 @@
         <Nullable>enable</Nullable>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <SelfContained>true</SelfContained>
-        <RuntimeIdentifier>win-x86</RuntimeIdentifier>
+        <RuntimeIdentifier>win-x86;wi-x64</RuntimeIdentifier>
     </PropertyGroup>
 
     <ItemGroup>

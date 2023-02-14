@@ -24,9 +24,9 @@ public partial class Program
         {
             Localize = key => key
         };
-        
-        var runner = new AppRunner<Program>(settings);
 
+        var runner = new AppRunner<Program>(settings);
+        
         return runner.Run(args);
     }
     
