@@ -31,4 +31,10 @@
       </Compile>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="docs\filters.md">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
