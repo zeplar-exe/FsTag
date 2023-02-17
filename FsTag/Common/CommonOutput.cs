@@ -18,14 +18,6 @@ public static class CommonOutput
 
         return false;
     }
-    
-    public static void WarnIfRecurseDepthWithoutRecursion(bool isRecursive, uint? recurseDepth)
-    {
-        if (!isRecursive && recurseDepth != null)
-        {
-            WriteFormatter.Warning("recurseDepth is set, but recursion is not specified. Did you forget -r?");
-        }
-    }
 
     public static void WarnXIgnoredBecauseYIsSpecified(object? x, bool y)
     {

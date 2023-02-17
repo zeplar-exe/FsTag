@@ -15,32 +15,22 @@ public partial class Program
         [DefaultCommand]
         public int Execute(
             PathFilter? filter,
-            [Option('a', "all")] bool all,
-            [Option('r', "recursive")] bool isRecursive,
-            [Option("recurseDepth")] uint? recurseDepth = null)
+            [LocalizedOption('r', "recursive", nameof(Descriptions.RecursiveOp))] uint recurseDepth = 0)
         {
-            if (all)
-            {
-                if (filter != null)
-                    CommonOutput.WarnXIgnoredBecauseYIsSpecified(filter, all);
-                if (isRecursive)
-                    CommonOutput.WarnXIgnoredBecauseYIsSpecified(isRecursive, all);
-                if (recurseDepth != null)
-                    CommonOutput.WarnXIgnoredBecauseYIsSpecified(recurseDepth, all);
-                
-                AppData.ClearIndex();
-
-                return 0;
-            }
-            
-            CommonOutput.WarnIfRecurseDepthWithoutRecursion(isRecursive, recurseDepth);
-            
             if (CommonOutput.ErrorIfFilterNullAndNotAll(filter))
             {
                 return 1;
             }
 
-            return FilterHelper.ExecuteOnFilterItems(filter, isRecursive, recurseDepth ?? 0, AppData.RemoveFromIndex);
+            return FilterHelper.ExecuteOnFilterItems(filter, recurseDepth, AppData.RemoveFromIndex);
+        }
+
+        [LocalizedCommand("all", nameof(Descriptions.RemoveAllCommand))]
+        public int All()
+        {
+            AppData.ClearIndex();
+
+            return 0;
         }
     }
 }

@@ -10,9 +10,9 @@ public class RegexFilterParser : PrefixBasedPathFilterParser
     }
     
 
-    public override IEnumerable<string> EnumerateFilesByTrimmed(string trimmedFilter)
+    public override IEnumerable<string> EnumerateFilesByActualFilter(string actualFilter)
     {
-        var regex = new Regex(trimmedFilter);
+        var regex = new Regex(actualFilter);
 
         foreach (var file in Directory.EnumerateFileSystemEntries(
                      CurrentDirectory, "*", SearchOption.AllDirectories))

@@ -14,6 +14,8 @@ public static class AppData
     
     public const string DefaultSession = "__default";
 
+    public static string SessionDirectoryPath = EnsureDirectory(Path.Join(DataDirectory, $"sessions/{CurrentSession}"));
+
     public static void IndexFiles(IEnumerable<string> fileNames)
     {
         var set = fileNames.ToHashSet();
@@ -41,27 +43,6 @@ public static class AppData
             writer.WriteLine(item);
             WriteFormatter.Info($"Added '{item}' to tag index.");
         }
-    }
-
-    public static IEnumerable<string> EnumerateIndex()
-    {
-        var file = GetIndexFilePath();
-
-        using var reader = new StreamReader(file);
-
-        while (reader.ReadLine() is {} line)
-        {
-            yield return line;
-        }
-    }
-
-    public static void ClearIndex()
-    {
-        var file = GetIndexFilePath();
-        
-        File.WriteAllText(file, string.Empty);
-        
-        WriteFormatter.Info("Successfully cleared tag index.");
     }
 
     public static void RemoveFromIndex(IEnumerable<string> fileNames)
@@ -101,80 +82,121 @@ public static class AppData
         File.Delete(index);
         File.Move(tempIndex, index);
     }
+    
+    public static IEnumerable<string> EnumerateIndex()
+    {
+        var file = GetIndexFilePath();
+
+        using var reader = new StreamReader(file);
+
+        while (reader.ReadLine() is {} line)
+        {
+            yield return line;
+        }
+    }
+    
+    public static void ClearIndex()
+    {
+        var file = GetIndexFilePath();
+        
+        File.WriteAllText(file, string.Empty);
+        
+        WriteFormatter.Info("Successfully cleared tag index.");
+    }
 
     public static ConfigJsonWrapper? GetConfig()
     {
-        var config = GetConfigFilePath();
+        var json = ParseJson(GetConfigFilePath());
+        
+        return json != null ? new ConfigJsonWrapper(json) : null;
+    }
+
+    public static void WriteConfig(JObject json)
+    {
+        WriteJson(GetConfigFilePath(), json);
+    }
+
+    public static JObject? GetLabels()
+    {
+        var json = ParseJson(GetLabelIndexFilePath());
+
+        return json;
+    }
+
+    public static void WriteLabels(JObject json)
+    {
+        WriteJson(GetLabelIndexFilePath(), json);
+    }
+
+    private static JObject? ParseJson(string path)
+    {
         JObject json;
 
         try
         {
-            json = JObject.Parse(File.ReadAllText(config));
+            json = JObject.Parse(File.ReadAllText(path));
         }
         catch (JsonReaderException e)
         {
-            WriteFormatter.Error($"A JsonReaderException occured while reading {config}: {e}");
+            WriteFormatter.Error($"A JsonReaderException occured while reading {path}: {e}");
             WriteFormatter.Plain("This usually means your config file is corrupted. Either attempt " +
                                  "to fix it, or use 'fstag config clear' to *clear* the config file.");
 
             return null;
         }
         
-        return new ConfigJsonWrapper(json);
+        return json;
     }
 
-    public static void WriteConfig(JObject json)
+    private static void WriteJson(string path, JObject json)
     {
-        var config = GetConfigFilePath();
-        using var writer = new JsonTextWriter(new StreamWriter(config));
+        using var writer = new JsonTextWriter(new StreamWriter(path));
         json.WriteTo(writer);
         
         writer.Flush();
     }
-
-    public static string GetSessionDirectory()
-    {
-        var path = Path.Join(DataDirectory, $"sessions/{CurrentSession}");
-        
-        EnsureDirectory(path);
-
-        return path;
-    }
     
     private static string GetIndexFilePath()
     {
-        var directoryPath = GetSessionDirectory();
-        var filePath = Path.Join(directoryPath, "index.nsv");
-        
-        EnsureFile(filePath);
+        var filePath = EnsureFile(Path.Join(SessionDirectoryPath, "index.nsv"));
 
         return filePath;
     }
     
     private static string GetConfigFilePath()
     {
-        var filePath = Path.Join(DataDirectory, "config.json");
-        
-        EnsureFile(filePath);
+        return EnsureJsonFile(Path.Join(DataDirectory, "config.json"));
+    }
 
-        var info = new FileInfo(filePath);
+    private static string GetLabelIndexFilePath()
+    {
+        return EnsureJsonFile(Path.Join(DataDirectory, "label_index.json"));
+    }
+
+    private static string EnsureJsonFile(string path)
+    {
+        var info = new FileInfo(path);
 
         if (info.Length == 0)
         {
-            File.WriteAllText(filePath, "{}");
+            File.WriteAllText(path, "{}");
         }
 
-        return filePath;
+        return path;
     }
 
-    private static void EnsureDirectory(string directory)
+    private static string EnsureDirectory(string directory)
     {
         Directory.CreateDirectory(directory);
+
+        return directory;
     }
 
-    private static void EnsureFile(string file)
+    private static string EnsureFile(string file)
     {
         if (!File.Exists(file))
             File.Create(file).Dispose();
+
+        return file;
     }
 }

@@ -10,13 +10,14 @@ namespace FsTag;
 
 public partial class Program
 {
-    [Command("print", Description = "Print files that are currently tagged (in the index).")]
+    [LocalizedCommand("print", nameof(Descriptions.PrintCommand))]
     [Subcommand]
     public class PrintCommand
     {
         [DefaultCommand]
         public int Execute(
-            [Option('d', "delimiter", Description = "Delimiter between index items.")] string delimiter = ";")
+            [LocalizedOption('d', "delimiter", nameof(Descriptions.PrintDelimiterOp))]
+            string delimiter = ";")
         {
             foreach (var item in AppData.EnumerateIndex())
             {

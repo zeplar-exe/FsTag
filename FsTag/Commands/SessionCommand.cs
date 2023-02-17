@@ -13,7 +13,7 @@ public partial class Program
         [DefaultCommand]
         public int Execute()
         {
-            var directory = AppData.GetSessionDirectory();
+            var directory = AppData.SessionDirectoryPath;
             
             if (Verbose)
             {

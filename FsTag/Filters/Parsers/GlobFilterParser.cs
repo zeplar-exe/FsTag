@@ -1,5 +1,7 @@
 ﻿using DotNet.Globbing;
 
+using FsTag.Glob;
+
 namespace FsTag.Filters.Parsers;
 
 public class GlobFilterParser : PrefixBasedPathFilterParser
@@ -9,17 +11,17 @@ public class GlobFilterParser : PrefixBasedPathFilterParser
         
     }
     
-    public override IEnumerable<string> EnumerateFilesByTrimmed(string trimmedFilter)
+    public override IEnumerable<string> EnumerateFilesByActualFilter(string actualFilter)
     {
-        var glob = Glob.Parse(trimmedFilter);
+        var glob = FileGlob.Parse(actualFilter);
         
         foreach (var file in Directory.EnumerateFileSystemEntries(
                      CurrentDirectory, "*", SearchOption.AllDirectories))
         {
             var relative = Path.GetRelativePath(CurrentDirectory, file);
 
-            if (glob.IsMatch(relative))
-                yield return file;
+            if (glob.IsMatchFrom(relative))
+                yield return file; // custom glob
         }
     }
 }

@@ -18,8 +18,8 @@ public abstract class PrefixBasedPathFilterParser : PathFilterParser
 
     public sealed override IEnumerable<string> EnumerateFiles(string filter)
     {
-        return EnumerateFilesByTrimmed(filter.Substring(Prefix.Length));
+        return EnumerateFilesByActualFilter(filter.Substring(Prefix.Length));
     }
 
-    public abstract IEnumerable<string> EnumerateFilesByTrimmed(string trimmedFilter);
+    public abstract IEnumerable<string> EnumerateFilesByActualFilter(string actualFilter);
 }

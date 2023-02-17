@@ -7,8 +7,8 @@ public class RelativeFilterParser : PrefixBasedPathFilterParser
         
     }
     
-    public override IEnumerable<string> EnumerateFilesByTrimmed(string trimmedFilter)
+    public override IEnumerable<string> EnumerateFilesByActualFilter(string actualFilter)
     {
-        yield return Path.Join(CurrentDirectory, trimmedFilter);
+        yield return Path.Join(CurrentDirectory, actualFilter);
     }
 }

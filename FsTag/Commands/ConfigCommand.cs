@@ -15,7 +15,7 @@ public partial class Program
     {
         [DefaultCommand]
         public int Execute([Option('d', "delimiter")] string delimiter = ";")
-        {
+        {// move to print [config]
             var config = AppData.GetConfig();
             
             if (config == null)

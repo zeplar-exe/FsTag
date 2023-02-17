@@ -16,6 +16,19 @@ public partial class Program
             var removed = AppData.EnumerateIndex().Where(tag => !File.Exists(tag));
             AppData.RemoveFromIndex(removed);
 
+            var labels = AppData.GetLabels();
+
+            if (labels != null)
+            {
+                foreach (var item in labels)
+                {
+                    if (!File.Exists(item.Key))
+                        labels.Remove(item.Key);
+                }
+                
+                AppData.WriteLabels(labels);
+            }
+
             return 0;
         }
     }

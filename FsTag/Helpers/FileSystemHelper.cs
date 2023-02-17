@@ -12,19 +12,19 @@ public static class FileSystemHelper
         
     private static IEnumerable<string> EnumerateFilesToDepth(string directory, uint maxDepth, uint depth)
     {
+        if (depth > maxDepth)
+            yield break;
+        
         foreach (var file in Directory.EnumerateFiles(directory))
         {
             yield return file;
         }
             
-        if (depth != maxDepth)
+        foreach (var dir in Directory.EnumerateDirectories(directory))
         {
-            foreach (var dir in Directory.EnumerateDirectories(directory))
+            foreach (var file in EnumerateFilesToDepth(dir, maxDepth, depth + 1))
             {
-                foreach (var file in EnumerateFilesToDepth(dir, maxDepth, depth + 1))
-                {
-                    yield return file;
-                }
+                yield return file;
             }
         }
     }

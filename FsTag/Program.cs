@@ -20,12 +20,7 @@ public partial class Program
     // This method exists purely for unit testing purposes
     public static int MainMethod(string[] args)
     {
-        var settings = new AppSettings
-        {
-            Localize = key => key
-        };
-
-        var runner = new AppRunner<Program>(settings);
+        var runner = new AppRunner<Program>();
         
         return runner.Run(args);
     }
@@ -55,9 +50,9 @@ public partial class Program
     
     [DefaultCommand]
     public int Execute(PathFilter filter, 
-        [Option('r', "recursive")] bool isRecursive, 
-        [Option("recurseDepth")] uint? recurseDepth = null)
+        [LocalizedOption('r', "recursive", nameof(Descriptions.RecursiveOp))] 
+        uint recurseDepth = 0)
     {
-        return new TagCommand().Execute(filter, isRecursive, recurseDepth);
+        return new TagCommand().Execute(filter, recurseDepth);
     }
 }

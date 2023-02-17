@@ -60,6 +60,96 @@ namespace FsTag {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Whether to send deleted items to the recycle bin..
+        /// </summary>
+        internal static string DeleteRecycle {
+            get {
+                return ResourceManager.GetString("DeleteRecycle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extended information on various commands and topics in FsTag..
+        /// </summary>
+        internal static string HelpCommand {
+            get {
+                return ResourceManager.GetString("HelpCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set the specified label on indexed files..
+        /// </summary>
+        internal static string LabelCommand {
+            get {
+                return ResourceManager.GetString("LabelCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only set labels where they aren&apos;t already set..
+        /// </summary>
+        internal static string LabelNewOp {
+            get {
+                return ResourceManager.GetString("LabelNewOp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print files that are currently tagged (in the index)..
+        /// </summary>
+        internal static string PrintCommand {
+            get {
+                return ResourceManager.GetString("PrintCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delimiter between printed index items..
+        /// </summary>
+        internal static string PrintDelimiterOp {
+            get {
+                return ResourceManager.GetString("PrintDelimiterOp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recurse depth to tag up until. 0 (default) denotes no recursion, values less than 0 denote no limit..
+        /// </summary>
+        internal static string RecursiveOp {
+            get {
+                return ResourceManager.GetString("RecursiveOp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Untag all indexed files..
+        /// </summary>
+        internal static string RemoveAllCommand {
+            get {
+                return ResourceManager.GetString("RemoveAllCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove all labels from indexed files..
+        /// </summary>
+        internal static string RmLabelAllCommand {
+            get {
+                return ResourceManager.GetString("RmLabelAllCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove the specified label from index files..
+        /// </summary>
+        internal static string RmLabelCommand {
+            get {
+                return ResourceManager.GetString("RmLabelCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adds files to the current session index based on the provided filter..
         /// </summary>
         internal static string TagCommand {

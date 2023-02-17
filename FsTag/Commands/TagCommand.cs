@@ -8,19 +8,17 @@ namespace FsTag;
 
 public partial class Program
 {
-    [Command("tag", Description = "Adds files to the index based on the provided filter.")]
+    [LocalizedCommand("tag", nameof(Descriptions.TagCommand))]
     [Subcommand]
     public class TagCommand
     {
         [DefaultCommand]
         public int Execute(
             PathFilter filter, 
-            [Option('r', "recursive")] bool isRecursive, 
-            [Option("recurseDepth")] uint? recurseDepth = null)
+            [LocalizedOption('r', "recursive", nameof(Descriptions.RecursiveOp))]
+            uint recurseDepth = 0)
         {
-            CommonOutput.WarnIfRecurseDepthWithoutRecursion(isRecursive, recurseDepth);
-            
-            return FilterHelper.ExecuteOnFilterItems(filter, isRecursive, recurseDepth ?? 0, AppData.IndexFiles);
+            return FilterHelper.ExecuteOnFilterItems(filter, recurseDepth, AppData.IndexFiles);
         }
     }
 }
