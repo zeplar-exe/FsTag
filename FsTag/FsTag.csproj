@@ -32,9 +32,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="docs\filters.md">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
+        <None Update="docs\**\*.*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
 </Project>
