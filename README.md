@@ -31,8 +31,8 @@ The core functionality of the CLI is accessed via tagging:
 
 All tagged files are stored in a session-specific index, which can be viewed with the `print` command:
 
-```bas
-> fstag print --delimiter=";"
+```
+> fstag print index
 test.txt;
 ```
 
@@ -41,17 +41,22 @@ test.txt;
 Once ready to act on indexed files, the various `bulk` commands can be used:
 
 - `fstag bulk delete`
+- `fstag bulk label "my_label" "some_value"`
 - *crickets chirp in the distance*
 
-For more details, run `fstag -h`
+For more details, run `fstag bulk -h`.
 
-### Tag Filters
+## Documentation
 
-When tagging files, a filter is used sourced from the working directory. Currently, the following filters are supported:
+See [FsTag/docs](./FsTag/docs/).
 
-- Regex: `fstag tag re:*.tx\w)`
-- Glob: `fstag tag f:**/*.txt`
-- Relative: `fstag tag r:test.txt`
-- Absolute: `fstag tag a:C:\Users\me\test.txt`
+The CLI also offers these files via the `fstag docs` command.
 
-If none are specified, the filter is assumed to be relative or absolute.
+```
+> fstag docs filters
+Filters are a powerful mechanism for file selection used in tagging. All filters...
+```
+
+## Contribution
+
+See [Contributing.md](./CONTRIBUTING.md).
