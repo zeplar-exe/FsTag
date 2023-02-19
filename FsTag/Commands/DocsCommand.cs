@@ -6,33 +6,32 @@ namespace FsTag;
 
 public partial class Program
 {
-    [LocalizedCommand("docs", nameof(Descriptions.HelpCommand))]
+    [LocalizedCommand("docs", nameof(Descriptions.DocsCommand))]
     [Subcommand]
     public class DocsCommand
     {
         [DefaultCommand]
-        public int Execute(string? module = null)
+        public int Execute(string module)
         {
-            var modules = GetDocumentationModules().ToArray();
-
-            if (module != null)
+            foreach (var helpModule in GetDocumentationModules())
             {
-                foreach (var helpModule in modules)
+                if (helpModule.IsMatch(module))
                 {
-                    if (helpModule.IsMatch(module))
-                    {
-                        WriteFormatter.Plain(helpModule.Content);
+                    WriteFormatter.Plain(helpModule.Content);
 
-                        return 0;
-                    }
+                    return 0;
                 }
-
-                return 1;
             }
-            
+
+            return 1;
+        }
+
+        [LocalizedCommand("modules", nameof(Descriptions.DocModulesCommand))]
+        public int Modules()
+        {
             WriteFormatter.Plain("Loaded Documentation Modules:");
 
-            foreach (var helpModule in modules)
+            foreach (var helpModule in GetDocumentationModules())
             {
                 WriteFormatter.PlainNoLine(helpModule.Name);
                 WriteFormatter.PlainNoLine($" [ {helpModule.FileName} ]");

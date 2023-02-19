@@ -1,20 +1,30 @@
-﻿Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras hendrerit
-efficitur lobortis. Phasellus dui lacus, vehicula ac ultrices nec, tincidunt non
-tortor. Suspendisse ac justo sed turpis elementum pretium. Aliquam neque est,
-consectetur vel commodo nec, gravida non risus. Praesent urna nunc, tristique at
-dui id, malesuada tincidunt mi. Donec pretium mollis aliquam. Nunc bibendum arcu
-eu augue imperdiet, non vulputate mi ultrices. Integer porttitor lorem eget nunc
-aliquet tempus. Nunc in pretium nulla. Nulla scelerisque scelerisque dui id
-ullamcorper. Integer at lacus laoreet mi lobortis semper. Praesent tincidunt
-nisi quis ligula rutrum, et mollis neque rutrum. Fusce felis ex, commodo ac
-aliquam vel, lacinia ut neque. Nam convallis tortor eu libero feugiat, vel
-fermentum turpis commodo.
+﻿==Filters==
 
-Cras sed nisi id felis luctus scelerisque nec ac elit. Suspendisse rutrum tempus
-eleifend. Aliquam erat volutpat. Nullam vitae quam sed ipsum pellentesque congue
-vitae sed nisl. Integer velit turpis, gravida in facilisis imperdiet, tempor vel
-neque. Donec sit amet metus vel urna scelerisque blandit. Nunc vitae nulla vitae
-dui tempor dapibus at sit amet ex. Nulla facilisi. Aliquam lacus orci, egestas
-quis ante et, dictum maximus diam. Vivamus ultrices ullamcorper ipsum a
-tincidunt. Proin ut turpis sed metus fringilla condimentum. Donec eu varius
-augue. Nulla egestas vehicula turpis, quis lobortis arcu varius sed. 
+Filters are a powerful mechanism for file selection used in tagging. All filters
+are formatted as to have a prefix, such as f:*.txt for a glob filter.
+
+Escaped backslashes and regular slashes are treated the same.
+
+Currently implemented and supported filters are as follows:
+
+- Relative
+Ex: r:some/path/relative/to/the/current/working/directory.txt
+
+- Absolute 
+Ex: a:C:/some/rooted/path.txt
+
+Absolute paths work for for disk roots or UNIX roots (/).
+
+- Regex
+Ex: re:.*\.txt
+
+Any regex pattern is valid. Be wary of possible timeouts.
+
+- Glob/Formatted
+Ex: f:*.txt
+
+*If no format is specified, the CLI will attempt to default to a relative or
+absolute path.*
+
+
+As for globbing, FsTag uses a custom glob implementation
