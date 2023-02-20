@@ -69,11 +69,20 @@ namespace FsTag {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List the currently loaded documentation modules..
+        /// </summary>
+        internal static string DocModulesCommand {
+            get {
+                return ResourceManager.GetString("DocModulesCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Extended information on various commands and topics in FsTag..
         /// </summary>
-        internal static string HelpCommand {
+        internal static string DocsCommand {
             get {
-                return ResourceManager.GetString("HelpCommand", resourceCulture);
+                return ResourceManager.GetString("DocsCommand", resourceCulture);
             }
         }
         
@@ -105,11 +114,11 @@ namespace FsTag {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delimiter between printed index items..
+        ///   Looks up a localized string similar to Print a list of valid print keys..
         /// </summary>
-        internal static string PrintDelimiterOp {
+        internal static string PrintKeysCommand {
             get {
-                return ResourceManager.GetString("PrintDelimiterOp", resourceCulture);
+                return ResourceManager.GetString("PrintKeysCommand", resourceCulture);
             }
         }
         

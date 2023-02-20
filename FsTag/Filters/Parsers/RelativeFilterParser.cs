@@ -1,14 +1,11 @@
 ﻿namespace FsTag.Filters.Parsers;
 
-public class RelativeFilterParser : PrefixBasedPathFilterParser
+public class RelativeFilterParser : PathFilterParser
 {
-    public RelativeFilterParser() : base("r:")
-    {
-        
-    }
+    public override string[] Identifiers => new[] { "r", "rel", "relative" };
     
-    public override IEnumerable<string> EnumerateFilesByActualFilter(string actualFilter)
+    public override IEnumerable<string> EnumerateFiles(string filter)
     {
-        yield return Path.Join(CurrentDirectory, actualFilter);
+        yield return Path.Join(CurrentDirectory, filter);
     }
 }

@@ -2,6 +2,8 @@
 
 public abstract class PathFilterParser
 {
-    public abstract bool CanHandle(string filter);
+    protected string CurrentDirectory => Directory.GetCurrentDirectory();
+    
+    public abstract string[] Identifiers { get; }
     public abstract IEnumerable<string> EnumerateFiles(string filter);
 }

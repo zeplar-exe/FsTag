@@ -7,12 +7,7 @@ public class FileGlob
         return new FileGlob();
     }
     
-    public bool IsMatchFrom(string directory)
-    {
-        return false;
-    }
-    
-    public bool IsMatch()
+    public bool IsMatchFrom(string directory, string path)
     {
         return false;
     }

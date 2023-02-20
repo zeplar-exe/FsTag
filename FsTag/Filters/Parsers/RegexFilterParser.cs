@@ -2,17 +2,13 @@
 
 namespace FsTag.Filters.Parsers;
 
-public class RegexFilterParser : PrefixBasedPathFilterParser
+public class RegexFilterParser : PathFilterParser
 {
-    public RegexFilterParser() : base("re:")
-    {
-        
-    }
+    public override string[] Identifiers => new[] { "re", "regex" };
     
-
-    public override IEnumerable<string> EnumerateFilesByActualFilter(string actualFilter)
+    public override IEnumerable<string> EnumerateFiles(string filter)
     {
-        var regex = new Regex(actualFilter);
+        var regex = new Regex(filter);
 
         foreach (var file in Directory.EnumerateFileSystemEntries(
                      CurrentDirectory, "*", SearchOption.AllDirectories))

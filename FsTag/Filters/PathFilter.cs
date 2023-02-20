@@ -1,18 +1,23 @@
-﻿using FsTag.Filters.Parsers;
+﻿using CommandDotNet;
+using CommandDotNet.TypeDescriptors;
+
+using FsTag.Filters.Parsers;
 using FsTag.Helpers;
 
 namespace FsTag.Filters;
 
-public class PathFilter
+// https://commanddotnet.bilal-fazlani.com/arguments/argument-models/
+public class PathFilter : IArgumentModel
 {
     private FilterParserContainer ParserContainer { get; }
     
-    private string Filter { get; }
-    
-    public PathFilter(string filter)
+    [Operand("Filter Identifier")]
+    public string Identifier { get; set; }
+    [Operand("Filter")]
+    public string Filter { get; set; }
+
+    public PathFilter()
     {
-        Filter = filter;
-        
         ParserContainer = new FilterParserContainer();
         ParserContainer.Add<AbsoluteFilterParser>();
         ParserContainer.Add<RelativeFilterParser>();
@@ -24,7 +29,7 @@ public class PathFilter
     {
         foreach (var parser in ParserContainer.EnumerateParsers())
         {
-            if (parser.CanHandle(Filter))
+            if (parser.Identifiers.Contains(Identifier))
                 return parser.EnumerateFiles(Filter);
         }
 

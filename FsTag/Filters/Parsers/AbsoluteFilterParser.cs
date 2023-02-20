@@ -1,14 +1,11 @@
 ﻿namespace FsTag.Filters.Parsers;
 
-public class AbsoluteFilterParser : PrefixBasedPathFilterParser
+public class AbsoluteFilterParser : PathFilterParser
 {
-    public AbsoluteFilterParser() : base("a:")
+    public override string[] Identifiers => new[] { "a", "abs", "absolute" };
+    
+    public override IEnumerable<string> EnumerateFiles(string filter)
     {
-        
-    }
-
-    public override IEnumerable<string> EnumerateFilesByActualFilter(string actualFilter)
-    {
-        yield return actualFilter;
+        yield return filter;
     }
 }

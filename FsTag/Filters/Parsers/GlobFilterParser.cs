@@ -4,24 +4,14 @@ using FsTag.Glob;
 
 namespace FsTag.Filters.Parsers;
 
-public class GlobFilterParser : PrefixBasedPathFilterParser
+public class GlobFilterParser : PathFilterParser
 {
-    public GlobFilterParser() : base("f:")
-    {
-        
-    }
+    public override string[] Identifiers => new[] { "f", "formatted", "g", "glob" };
     
-    public override IEnumerable<string> EnumerateFilesByActualFilter(string actualFilter)
+    public override IEnumerable<string> EnumerateFiles(string filter)
     {
-        var glob = FileGlob.Parse(actualFilter);
-        
-        foreach (var file in Directory.EnumerateFileSystemEntries(
-                     CurrentDirectory, "*", SearchOption.AllDirectories))
-        {
-            var relative = Path.GetRelativePath(CurrentDirectory, file);
+        var glob = FileGlob.Parse(filter);
 
-            if (glob.IsMatchFrom(relative))
-                yield return file; // custom glob
-        }
+        return glob.GetMatchesFrom(CurrentDirectory);
     }
 }

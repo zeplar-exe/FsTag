@@ -24,13 +24,13 @@
     <data name="PrintCommand" xml:space="preserve">
         <value>Print files that are currently tagged (in the index).</value>
     </data>
-    <data name="PrintDelimiterOp" xml:space="preserve">
-        <value>Delimiter between printed index items.</value>
+    <data name="PrintKeysCommand" xml:space="preserve">
+        <value>Print a list of valid print keys.</value>
     </data>
     <data name="RecursiveOp" xml:space="preserve">
         <value>Recurse depth to tag up until. 0 (default) denotes no recursion, values less than 0 denote no limit.</value>
     </data>
-    <data name="HelpCommand" xml:space="preserve">
+    <data name="DocsCommand" xml:space="preserve">
         <value>Extended information on various commands and topics in FsTag.</value>
     </data>
     <data name="RmLabelAllCommand" xml:space="preserve">
@@ -50,5 +50,8 @@
     </data>
     <data name="DeleteRecycle" xml:space="preserve">
         <value>Whether to send deleted items to the recycle bin.</value>
+    </data>
+    <data name="DocModulesCommand" xml:space="preserve">
+        <value>List the currently loaded documentation modules.</value>
     </data>
 </root>

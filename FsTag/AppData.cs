@@ -14,12 +14,14 @@ public static class AppData
     
     public const string DefaultSession = "__default";
 
-    public static string SessionDirectoryPath = EnsureDirectory(Path.Join(DataDirectory, $"sessions/{CurrentSession}"));
+    public static string SessionDirectoryPath => EnsureDirectory(Path.Join(DataDirectory, $"sessions/{CurrentSession}"));
+    public static string IndexFilePath => EnsureFile(Path.Join(SessionDirectoryPath, "index.nsv"));
+    public static string ConfigFilePath => EnsureJsonFile(Path.Join(DataDirectory, "config.json"));
+    public static string LabelIndexFilePath => EnsureJsonFile(Path.Join(DataDirectory, "label_index.json"));
 
     public static void IndexFiles(IEnumerable<string> fileNames)
     {
         var set = fileNames.ToHashSet();
-        var file = GetIndexFilePath();
 
         foreach (var item in EnumerateIndex())
         {
@@ -29,7 +31,7 @@ public static class AppData
             }
         }
 
-        using var writer = new StreamWriter(file, append: true);
+        using var writer = new StreamWriter(IndexFilePath, append: true);
 
         foreach (var item in set)
         {
@@ -40,20 +42,24 @@ public static class AppData
                 continue;
             }
             
-            writer.WriteLine(item);
+            if (!Program.DryRun)
+                writer.WriteLine(item);
+            
             WriteFormatter.Info($"Added '{item}' to tag index.");
         }
+        
+        if (!Program.DryRun)
+            writer.Flush();
     }
 
     public static void RemoveFromIndex(IEnumerable<string> fileNames)
     {
         var names = fileNames.ToHashSet();
-
-        var index = GetIndexFilePath();
+        
         var tempIndex = Path.GetTempFileName();
         var removedAny = false;
 
-        using (var reader = new StreamReader(index))
+        using (var reader = new StreamReader(IndexFilePath))
         {
             using var tempStream = File.OpenWrite(tempIndex);
             using var writer = new StreamWriter(tempStream);
@@ -67,9 +73,13 @@ public static class AppData
                 }
                 else
                 {
-                    writer.WriteLine(line);
+                    if (!Program.DryRun)
+                        writer.WriteLine(line);
                 }
             }
+            
+            if (!Program.DryRun)
+                writer.Flush();
         }
 
         if (!removedAny)
@@ -79,15 +89,16 @@ public static class AppData
             return;
         }
 
-        File.Delete(index);
-        File.Move(tempIndex, index);
+        if (!Program.DryRun)
+        {
+            File.Delete(IndexFilePath);
+            File.Move(tempIndex, IndexFilePath);
+        }
     }
     
     public static IEnumerable<string> EnumerateIndex()
     {
-        var file = GetIndexFilePath();
-
-        using var reader = new StreamReader(file);
+        using var reader = new StreamReader(IndexFilePath);
 
         while (reader.ReadLine() is {} line)
         {
@@ -97,35 +108,34 @@ public static class AppData
     
     public static void ClearIndex()
     {
-        var file = GetIndexFilePath();
-        
-        File.WriteAllText(file, string.Empty);
+        if (!Program.DryRun)
+            File.WriteAllText(IndexFilePath, string.Empty);
         
         WriteFormatter.Info("Successfully cleared tag index.");
     }
 
     public static ConfigJsonWrapper? GetConfig()
     {
-        var json = ParseJson(GetConfigFilePath());
+        var json = ParseJson(ConfigFilePath);
         
         return json != null ? new ConfigJsonWrapper(json) : null;
     }
 
     public static void WriteConfig(JObject json)
     {
-        WriteJson(GetConfigFilePath(), json);
+        WriteJson(ConfigFilePath, json);
     }
 
     public static JObject? GetLabels()
     {
-        var json = ParseJson(GetLabelIndexFilePath());
+        var json = ParseJson(LabelIndexFilePath);
 
         return json;
     }
 
     public static void WriteLabels(JObject json)
     {
-        WriteJson(GetLabelIndexFilePath(), json);
+        WriteJson(LabelIndexFilePath, json);
     }
 
     private static JObject? ParseJson(string path)
@@ -150,31 +160,20 @@ public static class AppData
 
     private static void WriteJson(string path, JObject json)
     {
+        if (Program.DryRun)
+            return;
+        
         using var writer = new JsonTextWriter(new StreamWriter(path));
         json.WriteTo(writer);
         
         writer.Flush();
     }
-    
-    private static string GetIndexFilePath()
-    {
-        var filePath = EnsureFile(Path.Join(SessionDirectoryPath, "index.nsv"));
-
-        return filePath;
-    }
-    
-    private static string GetConfigFilePath()
-    {
-        return EnsureJsonFile(Path.Join(DataDirectory, "config.json"));
-    }
-
-    private static string GetLabelIndexFilePath()
-    {
-        return EnsureJsonFile(Path.Join(DataDirectory, "label_index.json"));
-    }
 
     private static string EnsureJsonFile(string path)
     {
+        if (Program.DryRun)
+            return path;
+        
         var info = new FileInfo(path);
 
         if (info.Length == 0)
@@ -187,6 +186,9 @@ public static class AppData
 
     private static string EnsureDirectory(string directory)
     {
+        if (Program.DryRun)
+            return directory;
+        
         Directory.CreateDirectory(directory);
 
         return directory;
@@ -194,6 +196,9 @@ public static class AppData
 
     private static string EnsureFile(string file)
     {
+        if (Program.DryRun)
+            return file;
+        
         if (!File.Exists(file))
             File.Create(file).Dispose();
 
