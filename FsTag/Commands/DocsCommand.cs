@@ -11,35 +11,44 @@ public partial class Program
     public class DocsCommand
     {
         [DefaultCommand]
-        public int Execute(string module)
+        public int Execute(string[]? modules = null)
         {
-            foreach (var helpModule in GetDocumentationModules())
+            if (modules == null)
             {
-                if (helpModule.IsMatch(module))
-                {
-                    WriteFormatter.Plain(helpModule.Content);
+                WriteFormatter.NewLine();
+                
+                WriteFormatter.Plain("Append one or more of the following as the arguments to this " +
+                                     "command in order to see their contents:");
+                
+                WriteFormatter.NewLine();
 
-                    return 0;
+                foreach (var helpModule in GetDocumentationModules())
+                {
+                    WriteFormatter.PlainNoLine(helpModule.Name);
+                    WriteFormatter.PlainNoLine($" [ {helpModule.FileName} ]");
+                
+                    WriteFormatter.NewLine();
+                }
+                
+                WriteFormatter.NewLine();
+
+                return 0;
+            }
+
+            foreach (var module in modules)
+            {
+                foreach (var helpModule in GetDocumentationModules())
+                {
+                    if (helpModule.IsMatch(module))
+                    {
+                        WriteFormatter.Plain(helpModule.Content);
+
+                        return 0;
+                    }
                 }
             }
 
             return 1;
-        }
-
-        [LocalizedCommand("modules", nameof(Descriptions.DocModulesCommand))]
-        public int Modules()
-        {
-            WriteFormatter.Plain("Loaded Documentation Modules:");
-
-            foreach (var helpModule in GetDocumentationModules())
-            {
-                WriteFormatter.PlainNoLine(helpModule.Name);
-                WriteFormatter.PlainNoLine($" [ {helpModule.FileName} ]");
-                
-                WriteFormatter.NewLine();
-            }
-
-            return 0;
         }
 
         private IEnumerable<DocumentationModule> GetDocumentationModules()

@@ -13,8 +13,10 @@ public class PathFilter : IArgumentModel
     
     [Operand("Filter Identifier")]
     public string Identifier { get; set; }
+    
+    /// <remarks>When this is null, it's to be handled as if the identifier is a relative or absolute path.</remarks>
     [Operand("Filter")]
-    public string Filter { get; set; }
+    public string? Filter { get; set; }
 
     public PathFilter()
     {
@@ -27,12 +29,18 @@ public class PathFilter : IArgumentModel
 
     public IEnumerable<string> EnumerateFiles()
     {
+        if (Filter == null)
+        {
+            // See doc comment on Filter
+            return new[] { PathHelper.GetAbsolute(Identifier) };
+        }
+        
         foreach (var parser in ParserContainer.EnumerateParsers())
         {
             if (parser.Identifiers.Contains(Identifier))
                 return parser.EnumerateFiles(Filter);
         }
 
-        return new[] { PathHelper.GetAbsolute(Filter) };
+        return Array.Empty<string>();
     }
 }

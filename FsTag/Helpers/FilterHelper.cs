@@ -26,6 +26,10 @@ public static class FilterHelper
                     yield return item;
                 }
             }
+            else if (File.Exists(file))
+            {
+                yield return file;
+            }
             else
             {
                 WriteFormatter.Warning($"The directory '{file}' does not exist.");

@@ -18,7 +18,7 @@ public partial class Program
     {
         private static readonly PrintKey[] Keys =
         {
-            /*new("print_keys", PrintKeyDescriptions.PrintKeys, () =>
+            new("print_keys", PrintKeyDescriptions.PrintKeys, () =>
             {
                 foreach (var key in Keys)
                 {
@@ -57,12 +57,31 @@ public partial class Program
             new("raw_label_index", PrintKeyDescriptions.RawLabelIndex, () =>
             {
                 WriteFormatter.Plain(AppData.GetLabels()?.ToString(Formatting.Indented) ?? "null");
-            }),*/
+            }),
         };
         
         [DefaultCommand]
-        public int Execute(string[] keys)
+        public int Execute(string[]? keys = null)
         {
+            if (keys == null)
+            {
+                WriteFormatter.NewLine();
+                
+                WriteFormatter.Plain("Append one or more of the following as the arguments to this " +
+                                     "command in order to see their contents:");
+                
+                WriteFormatter.NewLine();
+                
+                foreach (var key in Keys)
+                {
+                    WriteFormatter.Plain($"{key.Key} - {key.Description}");
+                }
+                
+                WriteFormatter.NewLine();
+                
+                return 0;
+            }
+            
             foreach (var key in keys)
             {
                 foreach (var registered in Keys)
@@ -83,6 +102,6 @@ public partial class Program
             return 0;
         }
     }
-
+    
     private record PrintKey(string Key, string Description, Action Action);
 }

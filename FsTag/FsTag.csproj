@@ -21,6 +21,10 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>Descriptions.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+      <EmbeddedResource Update="PrintKeyDescriptions.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>PrintKeyDescriptions.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
@@ -28,6 +32,11 @@
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>Descriptions.resx</DependentUpon>
+      </Compile>
+      <Compile Update="PrintKeyDescriptions.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>PrintKeyDescriptions.resx</DependentUpon>
       </Compile>
     </ItemGroup>
 
