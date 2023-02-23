@@ -17,8 +17,7 @@ public partial class Program
             {
                 WriteFormatter.NewLine();
                 
-                WriteFormatter.Plain("Append one or more of the following as the arguments to this " +
-                                     "command in order to see their contents:");
+                WriteFormatter.Plain(CommonOutput.ValidArgumentList);
                 
                 WriteFormatter.NewLine();
 

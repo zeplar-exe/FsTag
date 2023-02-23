@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-using System.Text;
-
-namespace FsTag.Tests;
+﻿namespace FsTag.Tests;
 
 public static class Executable
 {

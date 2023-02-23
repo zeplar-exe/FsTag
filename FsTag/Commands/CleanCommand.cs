@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices.ComTypes;
-
-using CommandDotNet;
+﻿using CommandDotNet;
 
 namespace FsTag;
 

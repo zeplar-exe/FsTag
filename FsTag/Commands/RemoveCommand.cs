@@ -1,6 +1,5 @@
 ﻿using CommandDotNet;
 
-using FsTag.Common;
 using FsTag.Filters;
 using FsTag.Helpers;
 
@@ -17,11 +16,6 @@ public partial class Program
             PathFilter? filter,
             [LocalizedOption('r', "recursive", nameof(Descriptions.RecursiveOp))] uint recurseDepth = 0)
         {
-            if (CommonOutput.ErrorIfFilterNullAndNotAll(filter))
-            {
-                return 1;
-            }
-
             return FilterHelper.ExecuteOnFilterItems(filter, recurseDepth, AppData.RemoveFromIndex);
         }
 

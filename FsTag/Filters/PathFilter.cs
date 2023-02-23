@@ -1,5 +1,4 @@
 ﻿using CommandDotNet;
-using CommandDotNet.TypeDescriptors;
 
 using FsTag.Filters.Parsers;
 using FsTag.Helpers;

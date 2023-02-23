@@ -1,9 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using CommandDotNet;
 
-using CommandDotNet;
-
-using FsTag.Common;
-using FsTag.Filters;
 using FsTag.Helpers;
 
 using Newtonsoft.Json;
@@ -67,8 +63,7 @@ public partial class Program
             {
                 WriteFormatter.NewLine();
                 
-                WriteFormatter.Plain("Append one or more of the following as the arguments to this " +
-                                     "command in order to see their contents:");
+                WriteFormatter.Plain(CommonOutput.ValidArgumentList);
                 
                 WriteFormatter.NewLine();
                 

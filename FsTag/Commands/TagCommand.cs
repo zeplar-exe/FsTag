@@ -1,6 +1,5 @@
 ﻿using CommandDotNet;
 
-using FsTag.Common;
 using FsTag.Filters;
 using FsTag.Helpers;
 

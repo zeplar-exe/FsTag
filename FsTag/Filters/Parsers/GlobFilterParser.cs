@@ -1,6 +1,4 @@
-﻿using DotNet.Globbing;
-
-using FsTag.Glob;
+﻿using FsTag.Glob;
 
 namespace FsTag.Filters.Parsers;
 
