@@ -23,6 +23,7 @@ public static class AppData
     {
         var set = fileNames.ToHashSet();
 
+        // Ensure there's no duplicates
         foreach (var item in EnumerateIndex())
         {
             if (set.Remove(item))
@@ -32,7 +33,8 @@ public static class AppData
         }
 
         using var writer = new StreamWriter(IndexFilePath, append: true);
-
+        
+        // By this point, all items in `set` will be unique
         foreach (var item in set)
         {
             if (!File.Exists(item))
