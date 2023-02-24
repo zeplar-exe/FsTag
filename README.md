@@ -19,9 +19,7 @@ Additionally, add the executable to your PATH
 - on [Mac](https://apple.stackexchange.com/a/41586)
 - on [Linux](https://unix.stackexchange.com/a/183299)
 
-## Usage
-
-See full documentation here: 
+## Basic Usage 
 
 The core functionality of the CLI is accessed via tagging:
 
@@ -36,15 +34,24 @@ All tagged files are stored in a session-specific index, which can be viewed wit
 test.txt;
 ```
 
-> There is no limit to how many files can be tagged (besides disk space, of course). 
+> There is no limit to how many files can be tagged (besides disk space for the index file, of course).
 
 Once ready to act on indexed files, the various `bulk` commands can be used:
 
 - `fstag bulk delete`
-- `fstag bulk label "my_label" "some_value"`
 - *crickets chirp in the distance*
 
 For more details, run `fstag bulk -h`.
+
+### Sessions
+
+A tag 'session' is simply a group of tagged files which can be switched between, like so;
+
+```
+> fstag session switch my_session
+```
+
+This will change the session to my_session, as well as create it if necessary. 
 
 ## Documentation
 
