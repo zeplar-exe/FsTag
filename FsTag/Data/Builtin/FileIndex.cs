@@ -7,7 +7,7 @@ public class FileIndex : IFileIndex
 {
     public IEnumerable<string> EnumerateItems()
     {
-        using var reader = new StreamReader(StaticPaths.IndexFilePath);
+        using var reader = new StreamReader(BuiltinPaths.IndexFilePath);
 
         while (reader.ReadLine() is {} line)
         {
@@ -28,7 +28,7 @@ public class FileIndex : IFileIndex
             }
         }
 
-        using var writer = new StreamWriter(StaticPaths.IndexFilePath, append: true);
+        using var writer = new StreamWriter(BuiltinPaths.IndexFilePath, append: true);
         
         // By this point, all items in `set` will be unique
         foreach (var item in itemsSet)
@@ -57,7 +57,7 @@ public class FileIndex : IFileIndex
         var tempIndex = Path.GetTempFileName();
         var removedAny = false;
 
-        using (var reader = new StreamReader(StaticPaths.IndexFilePath))
+        using (var reader = new StreamReader(BuiltinPaths.IndexFilePath))
         {
             using var tempStream = File.OpenWrite(tempIndex);
             using var writer = new StreamWriter(tempStream);
@@ -89,15 +89,22 @@ public class FileIndex : IFileIndex
 
         if (!Program.DryRun)
         {
-            File.Delete(StaticPaths.IndexFilePath);
-            File.Move(tempIndex, StaticPaths.IndexFilePath);
+            File.Delete(BuiltinPaths.IndexFilePath);
+            File.Move(tempIndex, BuiltinPaths.IndexFilePath);
         }
+    }
+
+    public void Clean()
+    {
+        var removed = EnumerateItems().Where(tag => !File.Exists(tag));
+        
+        Remove(removed);
     }
 
     public void Clear()
     {
         if (!Program.DryRun)
-            File.WriteAllText(StaticPaths.IndexFilePath, string.Empty);
+            File.WriteAllText(BuiltinPaths.IndexFilePath, string.Empty);
         
         WriteFormatter.Info("Successfully cleared tag index.");
     }

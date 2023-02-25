@@ -31,7 +31,7 @@ public class SessionData : ISessionData
             return false;
         }
         
-        var fullPath = Path.Join(StaticPaths.SessionDirectoryPath, name);
+        var fullPath = Path.Join(BuiltinPaths.SessionDirectoryPath, name);
         
         Directory.CreateDirectory(fullPath);
 
@@ -40,7 +40,7 @@ public class SessionData : ISessionData
 
     public bool RemoveSession(string name)
     {
-        var directory = Path.Join(StaticPaths.SessionDirectoryPath, name);
+        var directory = Path.Join(BuiltinPaths.SessionDirectoryPath, name);
 
         if (!Directory.Exists(directory))
         {
@@ -56,6 +56,6 @@ public class SessionData : ISessionData
 
     public IEnumerable<string> GetExistingSessions()
     {
-        return Directory.EnumerateDirectories(StaticPaths.SessionDirectoryPath);
+        return Directory.EnumerateDirectories(BuiltinPaths.SessionDirectoryPath);
     }
 }

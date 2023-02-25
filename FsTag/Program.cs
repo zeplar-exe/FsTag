@@ -1,5 +1,6 @@
 ﻿using CommandDotNet;
 
+using FsTag.Attributes;
 using FsTag.Data;
 using FsTag.Filters;
 using FsTag.Helpers;
@@ -11,7 +12,7 @@ namespace FsTag;
 public partial class Program
 {
     /// <summary>
-    /// A CommandDotNet injected IConsole, should be used over Console.WriteXXX.
+    /// A CommandDotNet-injected IConsole, should be used over Console.WriteXXX.
     /// </summary>
     public static IConsole IConsole { get; set; }
     public static bool Verbose { get; set; }
@@ -19,12 +20,6 @@ public partial class Program
     public static bool DryRun { get; set; }
     
     public static int Main(string[] args)
-    {
-        return MainMethod(args);
-    }
-
-    // This method exists purely for unit testing purposes
-    public static int MainMethod(string[] args)
     {
         return Runner.Run(args);
     }
@@ -49,9 +44,9 @@ public partial class Program
         }
         catch (Exception e)
         {
-            e = e.InnerException ?? e;
             // Anonymous methods like above usually don't return the exception directly
-            
+            e = e.InnerException ?? e;
+
             WriteFormatter.Error(e.Message);
 
             return Task.FromResult(1);
@@ -60,8 +55,7 @@ public partial class Program
     
     [DefaultCommand]
     public int Execute(PathFilter filter, 
-        [LocalizedOption('r', "recursive", nameof(Descriptions.RecursiveOp))] 
-        uint recurseDepth = 0)
+        [RecurseOption] uint recurseDepth = 0)
     {
         return new TagCommand().Execute(filter, recurseDepth);
     }

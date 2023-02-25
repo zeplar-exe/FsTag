@@ -2,7 +2,7 @@
 
 using FsTag.Resources;
 
-namespace FsTag;
+namespace FsTag.Attributes;
 
 public class LocalizedCommandAttribute : CommandAttribute
 {

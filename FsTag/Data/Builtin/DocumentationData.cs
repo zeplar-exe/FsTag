@@ -10,19 +10,17 @@ namespace FsTag.Data.Builtin;
 
 public class DocumentationData : IDocumentationData
 {
-    public string DirectoryPath => Path.Join(Directory.GetCurrentDirectory(), "docs");
+    private string DirectoryPath => Path.Join(Directory.GetCurrentDirectory(), "docs");
 
     public IEnumerable<DocumentationModule> GetModules()
     {
-        var directory = AppData.FilePaths.DocsDirectory;
-            
         var markdownPipeline = new MarkdownPipelineBuilder()
             .UseYamlFrontMatter()
             .EnableTrackTrivia()
             .Build();
         var yamlDeserializer = new DeserializerBuilder().Build();
 
-        foreach (var file in Directory.EnumerateFiles(directory, "*.md"))
+        foreach (var file in Directory.EnumerateFiles(DirectoryPath, "*.md"))
         {
             var text = File.ReadAllText(file);
             var md = Markdown.Parse(text, markdownPipeline);

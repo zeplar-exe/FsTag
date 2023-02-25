@@ -6,5 +6,6 @@ public interface IFileIndex
 
     public void Add(IEnumerable<string> items);
     public void Remove(IEnumerable<string> items);
+    public void Clean();
     public void Clear();
 }

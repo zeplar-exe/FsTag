@@ -1,8 +1,9 @@
 ﻿namespace FsTag.Data.Builtin;
 
-internal class StaticPaths
+internal class BuiltinPaths
 {
-    private static string Root => AppData.FilePaths.RootDataDirectory;
+    public static string Root => 
+        Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Constants.DataDirectoryName);
     
     public static string SessionDirectoryPath => 
         DataFileHelper.EnsureDirectory(Path.Join(Root, $"sessions"));

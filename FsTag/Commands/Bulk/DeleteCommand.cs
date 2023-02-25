@@ -1,5 +1,6 @@
 ﻿using CommandDotNet;
 
+using FsTag.Attributes;
 using FsTag.Data;
 using FsTag.Helpers;
 using FsTag.Resources;
@@ -8,48 +9,56 @@ using Microsoft.VisualBasic.FileIO;
 
 namespace FsTag;
 
-public partial class BulkCommand
+public partial class Program
 {
-    [Command("delete")]
-    [Subcommand]
-    public class DeleteCommand
+    public partial class BulkCommand
     {
-        [DefaultCommand]
-        public int Execute(
-            [LocalizedOption('r', "recycle", nameof(Descriptions.DeleteRecycle))] 
-            bool recycle)
+        [Command("delete")]
+        [Subcommand]
+        public class DeleteCommand
         {
-            foreach (var file in AppData.FileIndex.EnumerateItems())
+            [DefaultCommand]
+            public int Execute(
+                [LocalizedOption('r', "recycle", nameof(Descriptions.DeleteRecycle))]
+                bool recycle)
             {
-                if (File.Exists(file))
+                if (DryRun)
+                    goto SkipDeletion;
+
+                foreach (var file in AppData.FileIndex.EnumerateItems())
                 {
-                    try
+                    if (File.Exists(file))
                     {
-                        if (recycle)
+                        try
                         {
-                            FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                            if (recycle)
+                            {
+                                FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                            }
+                            else
+                            {
+                                File.Delete(file);
+
+                                WriteFormatter.Info($"Deleted '{file}'.");
+                            }
                         }
-                        else
+                        catch (UnauthorizedAccessException)
                         {
-                            File.Delete(file);
-                
-                            WriteFormatter.Info($"Deleted '{file}'.");
+                            WriteFormatter.Warning($"Not authorized to delete '{file}', skipping.");
                         }
                     }
-                    catch (UnauthorizedAccessException)
+                    else
                     {
-                        WriteFormatter.Warning($"Not authorized to delete '{file}', skipping.");
+                        WriteFormatter.Warning($"The file '{file}' does not exist.");
                     }
                 }
-                else
-                {
-                    WriteFormatter.Warning($"The file '{file}' does not exist.");
-                }
+
+                SkipDeletion:
+
+                AppData.FileIndex.Clear();
+
+                return 0;
             }
-        
-            AppData.FileIndex.Clear();
-            
-            return 0;
         }
     }
 }

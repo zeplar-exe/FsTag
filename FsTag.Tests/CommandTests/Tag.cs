@@ -7,7 +7,7 @@ using FsTag.Data.Interfaces;
 namespace FsTag.Tests.CommandTests;
 
 [TestFixture]
-public class Tag : TestBase
+public class Tag
 {
     const string TestFileName = "test/test1.txt";
 
@@ -90,6 +90,11 @@ public class Tag : TestBase
                 
                 Program.IConsole.WriteLine($"{item}");
             }
+        }
+
+        public void Clean()
+        {
+            Program.IConsole.WriteLine("Cleaned index.");
         }
 
         public void Clear()

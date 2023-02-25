@@ -13,7 +13,7 @@ public class ConfigData : IConfigData
     {
         json = null;
         
-        var parsedJson = DataFileHelper.ParseJson(StaticPaths.ConfigFilePath);
+        var parsedJson = DataFileHelper.ParseJson(BuiltinPaths.ConfigFilePath);
 
         if (parsedJson == null)
             return false;
@@ -30,7 +30,7 @@ public class ConfigData : IConfigData
 
         json.Add(key, value);
         
-        DataFileHelper.WriteJson(StaticPaths.ConfigFilePath, json);
+        DataFileHelper.WriteJson(BuiltinPaths.ConfigFilePath, json);
     }
 
     public bool RemoveProperty(string key)
@@ -50,13 +50,13 @@ public class ConfigData : IConfigData
         }
         
         WriteFormatter.Info($"Removed config property '{key}'.");
-        DataFileHelper.WriteJson(StaticPaths.ConfigFilePath, json);
+        DataFileHelper.WriteJson(BuiltinPaths.ConfigFilePath, json);
 
         return true;
     }
 
     public void Clear()
     {
-        DataFileHelper.WriteJson(StaticPaths.ConfigFilePath, new JObject());
+        DataFileHelper.WriteJson(BuiltinPaths.ConfigFilePath, new JObject());
     }
 }

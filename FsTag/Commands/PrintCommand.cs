@@ -1,5 +1,6 @@
 ﻿using CommandDotNet;
 
+using FsTag.Attributes;
 using FsTag.Data;
 using FsTag.Data.Builtin;
 using FsTag.Helpers;
@@ -33,18 +34,6 @@ public partial class Program
 
                 WriteFormatter.NewLine();
             }),
-            new("index_path", PrintKeyDescriptions.IndexPath, () =>
-            {
-                WriteFormatter.Plain(StaticPaths.IndexFilePath);
-            }),
-            new("config_path", PrintKeyDescriptions.ConfigPath, () =>
-            {
-                WriteFormatter.Plain(StaticPaths.ConfigFilePath);
-            }),
-            new("session_path", PrintKeyDescriptions.SessionPath, () =>
-            {
-                WriteFormatter.Plain(StaticPaths.SessionDirectoryPath);
-            }),
             new("raw_config", PrintKeyDescriptions.RawConfig, () =>
             {
                 if (!AppData.ConfigData.TryRead(out var config))
@@ -66,8 +55,6 @@ public partial class Program
                 
                     WriteFormatter.Plain(output);
                 }
-                
-                WriteFormatter.Plain(StaticPaths.ConfigFilePath);
             }),
         };
         
@@ -107,7 +94,7 @@ public partial class Program
                 WriteFormatter.Error($"'{key}' is not a recognized print key.");
 
                 return 1;
-            } // fstag tag r/rel/relative a/b/c
+            }
 
             return 0;
         }
