@@ -10,7 +10,10 @@ namespace FsTag;
 [Command]
 public partial class Program
 {
-    public static IConsole Console { get; set; }
+    /// <summary>
+    /// A CommandDotNet injected IConsole, should be used over Console.WriteXXX.
+    /// </summary>
+    public static IConsole IConsole { get; set; }
     public static bool Verbose { get; set; }
     public static bool Quiet { get; set; }
     public static bool DryRun { get; set; }
@@ -35,7 +38,7 @@ public partial class Program
         [Option('v', "verbose", AssignToExecutableSubcommands = true)] bool verbose,
         [Option("dryrun", AssignToExecutableSubcommands = true)] bool dryRun)
     {
-        Console = console;
+        IConsole = console;
         Quiet = quiet;
         Verbose = verbose;
         DryRun = dryRun;

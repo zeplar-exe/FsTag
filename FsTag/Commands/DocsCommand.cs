@@ -1,7 +1,15 @@
 ﻿using CommandDotNet;
 
+using FsTag.Data;
+using FsTag.Data.Builtin;
 using FsTag.Helpers;
 using FsTag.Resources;
+
+using Markdig;
+using Markdig.Extensions.Yaml;
+
+using YamlDotNet.RepresentationModel;
+using YamlDotNet.Serialization;
 
 namespace FsTag;
 
@@ -17,17 +25,12 @@ public partial class Program
             if (modules == null)
             {
                 WriteFormatter.NewLine();
-                
                 WriteFormatter.Plain(CommonOutput.ValidArgumentList);
-                
                 WriteFormatter.NewLine();
 
                 foreach (var helpModule in GetDocumentationModules())
                 {
-                    WriteFormatter.PlainNoLine(helpModule.Name);
-                    WriteFormatter.PlainNoLine($" [ {helpModule.FileName} ]");
-                
-                    WriteFormatter.NewLine();
+                    WriteFormatter.Plain(string.Join(" | ", helpModule.Names));
                 }
                 
                 WriteFormatter.NewLine();
@@ -53,25 +56,50 @@ public partial class Program
 
         private IEnumerable<DocumentationModule> GetDocumentationModules()
         {
-            var directory = Path.Join(Directory.GetCurrentDirectory(), "docs");
+            var directory = AppData.FilePaths.DocsDirectory;
+            
+            var markdownPipeline = new MarkdownPipelineBuilder()
+                .UseYamlFrontMatter()
+                .EnableTrackTrivia()
+                .Build();
+            var yamlDeserializer = new DeserializerBuilder().Build();
 
             foreach (var file in Directory.EnumerateFiles(directory, "*.md"))
             {
-                yield return new DocumentationModule(
-                    Path.GetFileNameWithoutExtension(file),  
-                    Path.GetFileName(file), 
-                    file);
+                var text = File.ReadAllText(file);
+                var md = Markdown.Parse(text, markdownPipeline);
+
+                var names = new List<string>
+                {
+                    Path.GetFileNameWithoutExtension(file),
+                    Path.GetFileName(file)
+                };
+
+                if (md.First() is YamlFrontMatterBlock yamlMetadata)
+                {
+                    var yamlText = yamlMetadata.Lines.ToString();
+                    var metadata = yamlDeserializer.Deserialize<MarkdownMetadata>(yamlText);
+
+                    names.AddRange(metadata.Alias);
+                }
+                
+                yield return new DocumentationModule(names.ToArray(), file);
             }
         }
 
-        private record DocumentationModule(string Name, string FileName, string FilePath)
+        private record DocumentationModule(string[] Names, string FilePath)
         {
             public string Content => File.ReadAllText(FilePath);
             
             public bool IsMatch(string name)
             {
-                return name == Name || name == FileName;
+                return Names.Contains(name);
             }
+        }
+
+        private class MarkdownMetadata
+        {
+            [YamlMember(Alias = "alias")] public string[] Alias { get; set; } = Array.Empty<string>();
         }
     }
 }

@@ -2,5 +2,6 @@
 
 public interface IFilePaths
 {
-    public string GetRootDirectory();
+    public string RootDataDirectory { get; }
+    public string DocsDirectory { get; }
 }

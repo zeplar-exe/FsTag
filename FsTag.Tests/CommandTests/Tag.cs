@@ -77,7 +77,7 @@ public class Tag : TestBase
             {
                 Items.Add(item);
                 
-                Program.Console.WriteLine($"{item}");
+                Program.IConsole.WriteLine($"{item}");
             }
         }
 
@@ -87,7 +87,7 @@ public class Tag : TestBase
             {
                 Items.Remove(item);
                 
-                Program.Console.WriteLine($"{item}");
+                Program.IConsole.WriteLine($"{item}");
             }
         }
 

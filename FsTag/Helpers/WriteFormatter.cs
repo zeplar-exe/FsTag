@@ -7,13 +7,13 @@ public static class WriteFormatter
     public static void Plain(string text)
     {
         if (!Program.Quiet)
-            Program.Console.WriteLine(text);
+            Program.IConsole.WriteLine(text);
     }
     
     public static void PlainNoLine(string text)
     {
         if (!Program.Quiet)
-            Program.Console.Write(text);
+            Program.IConsole.Write(text);
     }
     
     public static void Info(string text)
@@ -38,16 +38,20 @@ public static class WriteFormatter
         
         var originalForeground = Console.ForegroundColor;
         
-        Program.Console.ForegroundColor = color;
-        Program.Console.WriteLine(text);
-        Program.Console.ForegroundColor = originalForeground;
+        Program.IConsole.ForegroundColor = color;
+        Program.IConsole.WriteLine(text);
+        Program.IConsole.ForegroundColor = originalForeground;
     }
     
-    public static void NewLine()
+    /// <summary>
+    /// Writes `count` empty lines to the console.
+    /// </summary>
+    public static void NewLine(uint count = 1)
     {
         if (Program.Quiet)
             return;
-        
-        Program.Console.WriteLine();
+
+        for (var i = 0; i < count; i++)
+            Program.IConsole.WriteLine();
     }
 }

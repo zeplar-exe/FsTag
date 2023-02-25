@@ -2,7 +2,7 @@
 
 internal class StaticPaths
 {
-    private static string Root => AppData.FilePaths.GetRootDirectory();
+    private static string Root => AppData.FilePaths.RootDataDirectory;
     
     public static string SessionDirectoryPath => 
         DataFileHelper.EnsureDirectory(Path.Join(Root, $"sessions"));
