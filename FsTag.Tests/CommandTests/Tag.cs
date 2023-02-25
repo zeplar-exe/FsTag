@@ -1,4 +1,7 @@
-﻿using CommandDotNet.TestTools.Scenarios;
+﻿using CommandDotNet;
+using CommandDotNet.TestTools.Scenarios;
+
+using FsTag.Data;
 
 namespace FsTag.Tests.CommandTests;
 
@@ -6,6 +9,12 @@ namespace FsTag.Tests.CommandTests;
 public class Tag : TestBase
 {
     const string TestFileName = "test/test1.txt";
+
+    [SetUp]
+    public void TagSetup()
+    {
+        AppData.FileIndex = new MockIndex();
+    }
     
     [Test]
     public void TestTag()
@@ -46,5 +55,45 @@ public class Tag : TestBase
                     OutputContainsTexts = new List<string> { TestFileName }
                 }
             });
+    }
+    
+    private class MockIndex : IFileIndex
+    {
+        private List<string> Items { get; }
+
+        public MockIndex()
+        {
+            Items = new List<string>();
+        }
+
+        public IEnumerable<string> EnumerateItems()
+        {
+            return Items;
+        }
+
+        public void Add(IEnumerable<string> items)
+        {
+            foreach (var item in items)
+            {
+                Items.Add(item);
+                
+                Program.Console.WriteLine($"{item}");
+            }
+        }
+
+        public void Remove(IEnumerable<string> items)
+        {
+            foreach (var item in items)
+            {
+                Items.Remove(item);
+                
+                Program.Console.WriteLine($"{item}");
+            }
+        }
+
+        public void Clear()
+        {
+            Items.Clear();
+        }
     }
 }
