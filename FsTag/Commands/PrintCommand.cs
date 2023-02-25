@@ -51,11 +51,7 @@ public partial class Program
             new("raw_config", PrintKeyDescriptions.RawConfig, () =>
             {
                 WriteFormatter.Plain(AppData.GetConfig()?.ToString(Formatting.Indented) ?? "null");
-            }),
-            new("raw_label_index", PrintKeyDescriptions.RawLabelIndex, () =>
-            {
-                WriteFormatter.Plain(AppData.GetLabels()?.ToString(Formatting.Indented) ?? "null");
-            }),
+            })
         };
         
         [DefaultCommand]

@@ -128,18 +128,6 @@ public static class AppData
         WriteJson(ConfigFilePath, json);
     }
 
-    public static JObject? GetLabels()
-    {
-        var json = ParseJson(LabelIndexFilePath);
-
-        return json;
-    }
-
-    public static void WriteLabels(JObject json)
-    {
-        WriteJson(LabelIndexFilePath, json);
-    }
-
     private static JObject? ParseJson(string path)
     {
         JObject json;
