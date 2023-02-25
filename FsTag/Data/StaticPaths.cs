@@ -10,8 +10,7 @@ internal class StaticPaths
     public static string IndexFilePath => 
         DataFileHelper.EnsureFile(
             Path.Join(
-                AppData.FilePaths.GetRootDirectory(),
-                AppData.SessionData.CurrentSessionName, 
+                SessionDirectoryPath,
                 "index.nsv"));
     
     public static string ConfigFilePath => 
