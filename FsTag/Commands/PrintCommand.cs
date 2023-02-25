@@ -52,7 +52,22 @@ public partial class Program
                 var format = config.FormatJsonOutput ? Formatting.Indented : Formatting.None;
                 
                 WriteFormatter.Plain(config.ToString(format));
-            })
+            }),
+            new("config_list", PrintKeyDescriptions.ConfigList, () =>
+            {
+                if (!AppData.ConfigData.TryRead(out var config))
+                    return;
+
+                foreach (var item in config)
+                {
+                    var formatting = JsonHelper.GetConfigJsonFormatting(config);
+                    var output = $"{item.Key}={item.Value?.ToString(formatting) ?? "null"}";
+                
+                    WriteFormatter.Plain(output);
+                }
+                
+                WriteFormatter.Plain(StaticPaths.ConfigFilePath);
+            }),
         };
         
         [DefaultCommand]

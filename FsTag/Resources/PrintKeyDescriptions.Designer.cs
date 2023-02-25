@@ -60,6 +60,15 @@ namespace FsTag.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A list of all registered configurations..
+        /// </summary>
+        internal static string ConfigList {
+            get {
+                return ResourceManager.GetString("ConfigList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File path of the global configuration file..
         /// </summary>
         internal static string ConfigPath {
@@ -87,15 +96,6 @@ namespace FsTag.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File path of the current-session label index..
-        /// </summary>
-        internal static string LabelIndexPath {
-            get {
-                return ResourceManager.GetString("LabelIndexPath", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to A list of all valid print keys. Like the one you&apos;re looking at right now..
         /// </summary>
         internal static string PrintKeys {
@@ -110,15 +110,6 @@ namespace FsTag.Resources {
         internal static string RawConfig {
             get {
                 return ResourceManager.GetString("RawConfig", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Raw json of the current-session label index..
-        /// </summary>
-        internal static string RawLabelIndex {
-            get {
-                return ResourceManager.GetString("RawLabelIndex", resourceCulture);
             }
         }
         

@@ -15,32 +15,13 @@ public partial class Program
     public class ConfigCommand
     {
         [DefaultCommand]
-        public int Execute([Option('d', "delimiter")] string delimiter = ";")
-        {// move to print [config]
-            if (!AppData.ConfigData.TryRead(out var config))
-                return 1;
-
-            var enumerable = (IEnumerable<KeyValuePair<string, JToken?>>)config;
-            
-            foreach (var item in enumerable.ToArray())
-            {
-                var format = $"{item.Key}={item.Value?.ToString(GetJsonFormatting(config)) ?? "null"}";
-                
-                WriteFormatter.PlainNoLine(format + delimiter);
-            }
-
-            WriteFormatter.NewLine();
-
-            return 0;
-        }
-        
-        [Command("get")]
-        public int Get(string key)
+        public int Execute(string name)
         {
             if (!AppData.ConfigData.TryRead(out var config))
                 return 1;
 
-            var value = config[key]?.ToString(GetJsonFormatting(config)) ?? "null";
+            var formatting = JsonHelper.GetConfigJsonFormatting(config);
+            var value = config[name]?.ToString(formatting) ?? "null";
 
             WriteFormatter.Plain(value);
 
@@ -67,23 +48,11 @@ public partial class Program
             }
             
             AppData.ConfigData.SetProperty(key, valueToken);
-            
-            WriteFormatter.Plain($"{key}={valueToken.ToString(GetJsonFormatting(config))}");
+
+            var formatting = JsonHelper.GetConfigJsonFormatting(config);
+            WriteFormatter.Plain($"{key}={valueToken.ToString(formatting)}");
 
             return 0;
-        }
-        
-        [Command("clear")]
-        public int Clear()
-        {
-            AppData.ConfigData.Clear();
-
-            return 0;
-        }
-
-        private static Formatting GetJsonFormatting(ConfigJsonWrapper wrapper)
-        {
-            return wrapper.FormatJsonOutput ? Formatting.Indented : Formatting.None;
         }
     }
 }

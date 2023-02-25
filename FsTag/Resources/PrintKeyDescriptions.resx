@@ -33,13 +33,10 @@
     <data name="SessionPath" xml:space="preserve">
         <value>Data directory path of the current session.</value>
     </data>
-    <data name="LabelIndexPath" xml:space="preserve">
-        <value>File path of the current-session label index.</value>
-    </data>
     <data name="RawConfig" xml:space="preserve">
         <value>Raw json of the global configuration file.</value>
     </data>
-    <data name="RawLabelIndex" xml:space="preserve">
-        <value>Raw json of the current-session label index.</value>
+    <data name="ConfigList" xml:space="preserve">
+        <value>A list of all registered configurations.</value>
     </data>
 </root>
