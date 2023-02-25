@@ -13,7 +13,7 @@ public sealed class ConfigJsonWrapper : JObject
     {
         foreach (var item in original)
         {
-            AppData.ConfigData.SetProperty(item.Key, item.Value);
+            this[item.Key] = item.Value;
         }
     }
     

@@ -23,11 +23,11 @@ public partial class Program
     // This method exists purely for unit testing purposes
     public static int MainMethod(string[] args)
     {
-        var runner = new AppRunner<Program>();
-        
-        return runner.Run(args);
+        return Runner.Run(args);
     }
-    
+
+    public static AppRunner<Program> Runner { get; } = new();
+
     // https://commanddotnet.bilal-fazlani.com/extensibility/interceptors/
     public Task<int> Interceptor(InterceptorExecutionDelegate next, 
         IConsole console,

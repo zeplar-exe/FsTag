@@ -67,9 +67,13 @@ internal class DataFileHelper
     {
         if (Program.DryRun)
             return file;
-        
+
         if (!File.Exists(file))
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(file)!);
+            
             File.Create(file).Dispose();
+        }
 
         return file;
     }

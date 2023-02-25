@@ -1,4 +1,6 @@
-﻿namespace FsTag.Tests.CommandTests;
+﻿using CommandDotNet.TestTools.Scenarios;
+
+namespace FsTag.Tests.CommandTests;
 
 [TestFixture]
 public class Tag : TestBase
@@ -8,18 +10,41 @@ public class Tag : TestBase
     [Test]
     public void TestTag()
     {
-        Executable.AssertExitCode(0, "tag", TestFileName);
-        var output = Executable.AssertExitCode(0, "print", "index");
-        
-        Assert.That(output.Output, Contains.Substring(TestFileName));
+        Program.Runner.Verify(
+            new Scenario
+            {
+                When = { ArgsArray = new[] { "tag", TestFileName } },
+                Then =
+                {
+                    ExitCode = 0,
+                    OutputContainsTexts = new List<string> { TestFileName }
+                }
+            });
+
+        Program.Runner.Verify(
+            new Scenario
+            {
+                When = { ArgsArray = new[] { "print", "index" } },
+                Then =
+                {
+                    ExitCode = 0,
+                    OutputContainsTexts = new List<string> { TestFileName }
+                }
+            });
     }
     
     [Test]
-    public void TestTagDefaultCommand()
+    public void TestTagAsDefaultCommand()
     {
-        Executable.AssertExitCode(0, TestFileName);
-        var output = Executable.AssertExitCode(0, "print");
-        
-        Assert.That(output.Output, Contains.Substring(TestFileName));
+        Program.Runner.Verify(
+            new Scenario
+            {
+                When = { ArgsArray = new[] { TestFileName } },
+                Then =
+                {
+                    ExitCode = 0,
+                    OutputContainsTexts = new List<string> { TestFileName }
+                }
+            });
     }
 }

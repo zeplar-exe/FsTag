@@ -2,7 +2,18 @@
 
 public class SessionData : ISessionData
 {
-    public string? CurrentSessionName => AppData.ConfigData.TryRead(out var json) ? json.SessionName : null;
+    public string? CurrentSessionName
+    {
+        get
+        {
+            var name = AppData.ConfigData.TryRead(out var json) ? json.SessionName : null;
+            
+            if (name != null)
+                AppData.SessionData.EnsureSession(name);
+
+            return name;
+        }
+    }
 
     public void EnsureSession(string name)
     {

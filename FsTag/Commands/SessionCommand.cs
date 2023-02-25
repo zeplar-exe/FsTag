@@ -34,11 +34,20 @@ public partial class Program
         [Command("switch")]
         public int Switch(string name)
         {
-            if (!AppData.ConfigData.TryRead(out var config))
+            var invalidIntersect = Path.GetInvalidFileNameChars()
+                .Intersect(name)
+                .ToArray();
+            
+            if (invalidIntersect.Any())
+            {
+                WriteFormatter.Error($"Invalid session name, contains {string.Join(" ", invalidIntersect)}");
+
                 return 1;
+            }
             
+            AppData.SessionData.EnsureSession(name);
             AppData.ConfigData.SetProperty("session_name", name);
-            
+
             return 0;
         }
 
@@ -46,6 +55,13 @@ public partial class Program
         public int Remove(string name)
         {
             var directory = Path.Join(StaticPaths.SessionDirectoryPath, name);
+
+            if (!Directory.Exists(directory))
+            {
+                WriteFormatter.Error($"The session '{name}' does not exist.");
+
+                return 1;
+            }
             
             Directory.Delete(directory);
 
