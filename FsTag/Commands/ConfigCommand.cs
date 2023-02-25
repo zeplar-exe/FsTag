@@ -17,9 +17,7 @@ public partial class Program
         [DefaultCommand]
         public int Execute([Option('d', "delimiter")] string delimiter = ";")
         {// move to print [config]
-            var config = AppData.GetConfig();
-            
-            if (config == null)
+            if (!AppData.ConfigData.TryRead(out var config))
                 return 1;
 
             var enumerable = (IEnumerable<KeyValuePair<string, JToken?>>)config;
@@ -39,12 +37,10 @@ public partial class Program
         [Command("get")]
         public int Get(string key)
         {
-            var json = AppData.GetConfig();
-            
-            if (json == null)
+            if (!AppData.ConfigData.TryRead(out var config))
                 return 1;
-            
-            var value = json[key]?.ToString(GetJsonFormatting(json)) ?? "null";
+
+            var value = config[key]?.ToString(GetJsonFormatting(config)) ?? "null";
 
             WriteFormatter.Plain(value);
 
@@ -54,9 +50,7 @@ public partial class Program
         [Command("set")]
         public int Set(string key, string value)
         {
-            var config = AppData.GetConfig();
-            
-            if (config == null)
+            if (!AppData.ConfigData.TryRead(out var config))
                 return 1;
 
             JToken valueToken;
@@ -71,10 +65,8 @@ public partial class Program
                 
                 return 1;
             }
-
-            config[key] = valueToken;
-
-            AppData.WriteConfig(config);
+            
+            AppData.ConfigData.SetProperty(key, valueToken);
             
             WriteFormatter.Plain($"{key}={valueToken.ToString(GetJsonFormatting(config))}");
 
@@ -84,7 +76,7 @@ public partial class Program
         [Command("clear")]
         public int Clear()
         {
-            AppData.WriteConfig(new JObject());
+            AppData.ConfigData.Clear();
 
             return 0;
         }

@@ -1,18 +1,19 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using FsTag.Data.Builtin;
+
+using Newtonsoft.Json.Linq;
 
 namespace FsTag.Data;
 
 public sealed class ConfigJsonWrapper : JObject
 {
     public bool FormatJsonOutput => GetOrDefault<bool>("format_json_output", new JValue(false));
-    public string SessionDirectory => GetOrDefault<string>("session_name", new JValue(AppData.DefaultSession)) 
-                                      ?? AppData.DefaultSession;
+    public string? SessionName => GetOrDefault<string>("session_name", new JValue(Constants.DefaultSessionName));
 
     public ConfigJsonWrapper(JObject original)
     {
         foreach (var item in original)
         {
-            this[item.Key] = item.Value;
+            AppData.ConfigData.SetProperty(item.Key, item.Value);
         }
     }
     
@@ -20,10 +21,8 @@ public sealed class ConfigJsonWrapper : JObject
     {
         if (TryGetValue(key, out var value))
             return value.Value<T>();
-
-        this[key] = defaultValue;
         
-        AppData.WriteConfig(this);
+        AppData.ConfigData.SetProperty(key, defaultValue);
 
         return defaultValue.Value<T>();
     }

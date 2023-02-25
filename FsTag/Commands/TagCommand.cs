@@ -19,7 +19,7 @@ public partial class Program
             [LocalizedOption('r', "recursive", nameof(Descriptions.RecursiveOp))]
             uint recurseDepth = 0)
         {
-            return FilterHelper.ExecuteOnFilterItems(filter, recurseDepth, AppData.IndexFiles);
+            return FilterHelper.ExecuteOnFilterItems(filter, recurseDepth, AppData.FileIndex.Add);
         }
     }
 }

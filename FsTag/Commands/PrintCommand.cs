@@ -25,7 +25,7 @@ public partial class Program
             }),
             new("index", PrintKeyDescriptions.Index, () =>
             {
-                foreach (var item in AppData.EnumerateIndex())
+                foreach (var item in AppData.FileIndex.EnumerateItems())
                 {
                     WriteFormatter.PlainNoLine(item + ';');
                 }
@@ -34,23 +34,24 @@ public partial class Program
             }),
             new("index_path", PrintKeyDescriptions.IndexPath, () =>
             {
-                WriteFormatter.Plain(AppData.IndexFilePath);
+                WriteFormatter.Plain(StaticPaths.IndexFilePath);
             }),
             new("config_path", PrintKeyDescriptions.ConfigPath, () =>
             {
-                WriteFormatter.Plain(AppData.ConfigFilePath);
+                WriteFormatter.Plain(StaticPaths.ConfigFilePath);
             }),
             new("session_path", PrintKeyDescriptions.SessionPath, () =>
             {
-                WriteFormatter.Plain(AppData.SessionDirectoryPath);
-            }),
-            new("label_index_path", PrintKeyDescriptions.LabelIndexPath, () =>
-            {
-                WriteFormatter.Plain(AppData.LabelIndexFilePath);
+                WriteFormatter.Plain(StaticPaths.SessionDirectoryPath);
             }),
             new("raw_config", PrintKeyDescriptions.RawConfig, () =>
             {
-                WriteFormatter.Plain(AppData.GetConfig()?.ToString(Formatting.Indented) ?? "null");
+                if (!AppData.ConfigData.TryRead(out var config))
+                    return;
+
+                var format = config.FormatJsonOutput ? Formatting.Indented : Formatting.None;
+                
+                WriteFormatter.Plain(config.ToString(format));
             })
         };
         

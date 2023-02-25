@@ -1,5 +1,6 @@
 ﻿using CommandDotNet;
 
+using FsTag.Data;
 using FsTag.Filters;
 using FsTag.Helpers;
 using FsTag.Resources;
@@ -9,6 +10,7 @@ namespace FsTag;
 [Command]
 public partial class Program
 {
+    public static IConsole Console { get; set; }
     public static bool Verbose { get; set; }
     public static bool Quiet { get; set; }
     public static bool DryRun { get; set; }
@@ -28,10 +30,12 @@ public partial class Program
     
     // https://commanddotnet.bilal-fazlani.com/extensibility/interceptors/
     public Task<int> Interceptor(InterceptorExecutionDelegate next, 
+        IConsole console,
         [Option('q', "quiet", AssignToExecutableSubcommands = true)] bool quiet,
         [Option('v', "verbose", AssignToExecutableSubcommands = true)] bool verbose,
         [Option("dryrun", AssignToExecutableSubcommands = true)] bool dryRun)
     {
+        Console = console;
         Quiet = quiet;
         Verbose = verbose;
         DryRun = dryRun;

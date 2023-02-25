@@ -13,8 +13,8 @@ public partial class Program
         [DefaultCommand]
         public int Execute()
         {
-            var removed = AppData.EnumerateIndex().Where(tag => !File.Exists(tag));
-            AppData.RemoveFromIndex(removed);
+            var removed = AppData.FileIndex.EnumerateItems().Where(tag => !File.Exists(tag));
+            AppData.FileIndex.Remove(removed);
 
             return 0;
         }

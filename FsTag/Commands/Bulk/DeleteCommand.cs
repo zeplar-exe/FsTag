@@ -19,7 +19,7 @@ public partial class BulkCommand
             [LocalizedOption('r', "recycle", nameof(Descriptions.DeleteRecycle))] 
             bool recycle)
         {
-            foreach (var file in AppData.EnumerateIndex())
+            foreach (var file in AppData.FileIndex.EnumerateItems())
             {
                 if (File.Exists(file))
                 {
@@ -47,8 +47,8 @@ public partial class BulkCommand
                 }
             }
         
-            AppData.ClearIndex();
-
+            AppData.FileIndex.Clear();
+            
             return 0;
         }
     }

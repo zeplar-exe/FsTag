@@ -1,17 +1,19 @@
-﻿namespace FsTag.Helpers;
+﻿using CommandDotNet;
+
+namespace FsTag.Helpers;
 
 public static class WriteFormatter
 {
     public static void Plain(string text)
     {
         if (!Program.Quiet)
-            Console.WriteLine(text);
+            Program.Console.WriteLine(text);
     }
     
     public static void PlainNoLine(string text)
     {
         if (!Program.Quiet)
-            Console.Write(text);
+            Program.Console.Write(text);
     }
     
     public static void Info(string text)
@@ -36,9 +38,9 @@ public static class WriteFormatter
         
         var originalForeground = Console.ForegroundColor;
         
-        Console.ForegroundColor = color;
-        Console.WriteLine(text);
-        Console.ForegroundColor = originalForeground;
+        Program.Console.ForegroundColor = color;
+        Program.Console.WriteLine(text);
+        Program.Console.ForegroundColor = originalForeground;
     }
     
     public static void NewLine()
@@ -46,6 +48,6 @@ public static class WriteFormatter
         if (Program.Quiet)
             return;
         
-        Console.WriteLine();
+        Program.Console.WriteLine();
     }
 }
