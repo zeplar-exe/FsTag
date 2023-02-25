@@ -1,6 +1,7 @@
 # FsTag
 
 ![license](https://img.shields.io/github/license/zeplar-exe/FsTag)
+![build](https://img.shields.io/github/actions/workflow/status/zeplar-exe/FsTag/dotnet.yml)
 
 FsTag is a utility command line interface for performing bulk operations on files.
 
