@@ -8,10 +8,8 @@ public class Tag : TestBase
     [Test]
     public void TestTag()
     {
-        Executable.DisplayCommandOutput = true;
-        
         Executable.AssertExitCode(0, "tag", TestFileName);
-        var output = Executable.AssertExitCode(0, "print");
+        var output = Executable.AssertExitCode(0, "print", "index");
         
         Assert.That(output.Output, Contains.Substring(TestFileName));
     }
@@ -19,8 +17,6 @@ public class Tag : TestBase
     [Test]
     public void TestTagDefaultCommand()
     {
-        Executable.DisplayCommandOutput = true;
-        
         Executable.AssertExitCode(0, TestFileName);
         var output = Executable.AssertExitCode(0, "print");
         

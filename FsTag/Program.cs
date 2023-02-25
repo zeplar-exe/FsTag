@@ -2,6 +2,7 @@
 
 using FsTag.Filters;
 using FsTag.Helpers;
+using FsTag.Resources;
 
 namespace FsTag;
 

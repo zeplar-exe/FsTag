@@ -34,6 +34,9 @@ public static class Executable
     
     public static CommandResult RunWithArgs(params string[] args)
     {
+        // We don't want to edit any files such as configuration, since it could overwrite the tester's stuff
+        args = args.Append("--dryrun").ToArray();
+        
         var code = Program.MainMethod(args);
         var reader = new StreamReader(Output);
 

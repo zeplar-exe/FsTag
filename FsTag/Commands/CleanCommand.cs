@@ -1,5 +1,7 @@
 ﻿using CommandDotNet;
 
+using FsTag.Data;
+
 namespace FsTag;
 
 public partial class Program

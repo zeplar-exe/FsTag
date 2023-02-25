@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace FsTag;
+namespace FsTag.Data;
 
 public sealed class ConfigJsonWrapper : JObject
 {

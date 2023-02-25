@@ -1,7 +1,9 @@
 ﻿using CommandDotNet;
 
+using FsTag.Data;
 using FsTag.Filters;
 using FsTag.Helpers;
+using FsTag.Resources;
 
 namespace FsTag;
 

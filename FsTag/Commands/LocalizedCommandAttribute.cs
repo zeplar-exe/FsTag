@@ -1,5 +1,7 @@
 ﻿using CommandDotNet;
 
+using FsTag.Resources;
+
 namespace FsTag;
 
 public class LocalizedCommandAttribute : CommandAttribute

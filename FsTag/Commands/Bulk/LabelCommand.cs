@@ -1,6 +1,8 @@
 ﻿using CommandDotNet;
 
+using FsTag.Data;
 using FsTag.Helpers;
+using FsTag.Resources;
 
 using Newtonsoft.Json.Linq;
 

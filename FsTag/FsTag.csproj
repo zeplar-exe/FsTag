@@ -17,32 +17,32 @@
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Update="Descriptions.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>Descriptions.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
-      <EmbeddedResource Update="PrintKeyDescriptions.resx">
+      <EmbeddedResource Update="Resources\PrintKeyDescriptions.resx">
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>PrintKeyDescriptions.Designer.cs</LastGenOutput>
       </EmbeddedResource>
-      <EmbeddedResource Update="CommonOutput.resx">
+      <EmbeddedResource Update="Resources\Descriptions.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Descriptions.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\CommonOutput.resx">
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>CommonOutput.Designer.cs</LastGenOutput>
       </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Descriptions.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>Descriptions.resx</DependentUpon>
-      </Compile>
-      <Compile Update="PrintKeyDescriptions.Designer.cs">
+      <Compile Update="Resources\PrintKeyDescriptions.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>PrintKeyDescriptions.resx</DependentUpon>
       </Compile>
-      <Compile Update="CommonOutput.Designer.cs">
+      <Compile Update="Resources\Descriptions.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Descriptions.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\CommonOutput.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>CommonOutput.resx</DependentUpon>

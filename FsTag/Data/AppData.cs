@@ -3,7 +3,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace FsTag;
+namespace FsTag.Data;
 
 public static class AppData
 {
