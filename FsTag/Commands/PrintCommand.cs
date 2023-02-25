@@ -1,6 +1,7 @@
 ﻿using CommandDotNet;
 
 using FsTag.Data;
+using FsTag.Data.Builtin;
 using FsTag.Helpers;
 using FsTag.Resources;
 

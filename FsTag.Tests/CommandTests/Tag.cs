@@ -2,6 +2,7 @@
 using CommandDotNet.TestTools.Scenarios;
 
 using FsTag.Data;
+using FsTag.Data.Interfaces;
 
 namespace FsTag.Tests.CommandTests;
 

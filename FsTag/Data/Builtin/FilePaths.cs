@@ -1,4 +1,6 @@
-﻿namespace FsTag.Data.Builtin;
+﻿using FsTag.Data.Interfaces;
+
+namespace FsTag.Data.Builtin;
 
 public class FilePaths : IFilePaths
 {

@@ -1,4 +1,5 @@
-﻿using FsTag.Helpers;
+﻿using FsTag.Data.Interfaces;
+using FsTag.Helpers;
 
 namespace FsTag.Data.Builtin;
 

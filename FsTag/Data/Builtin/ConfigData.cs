@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
+using FsTag.Data.Interfaces;
 using FsTag.Helpers;
 
 using Newtonsoft.Json.Linq;

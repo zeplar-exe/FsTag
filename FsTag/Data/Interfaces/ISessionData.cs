@@ -1,8 +1,9 @@
-﻿namespace FsTag.Data;
+﻿namespace FsTag.Data.Interfaces;
 
 public interface ISessionData
 {
     public string? CurrentSessionName { get; }
-    public void EnsureSession(string name);
+    public bool EnsureSession(string name);
+    public bool RemoveSession(string name);
     public IEnumerable<string> GetExistingSessions();
 }

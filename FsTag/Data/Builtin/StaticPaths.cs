@@ -1,4 +1,4 @@
-﻿namespace FsTag.Data;
+﻿namespace FsTag.Data.Builtin;
 
 internal class StaticPaths
 {

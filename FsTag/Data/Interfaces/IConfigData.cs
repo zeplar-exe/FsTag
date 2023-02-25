@@ -2,7 +2,7 @@
 
 using Newtonsoft.Json.Linq;
 
-namespace FsTag.Data;
+namespace FsTag.Data.Interfaces;
 
 public interface IConfigData
 {

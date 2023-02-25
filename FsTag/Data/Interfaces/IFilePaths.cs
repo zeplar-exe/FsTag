@@ -1,4 +1,4 @@
-﻿namespace FsTag.Data;
+﻿namespace FsTag.Data.Interfaces;
 
 public interface IFilePaths
 {
