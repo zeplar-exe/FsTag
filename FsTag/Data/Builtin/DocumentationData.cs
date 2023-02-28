@@ -31,15 +31,19 @@ public class DocumentationData : IDocumentationData
                 Path.GetFileName(file)
             };
 
+            var moduleContent = text;
+            
             if (md.First() is YamlFrontMatterBlock yamlMetadata)
             {
                 var yamlText = yamlMetadata.Lines.ToString();
                 var metadata = yamlDeserializer.Deserialize<MarkdownMetadata>(yamlText);
 
                 names.AddRange(metadata.Alias);
+                
+                moduleContent = moduleContent.Remove(0, yamlMetadata.Span.Length);
             }
                 
-            yield return new DocumentationModule(names.ToArray(), file);
+            yield return new DocumentationModule(names.ToArray(), moduleContent);
         }
     }
     
