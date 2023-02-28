@@ -27,9 +27,16 @@ public partial class Program
             }),
             new("index", PrintKeyDescriptions.Index, () =>
             {
+                var i = 0;
+                
                 foreach (var item in AppData.FileIndex.EnumerateItems())
                 {
-                    WriteFormatter.PlainNoLine(item + ';');
+                    if (i++ > 0)
+                    {
+                        WriteFormatter.PlainNoLine(";"); // Like string.Join, so we don't have a hanging semicolon
+                    }
+                    
+                    WriteFormatter.PlainNoLine(item);
                 }
 
                 WriteFormatter.NewLine();
