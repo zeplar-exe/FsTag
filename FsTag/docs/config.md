@@ -1,4 +1,7 @@
-==Config==
+---
+alias: [ configuration ]
+---
+# Configuration
 
 Config, or configuration, represents global settings used by the 
 CLI. All configurations are stored at the following location: 
