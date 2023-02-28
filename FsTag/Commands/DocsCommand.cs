@@ -2,16 +2,8 @@
 
 using FsTag.Attributes;
 using FsTag.Data;
-using FsTag.Data.Builtin;
-using FsTag.Data.Models;
 using FsTag.Helpers;
 using FsTag.Resources;
-
-using Markdig;
-using Markdig.Extensions.Yaml;
-
-using YamlDotNet.RepresentationModel;
-using YamlDotNet.Serialization;
 
 namespace FsTag;
 
@@ -47,6 +39,7 @@ public partial class Program
                     if (helpModule.IsMatch(module))
                     {
                         WriteFormatter.Plain(helpModule.Content);
+                        WriteFormatter.NewLine();
 
                         return 0;
                     }
