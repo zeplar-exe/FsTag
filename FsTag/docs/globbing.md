@@ -1,4 +1,4 @@
-﻿---
+---
 alias: [ glob ]
 ---
 # Globbing
