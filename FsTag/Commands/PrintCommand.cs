@@ -7,6 +7,7 @@ using FsTag.Helpers;
 using FsTag.Resources;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace FsTag;
 
@@ -47,15 +48,18 @@ public partial class Program
                     return;
 
                 var format = config.FormatJsonOutput ? Formatting.Indented : Formatting.None;
+                var json = JObject.FromObject(config);
                 
-                WriteFormatter.Plain(config.ToString(format));
+                WriteFormatter.Plain(json.ToString(format));
             }),
             new("config_list", PrintKeyDescriptions.ConfigList, () =>
             {
                 if (!AppData.ConfigData.TryRead(out var config))
                     return;
+                
+                var json = JObject.FromObject(config);
 
-                foreach (var item in config)
+                foreach (var item in json)
                 {
                     var formatting = JsonHelper.GetConfigJsonFormatting(config);
                     var output = $"{item.Key}={item.Value?.ToString(formatting) ?? "null"}";

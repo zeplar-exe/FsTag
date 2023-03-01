@@ -9,7 +9,7 @@ namespace FsTag.Data.Builtin;
 
 public class ConfigData : IConfigData
 {
-    public bool TryRead([NotNullWhen(true)] out ConfigJsonWrapper? json)
+    public bool TryRead([NotNullWhen(true)] out Configuration? json)
     {
         json = null;
         
@@ -17,40 +17,41 @@ public class ConfigData : IConfigData
 
         if (parsedJson == null)
             return false;
-        
-        json = new ConfigJsonWrapper(parsedJson);
+
+        json = parsedJson.ToObject<Configuration>() ?? new Configuration();
+        // If null for whatever reason, return the default
 
         return true;
     }
 
     public void SetProperty(string key, JToken? value)
     {
-        if (!TryRead(out var json))
+        if (!TryRead(out var config))
             return;
 
-        json.Add(key, value);
+        config.Set(key, value);
         
-        DataFileHelper.WriteJson(BuiltinPaths.ConfigFilePath, json);
+        DataFileHelper.WriteJson(BuiltinPaths.ConfigFilePath, JObject.FromObject(config));
     }
 
     public bool RemoveProperty(string key)
     {
-        if (!TryRead(out var json))
+        if (!TryRead(out var config))
             return false;
 
-        if (json.TryGetValue(key, out var token))
+        if (config.TryGet<object>(key, out var token))
         {
-            token.Remove();
+            config.OtherProperties.Remove();
         }
         else
         {
-            WriteFormatter.Error($"The config property '{key}' does not exist.");
+            WriteFormatter.Error($"The extra config property '{key}' does not exist.");
 
             return false;
         }
         
         WriteFormatter.Info($"Removed config property '{key}'.");
-        DataFileHelper.WriteJson(BuiltinPaths.ConfigFilePath, json);
+        DataFileHelper.WriteJson(BuiltinPaths.ConfigFilePath, JObject.FromObject(config));
 
         return true;
     }

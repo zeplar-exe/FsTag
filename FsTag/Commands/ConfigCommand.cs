@@ -21,9 +21,15 @@ public partial class Program
                 return 1;
 
             var formatting = JsonHelper.GetConfigJsonFormatting(config);
-            var value = config[name]?.ToString(formatting) ?? "null";
 
-            WriteFormatter.Plain(value);
+            if (!config.TryGet<JToken>(name, out var value))
+            {
+                WriteFormatter.Info($"The configuration '{name}' does not exist.");
+
+                return 1;
+            }
+
+            WriteFormatter.Plain(value.ToString(formatting));
 
             return 0;
         }
