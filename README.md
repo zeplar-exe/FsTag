@@ -26,7 +26,11 @@ The core functionality of the CLI is accessed via tagging:
 
 ```bash
 > fstag test.txt
+> fstag tag relative my/relative/file.md
+> fstag tag glob **/*.cs
 ```
+
+Wherein, files are selected relative to the current working directory using a [filter](FsTag/docs/filters.md).
 
 All tagged files are stored in a session-specific index, which can be viewed with the `print` command:
 
@@ -42,7 +46,7 @@ Once ready to act on indexed files, the various `bulk` commands can be used:
 - `fstag bulk delete`
 - *crickets chirp in the distance*
 
-For more details, run `fstag bulk -h`.
+For more details, run `fstag bulk -h` or see [bulk_operations.md](FsTag/docs/bulk_operations.md).
 
 ### Sessions
 
@@ -52,7 +56,8 @@ A tag 'session' is simply a group of tagged files which can be switched between,
 > fstag session switch my_session
 ```
 
-This will change the session to my_session, as well as create it if necessary. 
+This will change the session to my_session, as well as create it if necessary. All operations which 
+deal with tagging will be secluded to the current session.
 
 ## Documentation
 
