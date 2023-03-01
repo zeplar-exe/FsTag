@@ -7,6 +7,10 @@ of existing code. When done making changes, create a detailed pull request. Use
 commits to the best of your ability. Additionally, see 
 [Understandig the Codebase](#understanding-the-codebase).
 
+## Branching
+
+Forks and clones for contribution should be based from the dev branch.
+
 ## Development Environment
 
 Due to the use of resource files which allow C# generation, it is heavily
