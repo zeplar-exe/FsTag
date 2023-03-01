@@ -1,5 +1,4 @@
-﻿using FsTag.Glob;
-
+﻿
 namespace FsTag.Filters.Parsers;
 
 public class GlobFilterParser : PathFilterParser
@@ -8,8 +7,14 @@ public class GlobFilterParser : PathFilterParser
     
     public override IEnumerable<string> EnumerateFiles(string filter)
     {
-        var glob = FileGlob.Parse(filter);
+        var glob = DotNet.Globbing.Glob.Parse(filter);
 
-        return glob.GetMatchesFrom(CurrentDirectory);
+        foreach (var file in Directory.EnumerateFileSystemEntries(CurrentDirectory))
+        {
+            var relative = Path.GetRelativePath(CurrentDirectory, file);
+            
+            if (glob.IsMatch(relative))
+                yield return file;
+        }
     }
 }

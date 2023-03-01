@@ -43,7 +43,7 @@ public class FileIndex : IFileIndex
             if (!Program.DryRun)
                 writer.WriteLine(item);
             
-            WriteFormatter.Info($"Added '{item}' to tag index.");
+            WriteFormatter.Info($"Added '{item}' to the tag index.");
         }
         
         if (!Program.DryRun)
