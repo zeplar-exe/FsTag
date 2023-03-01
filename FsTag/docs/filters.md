@@ -1,5 +1,5 @@
-﻿---
-note: Simplified descriptions of the filters listed here should also be placed in filters_simple.md
+---
+note: "Simplified descriptions of the filters listed here should also be placed in filters_simple.md"
 ---
 # Filters
  
