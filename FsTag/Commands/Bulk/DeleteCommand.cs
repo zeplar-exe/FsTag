@@ -25,7 +25,13 @@ public partial class Program
                 if (DryRun)
                     goto SkipDeletion;
 
-                foreach (var file in AppData.FileIndex.EnumerateItems())
+                var files = AppData.FileIndex.EnumerateItems();
+                string currentSessionName = AppData.SessionData.CurrentSessionName ?? "";
+
+                if (ConfirmDeletion(files.Count(), currentSessionName) == false)
+                    goto SkipDeletion;
+
+                foreach (var file in files)
                 {
                     if (File.Exists(file))
                     {
@@ -53,11 +59,24 @@ public partial class Program
                     }
                 }
 
-                SkipDeletion:
+            SkipDeletion:
 
                 AppData.FileIndex.Clear();
 
                 return 0;
+            }
+            private bool ConfirmDeletion(int filesCount, string sessionName)
+            {
+                WriteFormatter.Warning($"Are you sure you want to delete {filesCount} files in the {sessionName} session? (yes/no):");
+
+                string input = Console.ReadLine()!;
+                if (!string.IsNullOrEmpty(input))
+                {
+                    string lowerInput = input.ToLower();
+                    if (lowerInput == "y" || lowerInput == "yes")
+                        return true;
+                }
+                return false;
             }
         }
     }
