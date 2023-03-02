@@ -133,3 +133,10 @@ Localization is achieved using .resx files, which should be located in
 Visual Studio, Rider, or any established .NET IDE. Localization keys should
 be abbreviated or shortened where possible as to avoid long lines for 
 attributes.
+
+### Configuration
+
+All configuration settings are implemented in FsTag/Data/Configuration.cs.
+This is a class which is serialized/deserializd by JSON.NET, thus requiring
+the `[JsonProperty]` attribute. All configuration properties should be
+snake_case, with the C# identifier being UpperCamelCase.
