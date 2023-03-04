@@ -60,20 +60,56 @@ namespace FsTag.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bulk opertions to execute on currently tagged files..
+        /// </summary>
+        internal static string BulkCommand {
+            get {
+                return ResourceManager.GetString("BulkCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete every tagged file..
+        /// </summary>
+        internal static string BulkDeleteCommand {
+            get {
+                return ResourceManager.GetString("BulkDeleteCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cleans the index of any invalid files (i.e, those that do not exist)..
+        /// </summary>
+        internal static string CleanCommand {
+            get {
+                return ResourceManager.GetString("CleanCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Access to the global configuration file..
+        /// </summary>
+        internal static string ConfigCommand {
+            get {
+                return ResourceManager.GetString("ConfigCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set the specified config to the specified Json value..
+        /// </summary>
+        internal static string ConfigSetCommand {
+            get {
+                return ResourceManager.GetString("ConfigSetCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Whether to send deleted items to the recycle bin..
         /// </summary>
         internal static string DeleteRecycle {
             get {
                 return ResourceManager.GetString("DeleteRecycle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to List the currently loaded documentation modules..
-        /// </summary>
-        internal static string DocModulesCommand {
-            get {
-                return ResourceManager.GetString("DocModulesCommand", resourceCulture);
             }
         }
         
@@ -87,38 +123,11 @@ namespace FsTag.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set the specified label on indexed files..
-        /// </summary>
-        internal static string LabelCommand {
-            get {
-                return ResourceManager.GetString("LabelCommand", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Only set labels where they aren&apos;t already set..
-        /// </summary>
-        internal static string LabelNewOp {
-            get {
-                return ResourceManager.GetString("LabelNewOp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Print files that are currently tagged (in the index)..
         /// </summary>
         internal static string PrintCommand {
             get {
                 return ResourceManager.GetString("PrintCommand", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Print a list of valid print keys..
-        /// </summary>
-        internal static string PrintKeysCommand {
-            get {
-                return ResourceManager.GetString("PrintKeysCommand", resourceCulture);
             }
         }
         
@@ -141,20 +150,38 @@ namespace FsTag.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove all labels from indexed files..
+        ///   Looks up a localized string similar to Removes files from the index based on the provided filter..
         /// </summary>
-        internal static string RmLabelAllCommand {
+        internal static string RemoveCommand {
             get {
-                return ResourceManager.GetString("RmLabelAllCommand", resourceCulture);
+                return ResourceManager.GetString("RemoveCommand", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove the specified label from index files..
+        ///   Looks up a localized string similar to Switch between and view tag sesssions..
         /// </summary>
-        internal static string RmLabelCommand {
+        internal static string SessionCommand {
             get {
-                return ResourceManager.GetString("RmLabelCommand", resourceCulture);
+                return ResourceManager.GetString("SessionCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete the specified session if it exists..
+        /// </summary>
+        internal static string SessionRemoveCommand {
+            get {
+                return ResourceManager.GetString("SessionRemoveCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch (and create if necessary) to the specified session..
+        /// </summary>
+        internal static string SessionSwitchCommand {
+            get {
+                return ResourceManager.GetString("SessionSwitchCommand", resourceCulture);
             }
         }
         

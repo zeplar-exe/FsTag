@@ -1,13 +1,15 @@
 ﻿using CommandDotNet;
 
+using FsTag.Attributes;
 using FsTag.Data;
 using FsTag.Helpers;
+using FsTag.Resources;
 
 namespace FsTag;
 
 public partial class Program
 {
-    [Command("session")]
+    [LocalizedCommand("session", nameof(Descriptions.SessionCommand))]
     [Subcommand]
     public class SessionCommand
     {
@@ -31,7 +33,7 @@ public partial class Program
             return 0;
         }
         
-        [Command("switch")]
+        [LocalizedCommand("switch", nameof(Descriptions.SessionSwitchCommand))]
         public int Switch(string name)
         {
             if (!AppData.SessionData.EnsureSession(name))
@@ -42,7 +44,7 @@ public partial class Program
             return 0;
         }
 
-        [Command("rm")]
+        [LocalizedCommand("rm", nameof(Descriptions.SessionRemoveCommand))]
         public int Remove(string name)
         {
             return AppData.SessionData.RemoveSession(name) ? 0 : 1;

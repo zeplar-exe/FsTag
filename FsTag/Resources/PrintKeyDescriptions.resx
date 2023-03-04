@@ -24,15 +24,6 @@
     <data name="Index" xml:space="preserve">
         <value>A list of all tagged files.</value>
     </data>
-    <data name="IndexPath" xml:space="preserve">
-        <value>File path of the current-session index file.</value>
-    </data>
-    <data name="ConfigPath" xml:space="preserve">
-        <value>File path of the global configuration file.</value>
-    </data>
-    <data name="SessionPath" xml:space="preserve">
-        <value>Data directory path of the current session.</value>
-    </data>
     <data name="RawConfig" xml:space="preserve">
         <value>Raw json of the global configuration file.</value>
     </data>

@@ -10,7 +10,7 @@ namespace FsTag;
 
 public partial class Program
 {
-    [Command("rm", Description = "Removes files from the index based on the provided filter.")]
+    [LocalizedCommand("rm", nameof(Descriptions.RemoveCommand))]
     [Subcommand]
     public class RemoveCommand
     {

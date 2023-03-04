@@ -14,7 +14,7 @@ public partial class Program
 {
     public partial class BulkCommand
     {
-        [Command("delete")]
+        [LocalizedCommand("delete", nameof(Descriptions.BulkDeleteCommand))]
         [Subcommand]
         public class DeleteCommand
         {

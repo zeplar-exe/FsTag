@@ -69,29 +69,11 @@ namespace FsTag.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File path of the global configuration file..
-        /// </summary>
-        internal static string ConfigPath {
-            get {
-                return ResourceManager.GetString("ConfigPath", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to A list of all tagged files..
         /// </summary>
         internal static string Index {
             get {
                 return ResourceManager.GetString("Index", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File path of the current-session index file..
-        /// </summary>
-        internal static string IndexPath {
-            get {
-                return ResourceManager.GetString("IndexPath", resourceCulture);
             }
         }
         
@@ -110,15 +92,6 @@ namespace FsTag.Resources {
         internal static string RawConfig {
             get {
                 return ResourceManager.GetString("RawConfig", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Data directory path of the current session..
-        /// </summary>
-        internal static string SessionPath {
-            get {
-                return ResourceManager.GetString("SessionPath", resourceCulture);
             }
         }
     }

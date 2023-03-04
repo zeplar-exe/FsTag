@@ -1,7 +1,9 @@
 ﻿using CommandDotNet;
 
+using FsTag.Attributes;
 using FsTag.Data;
 using FsTag.Helpers;
+using FsTag.Resources;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -10,7 +12,7 @@ namespace FsTag;
 
 public partial class Program
 {
-    [Command("config")]
+    [LocalizedCommand("config", nameof(Descriptions.ConfigCommand))]
     [Subcommand]
     public class ConfigCommand
     {
@@ -29,12 +31,12 @@ public partial class Program
                 return 1;
             }
 
-            WriteFormatter.Plain(value.ToString(formatting));
+            WriteFormatter.Plain(value?.ToString(formatting) ?? "null");
 
             return 0;
         }
         
-        [Command("set")]
+        [LocalizedCommand("set", nameof(Descriptions.ConfigSetCommand))]
         public int Set(string key, string value)
         {
             if (!AppData.ConfigData.TryRead(out var config))

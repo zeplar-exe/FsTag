@@ -39,6 +39,10 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>CommonOutput.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+      <EmbeddedResource Update="Resources\ConfirmationText.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>ConfirmationText.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
@@ -56,6 +60,11 @@
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>CommonOutput.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\ConfirmationText.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ConfirmationText.resx</DependentUpon>
       </Compile>
     </ItemGroup>
 

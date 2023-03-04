@@ -24,34 +24,43 @@
     <data name="PrintCommand" xml:space="preserve">
         <value>Print files that are currently tagged (in the index).</value>
     </data>
-    <data name="PrintKeysCommand" xml:space="preserve">
-        <value>Print a list of valid print keys.</value>
-    </data>
     <data name="RecursiveOp" xml:space="preserve">
         <value>Recurse depth to tag up until. 0 (default) denotes no recursion, values less than 0 denote no limit.</value>
     </data>
     <data name="DocsCommand" xml:space="preserve">
         <value>Extended information on various commands and topics in FsTag.</value>
     </data>
-    <data name="RmLabelAllCommand" xml:space="preserve">
-        <value>Remove all labels from indexed files.</value>
-    </data>
-    <data name="RmLabelCommand" xml:space="preserve">
-        <value>Remove the specified label from index files.</value>
-    </data>
-    <data name="LabelCommand" xml:space="preserve">
-        <value>Set the specified label on indexed files.</value>
-    </data>
     <data name="RemoveAllCommand" xml:space="preserve">
         <value>Untag all indexed files.</value>
-    </data>
-    <data name="LabelNewOp" xml:space="preserve">
-        <value>Only set labels where they aren't already set.</value>
     </data>
     <data name="DeleteRecycle" xml:space="preserve">
         <value>Whether to send deleted items to the recycle bin.</value>
     </data>
-    <data name="DocModulesCommand" xml:space="preserve">
-        <value>List the currently loaded documentation modules.</value>
+    <data name="ConfigCommand" xml:space="preserve">
+        <value>Access to the global configuration file.</value>
+    </data>
+    <data name="ConfigSetCommand" xml:space="preserve">
+        <value>Set the specified config to the specified Json value.</value>
+    </data>
+    <data name="BulkCommand" xml:space="preserve">
+        <value>Bulk opertions to execute on currently tagged files.</value>
+    </data>
+    <data name="CleanCommand" xml:space="preserve">
+        <value>Cleans the index of any invalid files (i.e, those that do not exist).</value>
+    </data>
+    <data name="RemoveCommand" xml:space="preserve">
+        <value>Removes files from the index based on the provided filter.</value>
+    </data>
+    <data name="SessionCommand" xml:space="preserve">
+        <value>Switch between and view tag sesssions.</value>
+    </data>
+    <data name="SessionSwitchCommand" xml:space="preserve">
+        <value>Switch (and create if necessary) to the specified session.</value>
+    </data>
+    <data name="SessionRemoveCommand" xml:space="preserve">
+        <value>Delete the specified session if it exists.</value>
+    </data>
+    <data name="BulkDeleteCommand" xml:space="preserve">
+        <value>Delete every tagged file.</value>
     </data>
 </root>
