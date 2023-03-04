@@ -1,4 +1,5 @@
 ﻿using CommandDotNet;
+using CommandDotNet.Prompts;
 
 using FsTag.Attributes;
 using FsTag.Data;
@@ -22,14 +23,14 @@ public partial class Program
                 [LocalizedOption('r', "recycle", nameof(Descriptions.DeleteRecycle))]
                 bool recycle)
             {
-                if (DryRun)
-                    goto SkipDeletion;
+                var files = AppData.FileIndex.EnumerateItems().ToArray();
+                var sessionName = AppData.SessionData.CurrentSessionName;
 
-                var files = AppData.FileIndex.EnumerateItems();
-                string currentSessionName = AppData.SessionData.CurrentSessionName ?? "";
+                if (sessionName == null)
+                    return 1;
 
-                if (ConfirmDeletion(files.Count(), currentSessionName) == false)
-                    goto SkipDeletion;
+                if (!ConfirmDeletion(files.Length, sessionName))
+                    return 1;
 
                 foreach (var file in files)
                 {
@@ -39,11 +40,13 @@ public partial class Program
                         {
                             if (recycle)
                             {
-                                FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                                if (!DryRun)
+                                    FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                             }
                             else
                             {
-                                File.Delete(file);
+                                if (!DryRun)
+                                    File.Delete(file);
 
                                 WriteFormatter.Info($"Deleted '{file}'.");
                             }
@@ -59,23 +62,24 @@ public partial class Program
                     }
                 }
 
-            SkipDeletion:
-
                 AppData.FileIndex.Clear();
 
                 return 0;
             }
-            private bool ConfirmDeletion(int filesCount, string sessionName)
+            
+            private static bool ConfirmDeletion(int filesCount, string sessionName)
             {
-                WriteFormatter.Warning($"Are you sure you want to delete {filesCount} files in the {sessionName} session? (yes/no):");
+                var prompt = new Prompter(IConsole);
 
-                string input = Console.ReadLine()!;
-                if (!string.IsNullOrEmpty(input))
+                if (Quiet)
+                    return true;
+                
+                if (prompt.TryPromptForValue(string.Format(ConfirmationText.BulkDelete, filesCount, sessionName),
+                        out var input, out _))
                 {
-                    string lowerInput = input.ToLower();
-                    if (lowerInput == "y" || lowerInput == "yes")
-                        return true;
+                    return input?.ToLower() is "y" or "yes";
                 }
+
                 return false;
             }
         }
