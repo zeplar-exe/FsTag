@@ -29,7 +29,7 @@ public partial class Program
                 if (sessionName == null)
                     return 1;
 
-                if (!ConfirmDeletion(files.Length, sessionName))
+                if (!Confirmation.Prompt(string.Format(ConfirmationText.BulkDelete, files.Length, sessionName)))
                     return 1;
 
                 foreach (var file in files)
@@ -65,22 +65,6 @@ public partial class Program
                 AppData.FileIndex.Clear();
 
                 return 0;
-            }
-            
-            private static bool ConfirmDeletion(int filesCount, string sessionName)
-            {
-                var prompt = new Prompter(IConsole);
-
-                if (Quiet)
-                    return true;
-                
-                if (prompt.TryPromptForValue(string.Format(ConfirmationText.BulkDelete, filesCount, sessionName),
-                        out var input, out _))
-                {
-                    return input?.ToLower() is "y" or "yes";
-                }
-
-                return false;
             }
         }
     }
