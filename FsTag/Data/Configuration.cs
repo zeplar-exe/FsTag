@@ -17,7 +17,7 @@ public class Configuration
     [JsonProperty("format_json_output")] public bool FormatJsonOutput { get; set; }
     [JsonProperty("session_name")] public string? SessionName { get; set; }
     
-    [JsonIgnore] [JsonExtensionData]
+    [JsonExtensionData]
     public JObject OtherProperties { get; set; }
 
     static Configuration()
