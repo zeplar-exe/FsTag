@@ -13,7 +13,9 @@ internal class DataFileHelper
 
         try
         {
-            json = JObject.Parse(File.ReadAllText(path));
+            var text = AppData.FileSystem.ReadText(path);
+
+            return text != null ? JObject.Parse(text) : null;
         }
         catch (JsonReaderException e)
         {
@@ -23,16 +25,19 @@ internal class DataFileHelper
 
             return null;
         }
-        
-        return json;
     }
 
     public static void WriteJson(string path, JObject json)
     {
         if (Program.DryRun)
             return;
+
+        var textWriter = AppData.FileSystem.OpenTextWriter(path);
+
+        if (textWriter == null)
+            return;
         
-        using var writer = new JsonTextWriter(new StreamWriter(path));
+        using var writer = new JsonTextWriter(textWriter);
         json.WriteTo(writer);
         
         writer.Flush();
@@ -47,7 +52,7 @@ internal class DataFileHelper
 
         if (info.Length == 0)
         {
-            File.WriteAllText(path, "{}");
+            AppData.FileSystem.WriteText(path, "{}");
         }
 
         return path;
@@ -57,8 +62,8 @@ internal class DataFileHelper
     {
         if (Program.DryRun)
             return directory;
-        
-        Directory.CreateDirectory(directory);
+
+        AppData.FileSystem.CreateDirectory(directory);
 
         return directory;
     }
@@ -68,11 +73,10 @@ internal class DataFileHelper
         if (Program.DryRun)
             return file;
 
-        if (!File.Exists(file))
+        if (!AppData.FileSystem.FileExists(file))
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(file)!);
-            
-            File.Create(file).Dispose();
+            AppData.FileSystem.CreateDirectory(Path.GetDirectoryName(file)!);
+            AppData.FileSystem.WriteText(file, "");
         }
 
         return file;

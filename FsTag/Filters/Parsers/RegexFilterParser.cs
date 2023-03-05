@@ -1,5 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 
+using FsTag.Data;
+
 namespace FsTag.Filters.Parsers;
 
 public class RegexFilterParser : PathFilterParser
@@ -10,13 +12,23 @@ public class RegexFilterParser : PathFilterParser
     {
         var regex = new Regex(filter);
 
-        foreach (var file in Directory.EnumerateFileSystemEntries(
-                     CurrentDirectory, "*", SearchOption.AllDirectories))
+        bool IsMatch(string path)
         {
-            var relative = Path.GetRelativePath(CurrentDirectory, file);
+            var relative = Path.GetRelativePath(CurrentDirectory, path);
 
-            if (regex.IsMatch(relative))
+            return regex!.IsMatch(relative);
+        }
+
+        foreach (var file in AppData.FileSystem.EnumerateFiles(CurrentDirectory))
+        {
+            if (IsMatch(file))
                 yield return file;
+        }
+        
+        foreach (var dir in AppData.FileSystem.EnumerateDirectories(CurrentDirectory))
+        {
+            if (IsMatch(dir))
+                yield return dir;
         }
     }
 }

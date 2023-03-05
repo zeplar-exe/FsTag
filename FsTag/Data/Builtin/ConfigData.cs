@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-using FsTag.Data.Interfaces;
+﻿using FsTag.Data.Interfaces;
 using FsTag.Helpers;
 
 using Newtonsoft.Json.Linq;
@@ -9,24 +7,22 @@ namespace FsTag.Data.Builtin;
 
 public class ConfigData : IConfigData
 {
-    public bool TryRead([NotNullWhen(true)] out Configuration? json)
+    public Configuration? Read()
     {
-        json = null;
-        
         var parsedJson = DataFileHelper.ParseJson(BuiltinPaths.ConfigFilePath);
 
         if (parsedJson == null)
-            return false;
+            return null;
 
-        json = parsedJson.ToObject<Configuration>() ?? new Configuration();
+        return parsedJson.ToObject<Configuration>() ?? new Configuration();
         // If null for whatever reason, return the default
-
-        return true;
     }
 
     public void SetProperty(string key, JToken? value)
     {
-        if (!TryRead(out var config))
+        var config = AppData.ConfigData.Read();
+            
+        if (config == null)
             return;
 
         config.Set(key, value);
@@ -36,12 +32,14 @@ public class ConfigData : IConfigData
 
     public bool RemoveProperty(string key)
     {
-        if (!TryRead(out var config))
+        var config = AppData.ConfigData.Read();
+            
+        if (config == null)
             return false;
 
-        if (config.TryGet<object>(key, out var token))
+        if (config.OtherProperties.TryGetValue(key, out var token))
         {
-            config.OtherProperties.Remove();
+            token.Remove();
         }
         else
         {

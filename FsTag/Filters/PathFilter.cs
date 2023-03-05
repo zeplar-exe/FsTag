@@ -10,7 +10,7 @@ public class PathFilter : IArgumentModel
 {
     private FilterParserContainer ParserContainer { get; }
     
-    [Operand("Filter Identifier")]
+    [Operand("Filter/Identifier")]
     public string Identifier { get; set; }
     
     /// <remarks>When this is null, it's to be handled as if the identifier is a relative or absolute path.</remarks>

@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Reflection;
+﻿using System.Reflection;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
 
 namespace FsTag.Data;
 

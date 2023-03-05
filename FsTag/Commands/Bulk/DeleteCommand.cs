@@ -1,12 +1,9 @@
 ﻿using CommandDotNet;
-using CommandDotNet.Prompts;
 
 using FsTag.Attributes;
 using FsTag.Data;
 using FsTag.Helpers;
 using FsTag.Resources;
-
-using Microsoft.VisualBasic.FileIO;
 
 namespace FsTag;
 
@@ -32,24 +29,29 @@ public partial class Program
                 if (!Confirmation.Prompt(string.Format(ConfirmationText.BulkDelete, files.Length, sessionName)))
                     return 1;
 
+                // Here to prevent removal of files which couldn't be deleted
+                var removed = new List<string>();
+                
                 foreach (var file in files)
                 {
-                    if (File.Exists(file))
+                    if (AppData.FileSystem.FileExists(file))
                     {
                         try
                         {
                             if (recycle)
                             {
                                 if (!DryRun)
-                                    FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                                    AppData.FileSystem.RecycleFile(file);
                             }
                             else
                             {
                                 if (!DryRun)
-                                    File.Delete(file);
+                                    AppData.FileSystem.DeleteFile(file);
 
                                 WriteFormatter.Info($"Deleted '{file}'.");
                             }
+                            
+                            removed.Add(file);
                         }
                         catch (UnauthorizedAccessException)
                         {
@@ -62,7 +64,7 @@ public partial class Program
                     }
                 }
 
-                AppData.FileIndex.Clear();
+                AppData.FileIndex.Remove(removed);
 
                 return 0;
             }

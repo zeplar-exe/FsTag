@@ -2,7 +2,6 @@
 
 using FsTag.Attributes;
 using FsTag.Data;
-using FsTag.Data.Builtin;
 using FsTag.Helpers;
 using FsTag.Resources;
 
@@ -44,7 +43,9 @@ public partial class Program
             }),
             new("raw_config", PrintKeyDescriptions.RawConfig, () =>
             {
-                if (!AppData.ConfigData.TryRead(out var config))
+                var config = AppData.ConfigData.Read();
+            
+                if (config == null)
                     return;
 
                 var format = config.FormatJsonOutput ? Formatting.Indented : Formatting.None;
@@ -54,7 +55,9 @@ public partial class Program
             }),
             new("config_list", PrintKeyDescriptions.ConfigList, () =>
             {
-                if (!AppData.ConfigData.TryRead(out var config))
+                var config = AppData.ConfigData.Read();
+            
+                if (config == null)
                     return;
                 
                 var json = JObject.FromObject(config);

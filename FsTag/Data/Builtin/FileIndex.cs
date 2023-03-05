@@ -33,7 +33,7 @@ public class FileIndex : IFileIndex
         // By this point, all items in `set` will be unique
         foreach (var item in itemsSet)
         {
-            if (!File.Exists(item))
+            if (!AppData.FileSystem.FileExists(item))
             {
                 WriteFormatter.Warning($"The file '{item}' does not exist.");
             
@@ -59,8 +59,10 @@ public class FileIndex : IFileIndex
 
         using (var reader = new StreamReader(BuiltinPaths.IndexFilePath))
         {
-            using var tempStream = File.OpenWrite(tempIndex);
-            using var writer = new StreamWriter(tempStream);
+            using var writer = AppData.FileSystem.OpenTextWriter(tempIndex);
+
+            if (writer == null)
+                return;
 
             while (reader.ReadLine() is {} line)
             {
@@ -89,14 +91,23 @@ public class FileIndex : IFileIndex
 
         if (!Program.DryRun)
         {
-            File.Delete(BuiltinPaths.IndexFilePath);
+            AppData.FileSystem.DeleteFile(BuiltinPaths.IndexFilePath);
+
+            using var reader = AppData.FileSystem.OpenTextReader(BuiltinPaths.IndexFilePath);
+            using var writer = AppData.FileSystem.OpenTextWriter(BuiltinPaths.IndexFilePath);
+            
+            if (reader == null || writer == null)
+                return;
+            
+            writer.Write(reader.ReadToEnd());
+            
             File.Move(tempIndex, BuiltinPaths.IndexFilePath);
         }
     }
 
     public void Clean()
     {
-        var removed = EnumerateItems().Where(tag => !File.Exists(tag));
+        var removed = EnumerateItems().Where(tag => !AppData.FileSystem.FileExists(tag));
         
         Remove(removed);
     }
@@ -104,7 +115,7 @@ public class FileIndex : IFileIndex
     public void Clear()
     {
         if (!Program.DryRun)
-            File.WriteAllText(BuiltinPaths.IndexFilePath, string.Empty);
+            AppData.FileSystem.WriteText(BuiltinPaths.IndexFilePath, "");
         
         WriteFormatter.Info("Successfully cleared tag index.");
     }

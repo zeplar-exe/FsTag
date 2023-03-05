@@ -1,4 +1,6 @@
-﻿namespace FsTag.Helpers;
+﻿using FsTag.Data;
+
+namespace FsTag.Helpers;
 
 public static class FileSystemHelper
 {
@@ -15,12 +17,12 @@ public static class FileSystemHelper
         if (depth > maxDepth)
             yield break;
         
-        foreach (var file in Directory.EnumerateFiles(directory))
+        foreach (var file in AppData.FileSystem.EnumerateFiles(directory))
         {
             yield return file;
         }
             
-        foreach (var dir in Directory.EnumerateDirectories(directory))
+        foreach (var dir in AppData.FileSystem.EnumerateDirectories(directory))
         {
             foreach (var file in EnumerateFilesToDepth(dir, maxDepth, depth + 1))
             {

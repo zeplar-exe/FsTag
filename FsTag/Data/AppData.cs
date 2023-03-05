@@ -9,4 +9,5 @@ public static class AppData
     public static IFileIndex FileIndex { get; set; } = new FileIndex();
     public static IConfigData ConfigData { get; set; } = new ConfigData();
     public static IDocumentationData DocumentationData { get; set; } = new DocumentationData();
+    public static IFileSystem FileSystem { get; set; }
 }

@@ -19,7 +19,9 @@ public partial class Program
         [DefaultCommand]
         public int Execute(string name)
         {
-            if (!AppData.ConfigData.TryRead(out var config))
+            var config = AppData.ConfigData.Read();
+            
+            if (config == null)
                 return 1;
 
             var formatting = JsonHelper.GetConfigJsonFormatting(config);
@@ -39,7 +41,9 @@ public partial class Program
         [LocalizedCommand("set", nameof(Descriptions.ConfigSetCommand))]
         public int Set(string key, string value)
         {
-            if (!AppData.ConfigData.TryRead(out var config))
+            var config = AppData.ConfigData.Read();
+            
+            if (config == null)
                 return 1;
 
             JToken valueToken;

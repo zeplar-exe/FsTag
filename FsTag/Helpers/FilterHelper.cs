@@ -1,4 +1,5 @@
-﻿using FsTag.Filters;
+﻿using FsTag.Data;
+using FsTag.Filters;
 
 namespace FsTag.Helpers;
 
@@ -17,7 +18,7 @@ public static class FilterHelper
     {
         foreach (var file in filter.EnumerateFiles())
         {
-            if (Directory.Exists(file))
+            if (AppData.FileSystem.DirectoryExists(file))
             {
                 var enumerable = FileSystemHelper.EnumerateFilesToDepth(file, recurseDepth);
 
@@ -26,7 +27,7 @@ public static class FilterHelper
                     yield return item;
                 }
             }
-            else if (File.Exists(file))
+            else if (AppData.FileSystem.FileExists(file))
             {
                 yield return file;
             }

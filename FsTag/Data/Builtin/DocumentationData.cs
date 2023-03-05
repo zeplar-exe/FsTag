@@ -22,7 +22,11 @@ public class DocumentationData : IDocumentationData
 
         foreach (var file in Directory.EnumerateFiles(DirectoryPath, "*.md"))
         {
-            var text = File.ReadAllText(file);
+            var text = AppData.FileSystem.ReadText(file);
+            
+            if (text == null)
+                continue;
+            
             var md = Markdown.Parse(text, markdownPipeline);
 
             var names = new List<string>
