@@ -7,7 +7,7 @@ namespace FsTag;
 
 public partial class Program
 {
-    [LocalizedCommand("bulk", nameof(Descriptions.BulkCommand))]
+    [Command("bulk", Description = nameof(Descriptions.BulkCommand))]
     [Subcommand]
     public partial class BulkCommand
     {

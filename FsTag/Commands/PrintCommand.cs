@@ -12,7 +12,7 @@ namespace FsTag;
 
 public partial class Program
 {
-    [LocalizedCommand("print", nameof(Descriptions.PrintCommand))]
+    [Command("print", Description = nameof(Descriptions.PrintCommand))]
     [Subcommand]
     public class PrintCommand
     {
@@ -73,7 +73,9 @@ public partial class Program
         };
         
         [DefaultCommand]
-        public int Execute(string[]? keys = null)
+        public int Execute(
+            [Operand("keys", Description = nameof(Descriptions.PrintKeysOperand))] 
+            string[]? keys = null)
         {
             if (keys == null)
             {

@@ -8,7 +8,7 @@ namespace FsTag;
 
 public partial class Program
 {
-    [LocalizedCommand("clean", nameof(Descriptions.CleanCommand))]
+    [Command("clean", Description = nameof(Descriptions.CleanCommand))]
     [Subcommand]
     public class CleanCommand
     {

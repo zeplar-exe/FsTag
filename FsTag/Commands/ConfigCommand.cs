@@ -12,12 +12,12 @@ namespace FsTag;
 
 public partial class Program
 {
-    [LocalizedCommand("config", nameof(Descriptions.ConfigCommand))]
+    [Command("config", Description = nameof(Descriptions.ConfigCommand))]
     [Subcommand]
     public class ConfigCommand
     {
         [DefaultCommand]
-        public int Execute(string name)
+        public int Execute([Operand("key", Description = nameof(Descriptions.GetConfigKey))] string name)
         {
             var config = AppData.ConfigData.Read();
             
@@ -38,8 +38,10 @@ public partial class Program
             return 0;
         }
         
-        [LocalizedCommand("set", nameof(Descriptions.ConfigSetCommand))]
-        public int Set(string key, string value)
+        [Command("set", Description = nameof(Descriptions.ConfigSetCommand))]
+        public int Set(
+            [Operand("key", Description = nameof(Descriptions.SetConfigKey))] string key,
+            [Operand("value", Description = nameof(Descriptions.SetConfigValue))] string value)
         {
             var config = AppData.ConfigData.Read();
             

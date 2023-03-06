@@ -11,14 +11,13 @@ public partial class Program
 {
     public partial class BulkCommand
     {
-        [LocalizedCommand("delete", nameof(Descriptions.BulkDeleteCommand))]
+        [Command("delete", Description = nameof(Descriptions.BulkDeleteCommand))]
         [Subcommand]
         public class DeleteCommand
         {
             [DefaultCommand]
             public int Execute(
-                [LocalizedOption('r', "recycle", nameof(Descriptions.DeleteRecycle))]
-                bool recycle)
+                [Option('r', "recycle", Description = nameof(Descriptions.DeleteRecycle))] bool recycle)
             {
                 var files = AppData.FileIndex.EnumerateItems().ToArray();
                 var sessionName = AppData.SessionData.CurrentSessionName;

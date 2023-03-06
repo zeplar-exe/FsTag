@@ -3,6 +3,7 @@
 using FsTag.Attributes;
 using FsTag.Filters;
 using FsTag.Helpers;
+using FsTag.Resources;
 
 namespace FsTag;
 
@@ -19,6 +20,8 @@ public partial class Program
     
     public static int Main(string[] args)
     {
+        Runner.AppSettings.Localization.Localize = s => Descriptions.ResourceManager.GetString(s);
+        
         return Runner.Run(args);
     }
 
@@ -27,9 +30,12 @@ public partial class Program
     // https://commanddotnet.bilal-fazlani.com/extensibility/interceptors/
     public Task<int> Interceptor(InterceptorExecutionDelegate next, 
         IConsole console,
-        [Option('q', "quiet", AssignToExecutableSubcommands = true)] bool quiet,
-        [Option('v', "verbose", AssignToExecutableSubcommands = true)] bool verbose,
-        [Option("dryrun", AssignToExecutableSubcommands = true)] bool dryRun)
+        [Option('q', "quiet", Description = nameof(Descriptions.QuietOption),
+            AssignToExecutableSubcommands = true)] bool quiet,
+        [Option('v', "verbose", Description = nameof(Descriptions.VerboseOption),
+            AssignToExecutableSubcommands = true)] bool verbose,
+        [Option("dryrun", Description = nameof(Descriptions.DryrunOption), 
+            AssignToExecutableSubcommands = true)] bool dryRun)
     {
         IConsole = console;
         Quiet = quiet;
@@ -52,7 +58,7 @@ public partial class Program
     }
     
     [DefaultCommand]
-    public int Execute(PathFilter filter, 
+    public int Execute([PathFilterOperand] PathFilter filter, 
         [RecurseOption] uint recurseDepth = 0)
     {
         return new TagCommand().Execute(filter, recurseDepth);

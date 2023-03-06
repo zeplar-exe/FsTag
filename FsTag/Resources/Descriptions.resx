@@ -63,4 +63,37 @@
     <data name="BulkDeleteCommand" xml:space="preserve">
         <value>Delete every tagged file.</value>
     </data>
+    <data name="QuietOption" xml:space="preserve">
+        <value>Suppress all terminal output *including input prompts*.</value>
+    </data>
+    <data name="DryrunOption" xml:space="preserve">
+        <value>For every supported command, avoid permanent changes (such as filesystem edits).</value>
+    </data>
+    <data name="VerboseOption" xml:space="preserve">
+        <value>For every supported command, create detailed output messages.</value>
+    </data>
+    <data name="FilterOperand" xml:space="preserve">
+        <value>The path filter to use. "See fstag print filters" for details.</value>
+    </data>
+    <data name="SessionSwitchName" xml:space="preserve">
+        <value>Name of the session to switch to.</value>
+    </data>
+    <data name="SessionRemoveName" xml:space="preserve">
+        <value>Name of the session to delete.</value>
+    </data>
+    <data name="PrintKeysOperand" xml:space="preserve">
+        <value>List of keys to print sequentially.</value>
+    </data>
+    <data name="DocsModulesOperand" xml:space="preserve">
+        <value>List of documentation modules to output sequentially.</value>
+    </data>
+    <data name="GetConfigKey" xml:space="preserve">
+        <value>Configuration key to print.</value>
+    </data>
+    <data name="SetConfigKey" xml:space="preserve">
+        <value>Configuration key to set.</value>
+    </data>
+    <data name="SetConfigValue" xml:space="preserve">
+        <value>Json value to set to the specified configuration key.</value>
+    </data>
 </root>

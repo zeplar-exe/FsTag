@@ -9,7 +9,7 @@ namespace FsTag;
 
 public partial class Program
 {
-    [LocalizedCommand("session", nameof(Descriptions.SessionCommand))]
+    [Command("session", Description = nameof(Descriptions.SessionCommand))]
     [Subcommand]
     public class SessionCommand
     {
@@ -33,8 +33,8 @@ public partial class Program
             return 0;
         }
         
-        [LocalizedCommand("switch", nameof(Descriptions.SessionSwitchCommand))]
-        public int Switch(string name)
+        [Command("switch", Description = nameof(Descriptions.SessionSwitchCommand))]
+        public int Switch([Operand("name", Description = nameof(Descriptions.SessionSwitchName))] string name)
         {
             if (!AppData.SessionData.EnsureSession(name))
                 return 1;
@@ -44,8 +44,8 @@ public partial class Program
             return 0;
         }
 
-        [LocalizedCommand("rm", nameof(Descriptions.SessionRemoveCommand))]
-        public int Remove(string name)
+        [Command("rm", Description = nameof(Descriptions.SessionRemoveCommand))]
+        public int Remove([Operand("name", Description = nameof(Descriptions.SessionRemoveName))] string name)
         {
             return AppData.SessionData.RemoveSession(name) ? 0 : 1;
         }

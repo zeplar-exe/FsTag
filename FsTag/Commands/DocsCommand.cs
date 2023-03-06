@@ -9,12 +9,14 @@ namespace FsTag;
 
 public partial class Program
 {
-    [LocalizedCommand("docs", nameof(Descriptions.DocsCommand))]
+    [Command("docs", Description = nameof(Descriptions.DocsCommand))]
     [Subcommand]
     public class DocsCommand
     {
         [DefaultCommand]
-        public int Execute(string[]? modules = null)
+        public int Execute(
+            [Operand("modules", Description = nameof(Descriptions.DocsModulesOperand))] 
+            string[]? modules = null)
         {
             if (modules == null)
             {

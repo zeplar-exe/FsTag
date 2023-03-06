@@ -123,11 +123,65 @@ namespace FsTag.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List of documentation modules to output sequentially..
+        /// </summary>
+        internal static string DocsModulesOperand {
+            get {
+                return ResourceManager.GetString("DocsModulesOperand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For every supported command, avoid permanent changes (such as filesystem edits)..
+        /// </summary>
+        internal static string DryrunOption {
+            get {
+                return ResourceManager.GetString("DryrunOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The path filter to use. &quot;See fstag print filters&quot; for details..
+        /// </summary>
+        internal static string FilterOperand {
+            get {
+                return ResourceManager.GetString("FilterOperand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configuration key to print..
+        /// </summary>
+        internal static string GetConfigKey {
+            get {
+                return ResourceManager.GetString("GetConfigKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Print files that are currently tagged (in the index)..
         /// </summary>
         internal static string PrintCommand {
             get {
                 return ResourceManager.GetString("PrintCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of keys to print sequentially..
+        /// </summary>
+        internal static string PrintKeysOperand {
+            get {
+                return ResourceManager.GetString("PrintKeysOperand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suppress all terminal output *including input prompts*..
+        /// </summary>
+        internal static string QuietOption {
+            get {
+                return ResourceManager.GetString("QuietOption", resourceCulture);
             }
         }
         
@@ -177,6 +231,15 @@ namespace FsTag.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name of the session to delete..
+        /// </summary>
+        internal static string SessionRemoveName {
+            get {
+                return ResourceManager.GetString("SessionRemoveName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Switch (and create if necessary) to the specified session..
         /// </summary>
         internal static string SessionSwitchCommand {
@@ -186,11 +249,47 @@ namespace FsTag.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name of the session to switch to..
+        /// </summary>
+        internal static string SessionSwitchName {
+            get {
+                return ResourceManager.GetString("SessionSwitchName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configuration key to set..
+        /// </summary>
+        internal static string SetConfigKey {
+            get {
+                return ResourceManager.GetString("SetConfigKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Json value to set to the specified configuration key..
+        /// </summary>
+        internal static string SetConfigValue {
+            get {
+                return ResourceManager.GetString("SetConfigValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adds files to the current session index based on the provided filter..
         /// </summary>
         internal static string TagCommand {
             get {
                 return ResourceManager.GetString("TagCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For every supported command, create detailed output messages..
+        /// </summary>
+        internal static string VerboseOption {
+            get {
+                return ResourceManager.GetString("VerboseOption", resourceCulture);
             }
         }
     }

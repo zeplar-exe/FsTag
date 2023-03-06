@@ -10,13 +10,13 @@ namespace FsTag;
 
 public partial class Program
 {
-    [LocalizedCommand("tag", nameof(Descriptions.TagCommand))]
+    [Command("tag", Description = nameof(Descriptions.TagCommand))]
     [Subcommand]
     public class TagCommand
     {
         [DefaultCommand]
         public int Execute(
-            PathFilter filter, 
+            [PathFilterOperand] PathFilter filter, 
             [RecurseOption] uint recurseDepth = 0)
         {
             return FilterHelper.ExecuteOnFilterItems(filter, recurseDepth, AppData.FileIndex.Add);

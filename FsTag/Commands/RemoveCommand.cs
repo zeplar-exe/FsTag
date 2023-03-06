@@ -10,19 +10,19 @@ namespace FsTag;
 
 public partial class Program
 {
-    [LocalizedCommand("rm", nameof(Descriptions.RemoveCommand))]
+    [Command("rm", Description = nameof(Descriptions.RemoveCommand))]
     [Subcommand]
     public class RemoveCommand
     {
         [DefaultCommand]
         public int Execute(
-            PathFilter filter,
+            [PathFilterOperand] PathFilter filter,
             [RecurseOption] uint recurseDepth = 0)
         {
             return FilterHelper.ExecuteOnFilterItems(filter, recurseDepth, AppData.FileIndex.Remove);
         }
 
-        [LocalizedCommand("all", nameof(Descriptions.RemoveAllCommand))]
+        [Command("all", Description = nameof(Descriptions.RemoveAllCommand))]
         public int All()
         {
             AppData.FileIndex.Clear();
