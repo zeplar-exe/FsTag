@@ -20,13 +20,12 @@ public class DocumentationModule
 
     private static string CleanContent(string content)
     {
-        // https://regex101.com/r/kHRWac/1
-        return Regex.Replace(content, @"(?<!^)(?<!\\)\\(?!\\)", "");
+        return CleanSteps.Aggregate(content, (current, step) => step.Invoke(current));
     }
 
-    public void Deconstruct(out string[] Names, out string Content)
+    private static readonly Func<string, string>[] CleanSteps =
     {
-        Names = this.Names;
-        Content = this.Content;
-    }
+        t => Regex.Replace(t, @"(?<!^)(?<!\\)\\(?!\\)", ""),
+        // https://regex101.com/r/kHRWac/1 - Remove lone escape characters
+    };
 }
