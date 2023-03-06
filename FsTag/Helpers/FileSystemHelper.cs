@@ -17,16 +17,26 @@ public static class FileSystemHelper
         if (depth > maxDepth)
             yield break;
         
-        foreach (var file in AppData.FileSystem.EnumerateFiles(directory))
+        var filesOperation = AppData.FileSystem.EnumerateFiles(directory);
+
+        if (filesOperation.Success)
         {
-            yield return file;
-        }
-            
-        foreach (var dir in AppData.FileSystem.EnumerateDirectories(directory))
-        {
-            foreach (var file in EnumerateFilesToDepth(dir, maxDepth, depth + 1))
+            foreach (var file in filesOperation.Result)
             {
                 yield return file;
+            }
+        }
+
+        var dirsOperation = AppData.FileSystem.EnumerateDirectories(directory);
+
+        if (dirsOperation.Success)
+        {
+            foreach (var dir in dirsOperation.Result)
+            {
+                foreach (var file in EnumerateFilesToDepth(dir, maxDepth, depth + 1))
+                {
+                    yield return file;
+                }
             }
         }
     }

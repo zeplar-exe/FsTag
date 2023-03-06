@@ -22,12 +22,12 @@ public class DocumentationData : IDocumentationData
 
         foreach (var file in Directory.EnumerateFiles(DirectoryPath, "*.md"))
         {
-            var text = AppData.FileSystem.ReadText(file);
+            var textOperation = AppData.FileSystem.ReadText(file);
             
-            if (text == null)
+            if (!textOperation.Success)
                 continue;
             
-            var md = Markdown.Parse(text, markdownPipeline);
+            var md = Markdown.Parse(textOperation.Result, markdownPipeline);
 
             var names = new List<string>
             {
@@ -35,7 +35,7 @@ public class DocumentationData : IDocumentationData
                 Path.GetFileName(file)
             };
 
-            var moduleContent = text;
+            var moduleContent = textOperation.Result;
             
             if (md.First() is YamlFrontMatterBlock yamlMetadata)
             {

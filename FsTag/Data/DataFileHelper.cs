@@ -13,9 +13,9 @@ internal class DataFileHelper
 
         try
         {
-            var text = AppData.FileSystem.ReadText(path);
+            var textOperation = AppData.FileSystem.ReadText(path);
 
-            return text != null ? JObject.Parse(text) : null;
+            return textOperation.Success ? JObject.Parse(textOperation.Result) : null;
         }
         catch (JsonReaderException e)
         {
@@ -32,12 +32,12 @@ internal class DataFileHelper
         if (Program.DryRun)
             return;
 
-        var textWriter = AppData.FileSystem.OpenTextWriter(path);
+        var writerOperation = AppData.FileSystem.OpenStreamWriter(path);
 
-        if (textWriter == null)
+        if (!writerOperation.Success)
             return;
         
-        using var writer = new JsonTextWriter(textWriter);
+        using var writer = new JsonTextWriter(writerOperation.Result);
         json.WriteTo(writer);
         
         writer.Flush();

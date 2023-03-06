@@ -59,7 +59,12 @@ public class FileIndex : IFileIndex
 
         using (var reader = new StreamReader(BuiltinPaths.IndexFilePath))
         {
-            using var writer = AppData.FileSystem.OpenTextWriter(tempIndex);
+            var writerOperation = AppData.FileSystem.OpenStreamWriter(tempIndex);
+            
+            if (!writerOperation.Success)
+                return;
+            
+            using var writer = writerOperation.Result;
 
             if (writer == null)
                 return;
@@ -91,17 +96,7 @@ public class FileIndex : IFileIndex
 
         if (!Program.DryRun)
         {
-            AppData.FileSystem.DeleteFile(BuiltinPaths.IndexFilePath);
-
-            using var reader = AppData.FileSystem.OpenTextReader(BuiltinPaths.IndexFilePath);
-            using var writer = AppData.FileSystem.OpenTextWriter(BuiltinPaths.IndexFilePath);
-            
-            if (reader == null || writer == null)
-                return;
-            
-            writer.Write(reader.ReadToEnd());
-            
-            File.Move(tempIndex, BuiltinPaths.IndexFilePath);
+            AppData.FileSystem.MoveFile(tempIndex, BuiltinPaths.IndexFilePath);
         }
     }
 
