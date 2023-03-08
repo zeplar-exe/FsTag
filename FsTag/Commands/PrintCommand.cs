@@ -27,19 +27,10 @@ public partial class Program
             }),
             new("index", PrintKeyDescriptions.Index, () =>
             {
-                var i = 0;
-                
                 foreach (var item in AppData.FileIndex.EnumerateItems())
                 {
-                    if (i++ > 0)
-                    {
-                        WriteFormatter.PlainNoLine(";"); // Like string.Join, so we don't have a hanging semicolon
-                    }
-                    
-                    WriteFormatter.PlainNoLine(item);
+                    WriteFormatter.Plain(item);
                 }
-
-                WriteFormatter.NewLine();
             }),
             new("raw_config", PrintKeyDescriptions.RawConfig, () =>
             {
@@ -107,7 +98,7 @@ public partial class Program
                     }
                 }
                 
-                WriteFormatter.Error($"'{key}' is not a recognized print key.");
+                WriteFormatter.Error(string.Format(CommandOutput.PrintKeyNotFound, key));
 
                 return 1;
             }

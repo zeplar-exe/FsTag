@@ -28,7 +28,7 @@ public partial class Program
 
             if (!config.TryGet<JToken>(name, out var value))
             {
-                WriteFormatter.Info($"The configuration '{name}' does not exist.");
+                WriteFormatter.Info(string.Format(CommandOutput.ConfigMissing, name));
 
                 return 1;
             }
@@ -56,7 +56,7 @@ public partial class Program
             }
             catch (JsonReaderException e)
             {
-                WriteFormatter.Error($"'{value}' is not valid JSON: {e.Message}");
+                WriteFormatter.Error(string.Format(CommandOutput.ConfigSetInvalidJson, value, e.Message));
                 
                 return 1;
             }

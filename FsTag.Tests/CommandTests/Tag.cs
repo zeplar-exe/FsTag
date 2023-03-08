@@ -15,6 +15,7 @@ public class Tag
     public void TagSetup()
     {
         AppData.FileIndex = new MockIndex();
+        AppData.FileSystem = new MockFileSystem();
     }
     
     [Test]
@@ -100,6 +101,69 @@ public class Tag
         public void Clear()
         {
             Items.Clear();
+        }
+    }
+    
+    public class MockFileSystem : IFileSystem
+    {
+        public FileSystemOperation<string> ReadText(string path)
+        {
+            throw new NotImplementedException();
+        }
+    
+        public FileSystemOperation WriteText(string path, string text)
+        {
+            throw new NotImplementedException();
+        }
+    
+        public FileSystemOperation<StreamWriter> OpenStreamWriter(string path)
+        {
+            throw new NotImplementedException();
+        }
+    
+        public FileSystemOperation<StreamReader> OpenStreamReader(string path)
+        {
+            throw new NotImplementedException();
+        }
+    
+        public FileSystemOperation CreateDirectory(string directory)
+        {
+            throw new NotImplementedException();
+        }
+    
+        public FileSystemOperation<IEnumerable<string>> EnumerateFiles(string directory)
+        {
+            throw new NotImplementedException();
+        }
+    
+        public FileSystemOperation<IEnumerable<string>> EnumerateDirectories(string directory)
+        {
+            throw new NotImplementedException();
+        }
+    
+        public FileSystemOperation RecycleFile(string file)
+        {
+            throw new NotImplementedException();
+        }
+    
+        public FileSystemOperation DeleteFile(string file)
+        {
+            throw new NotImplementedException();
+        }
+    
+        public FileSystemOperation FileExists(string file)
+        {
+            throw new NotImplementedException();
+        }
+    
+        public FileSystemOperation DirectoryExists(string file)
+        {
+            throw new NotImplementedException();
+        }
+    
+        public FileSystemOperation MoveFile(string source, string destination)
+        {
+            throw new NotImplementedException();
         }
     }
 }

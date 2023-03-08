@@ -1,5 +1,6 @@
 ﻿using FsTag.Data.Interfaces;
 using FsTag.Helpers;
+using FsTag.Resources;
 
 namespace FsTag.Data.Builtin;
 
@@ -26,7 +27,7 @@ public class SessionData : ISessionData
             
         if (invalidIntersect.Any())
         {
-            WriteFormatter.Error($"Invalid session name, contains {string.Join(" ", invalidIntersect)}");
+            WriteFormatter.Error(string.Format(CommandOutput.SessionCreateInvalidName, string.Join(" ", invalidIntersect)));
 
             return false;
         }
@@ -44,7 +45,7 @@ public class SessionData : ISessionData
 
         if (!Directory.Exists(directory))
         {
-            WriteFormatter.Error($"The session '{name}' does not exist.");
+            WriteFormatter.Error(string.Format(CommandOutput.SessionMissing, name));
 
             return false;
         }

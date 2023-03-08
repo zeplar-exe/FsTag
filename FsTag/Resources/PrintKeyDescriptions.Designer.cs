@@ -78,6 +78,15 @@ namespace FsTag.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string IntegrationDir {
+            get {
+                return ResourceManager.GetString("IntegrationDir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A list of all valid print keys. Like the one you&apos;re looking at right now..
         /// </summary>
         internal static string PrintKeys {

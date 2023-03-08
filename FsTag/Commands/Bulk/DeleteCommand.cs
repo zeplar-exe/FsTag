@@ -47,19 +47,19 @@ public partial class Program
                                 if (!DryRun)
                                     AppData.FileSystem.DeleteFile(file);
 
-                                WriteFormatter.Info($"Deleted '{file}'.");
+                                WriteFormatter.Info(string.Format(CommandOutput.BulkDeletedFile, file));
                             }
                             
                             removed.Add(file);
                         }
                         catch (UnauthorizedAccessException)
                         {
-                            WriteFormatter.Warning($"Not authorized to delete '{file}', skipping.");
+                            WriteFormatter.Warning(string.Format(CommandOutput.BulkDeleteUnauthorized, file));
                         }
                     }
                     else
                     {
-                        WriteFormatter.Warning($"The file '{file}' does not exist.");
+                        WriteFormatter.Warning(string.Format(CommandOutput.BulkDeleteFileMissing, file));
                     }
                 }
 

@@ -159,7 +159,7 @@ namespace FsTag.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Print files that are currently tagged (in the index)..
+        ///   Looks up a localized string similar to Print the specified keys sequentially. Outputs the list of valid keys if given no arguments..
         /// </summary>
         internal static string PrintCommand {
             get {

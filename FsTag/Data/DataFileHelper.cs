@@ -1,4 +1,5 @@
 ﻿using FsTag.Helpers;
+using FsTag.Resources;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -19,9 +20,7 @@ internal class DataFileHelper
         }
         catch (JsonReaderException e)
         {
-            WriteFormatter.Error($"A JsonReaderException occured while reading {path}: {e}");
-            WriteFormatter.Plain("This usually means your config file is corrupted. Either attempt " +
-                                 "to fix it, or use 'fstag config clear' to *clear* the config file.");
+            WriteFormatter.Error(string.Format(CommandOutput.ParseJsonReaderException, path, e));
 
             return null;
         }

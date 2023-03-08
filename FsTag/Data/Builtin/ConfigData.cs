@@ -1,5 +1,6 @@
 ﻿using FsTag.Data.Interfaces;
 using FsTag.Helpers;
+using FsTag.Resources;
 
 using Newtonsoft.Json.Linq;
 
@@ -43,12 +44,12 @@ public class ConfigData : IConfigData
         }
         else
         {
-            WriteFormatter.Error($"The extra config property '{key}' does not exist.");
+            WriteFormatter.Error(string.Format(CommandOutput.ConfigExtraPropertyMissing, key));
 
             return false;
         }
         
-        WriteFormatter.Info($"Removed config property '{key}'.");
+        WriteFormatter.Info(string.Format(CommandOutput.ConfigRemove, key));
         DataFileHelper.WriteJson(BuiltinPaths.ConfigFilePath, JObject.FromObject(config));
 
         return true;

@@ -1,5 +1,6 @@
 ﻿using FsTag.Data;
 using FsTag.Filters;
+using FsTag.Resources;
 
 namespace FsTag.Helpers;
 
@@ -33,7 +34,7 @@ public static class FilterHelper
             }
             else
             {
-                WriteFormatter.Warning($"The directory '{file}' does not exist.");
+                WriteFormatter.Warning(string.Format(CommandOutput.DirectoryMissing, file));
             }
         }
     }

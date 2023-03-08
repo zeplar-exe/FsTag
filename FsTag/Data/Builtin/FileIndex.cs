@@ -1,5 +1,6 @@
 ﻿using FsTag.Data.Interfaces;
 using FsTag.Helpers;
+using FsTag.Resources;
 
 namespace FsTag.Data.Builtin;
 
@@ -24,7 +25,7 @@ public class FileIndex : IFileIndex
         {
             if (itemsSet.Remove(item))
             {
-                WriteFormatter.Info($"'{item}' already exists in the tag index.");
+                WriteFormatter.Info(string.Format(CommandOutput.FileIndexAddDuplicate, item));
             }
         }
 
@@ -35,7 +36,7 @@ public class FileIndex : IFileIndex
         {
             if (!AppData.FileSystem.FileExists(item))
             {
-                WriteFormatter.Warning($"The file '{item}' does not exist.");
+                WriteFormatter.Warning(string.Format(CommandOutput.FileIndexAddMissing, item));
             
                 continue;
             }
@@ -43,7 +44,7 @@ public class FileIndex : IFileIndex
             if (!Program.DryRun)
                 writer.WriteLine(item);
             
-            WriteFormatter.Info($"Added '{item}' to the tag index.");
+            WriteFormatter.Info(string.Format(CommandOutput.FileIndexAddItem, item));
         }
         
         if (!Program.DryRun)
@@ -66,14 +67,11 @@ public class FileIndex : IFileIndex
             
             using var writer = writerOperation.Result;
 
-            if (writer == null)
-                return;
-
             while (reader.ReadLine() is {} line)
             {
                 if (itemsSet.Contains(line))
                 {
-                    WriteFormatter.Info($"Removing '{line}' from the index.");
+                    WriteFormatter.Info(string.Format(CommandOutput.FileIndexRemoveItem, line));
                     removedAny = true;
                 }
                 else
@@ -89,7 +87,7 @@ public class FileIndex : IFileIndex
 
         if (!removedAny)
         {
-            WriteFormatter.Info("Nothing to remove. Terminating early.");
+            WriteFormatter.Info(CommandOutput.FileIndexRemoveNone);
             
             return;
         }
@@ -112,6 +110,6 @@ public class FileIndex : IFileIndex
         if (!Program.DryRun)
             AppData.FileSystem.WriteText(BuiltinPaths.IndexFilePath, "");
         
-        WriteFormatter.Info("Successfully cleared tag index.");
+        WriteFormatter.Info(CommandOutput.FileIndexClear);
     }
 }

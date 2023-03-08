@@ -22,7 +22,7 @@
         <value>Adds files to the current session index based on the provided filter.</value>
     </data>
     <data name="PrintCommand" xml:space="preserve">
-        <value>Print files that are currently tagged (in the index).</value>
+        <value>Print the specified keys sequentially. Outputs the list of valid keys if given no arguments.</value>
     </data>
     <data name="RecursiveOp" xml:space="preserve">
         <value>Recurse depth to tag up until. 0 (default) denotes no recursion, values less than 0 denote no limit.</value>

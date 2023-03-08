@@ -30,4 +30,7 @@
     <data name="ConfigList" xml:space="preserve">
         <value>A list of all registered configurations.</value>
     </data>
+    <data name="IntegrationDir" xml:space="preserve">
+        <value />
+    </data>
 </root>

@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="PrintKeyNotFound" xml:space="preserve">
+        <value>'{0}' is not a recognized print key.</value>
+    </data>
+    <data name="ParseJsonReaderException" xml:space="preserve">
+        <value>A JsonReaderException occured while reading {0}: {1}. This usually means your config file is corrupted. Either attempt to fix it or reinstall FsTag.</value>
+    </data>
+    <data name="BulkDeletedFile" xml:space="preserve">
+        <value>Deleted '{0}'.</value>
+    </data>
+    <data name="BulkDeleteUnauthorized" xml:space="preserve">
+        <value>Not authorized to delete '{0}', skipping.</value>
+    </data>
+    <data name="BulkDeleteFileMissing" xml:space="preserve">
+        <value>The file '{0}' does not exist.</value>
+    </data>
+    <data name="FileIndexAddDuplicate" xml:space="preserve">
+        <value>'{0}' already exists in the tag index.</value>
+    </data>
+    <data name="FileIndexAddMissing" xml:space="preserve">
+        <value>The file '{0}' does not exist.</value>
+    </data>
+    <data name="FileIndexAddItem" xml:space="preserve">
+        <value>Added '{0}' to the tag index.</value>
+    </data>
+    <data name="FileIndexRemoveItem" xml:space="preserve">
+        <value>Removing '{0}' from the index.</value>
+    </data>
+    <data name="FileIndexRemoveNone" xml:space="preserve">
+        <value>Nothing to remove. Terminating early.</value>
+    </data>
+    <data name="FileIndexClear" xml:space="preserve">
+        <value>Successfully cleared tag index.</value>
+    </data>
+    <data name="ConfigMissing" xml:space="preserve">
+        <value>The configuration '{0}' does not exist."</value>
+    </data>
+    <data name="ConfigSetInvalidJson" xml:space="preserve">
+        <value>'{0}' is not valid JSON: {1}</value>
+    </data>
+    <data name="ConfigExtraPropertyMissing" xml:space="preserve">
+        <value>The extra config property '{0}' does not exist.</value>
+    </data>
+    <data name="ConfigRemove" xml:space="preserve">
+        <value>Removed config property '{0}'.</value>
+    </data>
+    <data name="DirectoryMissing" xml:space="preserve">
+        <value>The directory '{0}' does not exist.</value>
+    </data>
+    <data name="SessionCreateInvalidName" xml:space="preserve">
+        <value>Invalid session name, contains {0}."</value>
+    </data>
+    <data name="SessionMissing" xml:space="preserve">
+        <value>The session '{0}' does not exist.</value>
+    </data>
+</root>
