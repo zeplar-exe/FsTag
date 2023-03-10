@@ -19,7 +19,7 @@ public partial class Program
             [PathFilterOperand] PathFilter filter, 
             [RecurseOption] uint recurseDepth = 0)
         {
-            return FilterHelper.ExecuteOnFilterItems(filter, recurseDepth, AppData.FileIndex.Add);
+            return FilterHelper.ExecuteOnFilterItems(filter, recurseDepth, App.FileIndex.Add);
         }
     }
 }

@@ -22,7 +22,7 @@ public class DocumentationData : IDocumentationData
 
         foreach (var file in Directory.EnumerateFiles(DirectoryPath, "*.md"))
         {
-            var textOperation = AppData.FileSystem.ReadText(file);
+            var textOperation = App.FileSystem.ReadText(file);
             
             if (!textOperation.Success)
                 continue;

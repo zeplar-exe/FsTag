@@ -14,7 +14,7 @@ internal class DataFileHelper
 
         try
         {
-            var textOperation = AppData.FileSystem.ReadText(path);
+            var textOperation = App.FileSystem.ReadText(path);
 
             return textOperation.Success ? JObject.Parse(textOperation.Result) : null;
         }
@@ -31,7 +31,7 @@ internal class DataFileHelper
         if (Program.DryRun)
             return;
 
-        var writerOperation = AppData.FileSystem.OpenStreamWriter(path);
+        var writerOperation = App.FileSystem.OpenStreamWriter(path);
 
         if (!writerOperation.Success)
             return;
@@ -51,7 +51,7 @@ internal class DataFileHelper
 
         if (info.Length == 0)
         {
-            AppData.FileSystem.WriteText(path, "{}");
+            App.FileSystem.WriteText(path, "{}");
         }
 
         return path;
@@ -62,7 +62,7 @@ internal class DataFileHelper
         if (Program.DryRun)
             return directory;
 
-        AppData.FileSystem.CreateDirectory(directory);
+        App.FileSystem.CreateDirectory(directory);
 
         return directory;
     }
@@ -72,10 +72,10 @@ internal class DataFileHelper
         if (Program.DryRun)
             return file;
 
-        if (!AppData.FileSystem.FileExists(file))
+        if (!App.FileSystem.FileExists(file))
         {
-            AppData.FileSystem.CreateDirectory(Path.GetDirectoryName(file)!);
-            AppData.FileSystem.WriteText(file, "");
+            App.FileSystem.CreateDirectory(Path.GetDirectoryName(file)!);
+            App.FileSystem.WriteText(file, "");
         }
 
         return file;

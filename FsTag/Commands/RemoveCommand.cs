@@ -19,13 +19,13 @@ public partial class Program
             [PathFilterOperand] PathFilter filter,
             [RecurseOption] uint recurseDepth = 0)
         {
-            return FilterHelper.ExecuteOnFilterItems(filter, recurseDepth, AppData.FileIndex.Remove);
+            return FilterHelper.ExecuteOnFilterItems(filter, recurseDepth, App.FileIndex.Remove);
         }
 
         [Command("all", Description = nameof(Descriptions.RemoveAllCommand))]
         public int All()
         {
-            AppData.FileIndex.Clear();
+            App.FileIndex.Clear();
 
             return 0;
         }

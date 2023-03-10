@@ -21,7 +21,7 @@ public class ConfigData : IConfigData
 
     public void SetProperty(string key, JToken? value)
     {
-        var config = AppData.ConfigData.Read();
+        var config = App.ConfigData.Read();
             
         if (config == null)
             return;
@@ -33,7 +33,7 @@ public class ConfigData : IConfigData
 
     public bool RemoveProperty(string key)
     {
-        var config = AppData.ConfigData.Read();
+        var config = App.ConfigData.Read();
             
         if (config == null)
             return false;

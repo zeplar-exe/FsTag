@@ -17,7 +17,7 @@ public static class FileSystemHelper
         if (depth > maxDepth)
             yield break;
         
-        var filesOperation = AppData.FileSystem.EnumerateFiles(directory);
+        var filesOperation = App.FileSystem.EnumerateFiles(directory);
 
         if (filesOperation.Success)
         {
@@ -27,7 +27,7 @@ public static class FileSystemHelper
             }
         }
 
-        var dirsOperation = AppData.FileSystem.EnumerateDirectories(directory);
+        var dirsOperation = App.FileSystem.EnumerateDirectories(directory);
 
         if (dirsOperation.Success)
         {

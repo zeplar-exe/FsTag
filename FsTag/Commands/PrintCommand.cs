@@ -27,14 +27,14 @@ public partial class Program
             }),
             new("index", PrintKeyDescriptions.Index, () =>
             {
-                foreach (var item in AppData.FileIndex.EnumerateItems())
+                foreach (var item in App.FileIndex.EnumerateItems())
                 {
                     WriteFormatter.Plain(item);
                 }
             }),
             new("raw_config", PrintKeyDescriptions.RawConfig, () =>
             {
-                var config = AppData.ConfigData.Read();
+                var config = App.ConfigData.Read();
             
                 if (config == null)
                     return;
@@ -46,7 +46,7 @@ public partial class Program
             }),
             new("config_list", PrintKeyDescriptions.ConfigList, () =>
             {
-                var config = AppData.ConfigData.Read();
+                var config = App.ConfigData.Read();
             
                 if (config == null)
                     return;

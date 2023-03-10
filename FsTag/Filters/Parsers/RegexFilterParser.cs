@@ -19,7 +19,7 @@ public class RegexFilterParser : PathFilterParser
             return regex!.IsMatch(relative);
         }
 
-        var filesOperation = AppData.FileSystem.EnumerateFiles(CurrentDirectory);
+        var filesOperation = App.FileSystem.EnumerateFiles(CurrentDirectory);
 
         if (filesOperation.Success)
         {
@@ -30,7 +30,7 @@ public class RegexFilterParser : PathFilterParser
             }
         }
 
-        var dirsOperation = AppData.FileSystem.EnumerateDirectories(CurrentDirectory);
+        var dirsOperation = App.FileSystem.EnumerateDirectories(CurrentDirectory);
 
         if (dirsOperation.Success)
         {

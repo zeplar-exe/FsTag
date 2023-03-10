@@ -14,8 +14,8 @@ public class Tag
     [SetUp]
     public void TagSetup()
     {
-        AppData.FileIndex = new MockIndex();
-        AppData.FileSystem = new MockFileSystem();
+        App.FileIndex = new MockIndex();
+        App.FileSystem = new MockFileSystem();
     }
     
     [Test]

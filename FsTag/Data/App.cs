@@ -3,7 +3,7 @@ using FsTag.Data.Interfaces;
 
 namespace FsTag.Data;
 
-public static class AppData
+public static class App
 {
     public static ISessionData SessionData { get; set; } = new SessionData();
     public static IFileIndex FileIndex { get; set; } = new FileIndex();

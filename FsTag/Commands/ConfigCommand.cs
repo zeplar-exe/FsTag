@@ -19,7 +19,7 @@ public partial class Program
         [DefaultCommand]
         public int Execute([Operand("key", Description = nameof(Descriptions.GetConfigKey))] string name)
         {
-            var config = AppData.ConfigData.Read();
+            var config = App.ConfigData.Read();
             
             if (config == null)
                 return 1;
@@ -43,7 +43,7 @@ public partial class Program
             [Operand("key", Description = nameof(Descriptions.SetConfigKey))] string key,
             [Operand("value", Description = nameof(Descriptions.SetConfigValue))] string value)
         {
-            var config = AppData.ConfigData.Read();
+            var config = App.ConfigData.Read();
             
             if (config == null)
                 return 1;
@@ -61,7 +61,7 @@ public partial class Program
                 return 1;
             }
             
-            AppData.ConfigData.SetProperty(key, valueToken);
+            App.ConfigData.SetProperty(key, valueToken);
 
             var formatting = JsonHelper.GetConfigJsonFormatting(config);
             WriteFormatter.Plain($"{key}={valueToken.ToString(formatting)}");

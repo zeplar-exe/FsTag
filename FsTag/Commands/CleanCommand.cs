@@ -15,7 +15,7 @@ public partial class Program
         [DefaultCommand]
         public int Execute()
         {
-            AppData.FileIndex.Clean();
+            App.FileIndex.Clean();
 
             return 0;
         }

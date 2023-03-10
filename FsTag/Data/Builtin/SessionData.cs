@@ -10,10 +10,10 @@ public class SessionData : ISessionData
     {
         get
         {
-            var name = AppData.ConfigData.Read()?.SessionName;
+            var name = App.ConfigData.Read()?.SessionName;
             
             if (name != null)
-                AppData.SessionData.EnsureSession(name);
+                App.SessionData.EnsureSession(name);
 
             return name;
         }

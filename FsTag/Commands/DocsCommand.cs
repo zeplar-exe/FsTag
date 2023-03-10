@@ -24,7 +24,7 @@ public partial class Program
                 WriteFormatter.Plain(CommonOutput.ValidArgumentList);
                 WriteFormatter.NewLine();
 
-                foreach (var helpModule in AppData.DocumentationData.GetModules())
+                foreach (var helpModule in App.DocumentationData.GetModules())
                 {
                     WriteFormatter.Plain(string.Join(" | ", helpModule.Names));
                 }
@@ -36,7 +36,7 @@ public partial class Program
 
             foreach (var module in modules)
             {
-                foreach (var helpModule in AppData.DocumentationData.GetModules())
+                foreach (var helpModule in App.DocumentationData.GetModules())
                 {
                     if (helpModule.IsMatch(module))
                     {

@@ -19,8 +19,8 @@ public partial class Program
             public int Execute(
                 [Option('r', "recycle", Description = nameof(Descriptions.DeleteRecycle))] bool recycle)
             {
-                var files = AppData.FileIndex.EnumerateItems().ToArray();
-                var sessionName = AppData.SessionData.CurrentSessionName;
+                var files = App.FileIndex.EnumerateItems().ToArray();
+                var sessionName = App.SessionData.CurrentSessionName;
 
                 if (sessionName == null)
                     return 1;
@@ -33,19 +33,19 @@ public partial class Program
                 
                 foreach (var file in files)
                 {
-                    if (AppData.FileSystem.FileExists(file))
+                    if (App.FileSystem.FileExists(file))
                     {
                         try
                         {
                             if (recycle)
                             {
                                 if (!DryRun)
-                                    AppData.FileSystem.RecycleFile(file);
+                                    App.FileSystem.RecycleFile(file);
                             }
                             else
                             {
                                 if (!DryRun)
-                                    AppData.FileSystem.DeleteFile(file);
+                                    App.FileSystem.DeleteFile(file);
 
                                 WriteFormatter.Info(string.Format(CommandOutput.BulkDeletedFile, file));
                             }
@@ -63,7 +63,7 @@ public partial class Program
                     }
                 }
 
-                AppData.FileIndex.Remove(removed);
+                App.FileIndex.Remove(removed);
 
                 return 0;
             }
