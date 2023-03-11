@@ -19,7 +19,7 @@ public static class FilterHelper
     {
         foreach (var file in filter.EnumerateFiles())
         {
-            if (App.FileSystem.DirectoryExists(file))
+            if (App.FileSystem.Directory.Exists(file))
             {
                 var enumerable = FileSystemHelper.EnumerateFilesToDepth(file, recurseDepth);
 
@@ -28,7 +28,7 @@ public static class FilterHelper
                     yield return item;
                 }
             }
-            else if (App.FileSystem.FileExists(file))
+            else if (App.FileSystem.File.Exists(file))
             {
                 yield return file;
             }

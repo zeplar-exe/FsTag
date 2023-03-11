@@ -1,7 +1,5 @@
 ﻿using CommandDotNet;
 
-using FsTag.Data;
-
 namespace FsTag.Tests.Extensions;
 
 public static class AppRunnerExtensions

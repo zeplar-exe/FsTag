@@ -3,8 +3,6 @@
 using CommandDotNet;
 
 using FsTag.Attributes;
-using FsTag.Data;
-using FsTag.Data.Builtin;
 using FsTag.Filters;
 using FsTag.Helpers;
 using FsTag.Resources;

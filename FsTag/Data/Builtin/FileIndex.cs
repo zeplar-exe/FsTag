@@ -34,7 +34,7 @@ public class FileIndex : IFileIndex
         // By this point, all items in `set` will be unique
         foreach (var item in itemsSet)
         {
-            if (!App.FileSystem.FileExists(item))
+            if (!App.FileSystem.File.Exists(item))
             {
                 WriteFormatter.Warning(string.Format(CommandOutput.FileIndexAddMissing, item));
             
@@ -60,12 +60,8 @@ public class FileIndex : IFileIndex
 
         using (var reader = new StreamReader(BuiltinPaths.IndexFilePath))
         {
-            var writerOperation = App.FileSystem.OpenStreamWriter(tempIndex);
-            
-            if (!writerOperation.Success)
-                return;
-            
-            using var writer = writerOperation.Result;
+            var stream = App.FileSystem.File.Open(tempIndex, FileMode.Append, FileAccess.Write);
+            using var writer = new StreamWriter(stream);
 
             while (reader.ReadLine() is {} line)
             {
@@ -94,13 +90,13 @@ public class FileIndex : IFileIndex
 
         if (!Program.DryRun)
         {
-            App.FileSystem.MoveFile(tempIndex, BuiltinPaths.IndexFilePath);
+            App.FileSystem.File.Move(tempIndex, BuiltinPaths.IndexFilePath);
         }
     }
 
     public void Clean()
     {
-        var removed = EnumerateItems().Where(tag => !App.FileSystem.FileExists(tag));
+        var removed = EnumerateItems().Where(tag => !App.FileSystem.File.Exists(tag));
         
         Remove(removed);
     }
@@ -108,7 +104,7 @@ public class FileIndex : IFileIndex
     public void Clear()
     {
         if (!Program.DryRun)
-            App.FileSystem.WriteText(BuiltinPaths.IndexFilePath, "");
+            App.FileSystem.File.WriteAllText(BuiltinPaths.IndexFilePath, "");
         
         WriteFormatter.Info(CommandOutput.FileIndexClear);
     }

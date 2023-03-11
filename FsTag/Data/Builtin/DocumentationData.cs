@@ -22,32 +22,29 @@ public class DocumentationData : IDocumentationData
 
         foreach (var file in Directory.EnumerateFiles(DirectoryPath, "*.md"))
         {
-            var textOperation = App.FileSystem.ReadText(file);
-            
-            if (!textOperation.Success)
-                continue;
-            
-            var md = Markdown.Parse(textOperation.Result, markdownPipeline);
+            var content = App.FileSystem.File.ReadAllText(file);
+            var md = Markdown.Parse(content, markdownPipeline);
 
-            var names = new List<string>
+            var aliasNames = new List<string>
             {
                 Path.GetFileNameWithoutExtension(file),
                 Path.GetFileName(file)
             };
 
-            var moduleContent = textOperation.Result;
+            var moduleContent = content;
             
+            // Add any frontmatter aliases to our list, as well as trim it from the display text
             if (md.First() is YamlFrontMatterBlock yamlMetadata)
             {
                 var yamlText = yamlMetadata.Lines.ToString();
                 var metadata = yamlDeserializer.Deserialize<MarkdownMetadata>(yamlText);
 
-                names.AddRange(metadata.Alias);
+                aliasNames.AddRange(metadata.Alias);
                 
                 moduleContent = moduleContent.Remove(0, yamlMetadata.Span.Length);
             }
                 
-            yield return new DocumentationModule(names.ToArray(), moduleContent);
+            yield return new DocumentationModule(aliasNames.ToArray(), moduleContent);
         }
     }
     

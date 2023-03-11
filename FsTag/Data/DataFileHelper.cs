@@ -10,13 +10,11 @@ internal class DataFileHelper
 {
     public static JObject? ParseJson(string path)
     {
-        JObject json;
-
         try
         {
-            var textOperation = App.FileSystem.ReadText(path);
+            var text = App.FileSystem.File.ReadAllText(path);
 
-            return textOperation.Success ? JObject.Parse(textOperation.Result) : null;
+            return JObject.Parse(text);
         }
         catch (JsonReaderException e)
         {
@@ -31,12 +29,8 @@ internal class DataFileHelper
         if (Program.DryRun)
             return;
 
-        var writerOperation = App.FileSystem.OpenStreamWriter(path);
-
-        if (!writerOperation.Success)
-            return;
-        
-        using var writer = new JsonTextWriter(writerOperation.Result);
+        var stream = App.FileSystem.File.Open(path, FileMode.OpenOrCreate, FileAccess.Write);
+        using var writer = new JsonTextWriter(new StreamWriter(stream));
         json.WriteTo(writer);
         
         writer.Flush();
@@ -51,7 +45,7 @@ internal class DataFileHelper
 
         if (info.Length == 0)
         {
-            App.FileSystem.WriteText(path, "{}");
+            App.FileSystem.File.WriteAllText(path, "{}");
         }
 
         return path;
@@ -62,7 +56,7 @@ internal class DataFileHelper
         if (Program.DryRun)
             return directory;
 
-        App.FileSystem.CreateDirectory(directory);
+        App.FileSystem.Directory.CreateDirectory(directory);
 
         return directory;
     }
@@ -72,10 +66,10 @@ internal class DataFileHelper
         if (Program.DryRun)
             return file;
 
-        if (!App.FileSystem.FileExists(file))
+        if (!App.FileSystem.File.Exists(file))
         {
-            App.FileSystem.CreateDirectory(Path.GetDirectoryName(file)!);
-            App.FileSystem.WriteText(file, "");
+            App.FileSystem.Directory.CreateDirectory(Path.GetDirectoryName(file)!);
+            App.FileSystem.File.WriteAllText(file, "");
         }
 
         return file;

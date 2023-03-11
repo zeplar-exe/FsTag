@@ -1,9 +1,5 @@
-﻿using CommandDotNet.TestTools.Scenarios;
-
-using FsTag.Data;
-using FsTag.Data.Interfaces;
+﻿using FsTag.Data;
 using FsTag.Tests.Extensions;
-using FsTag.Tests.Integration;
 using FsTag.Tests.Unit.Mocks;
 
 namespace FsTag.Tests.Unit;

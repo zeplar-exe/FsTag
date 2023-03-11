@@ -18,26 +18,20 @@ public class GlobFilterParser : PathFilterParser
             return glob.IsMatch(relative);
         }
 
-        var filesOperation = App.FileSystem.EnumerateFiles(CurrentDirectory);
+        var files = App.FileSystem.Directory.EnumerateFiles(CurrentDirectory);
 
-        if (filesOperation.Success)
+        foreach (var file in files)
         {
-            foreach (var file in filesOperation.Result)
-            {
-                if (IsMatch(file))
-                    yield return file;
-            }
+            if (IsMatch(file))
+                yield return file;
         }
 
-        var dirsOperation = App.FileSystem.EnumerateDirectories(CurrentDirectory);
+        var dirs = App.FileSystem.Directory.EnumerateDirectories(CurrentDirectory);
 
-        if (dirsOperation.Success)
+        foreach (var dir in dirs)
         {
-            foreach (var dir in dirsOperation.Result)
-            {
-                if (IsMatch(dir))
-                    yield return dir;
-            }
+            if (IsMatch(dir))
+                yield return dir;
         }
     }
 }

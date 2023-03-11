@@ -1,4 +1,6 @@
-﻿using FsTag.Data.Builtin;
+﻿using System.IO.Abstractions;
+
+using FsTag.Data.Builtin;
 using FsTag.Data.Interfaces;
 
 namespace FsTag.Data;

@@ -1,9 +1,12 @@
 ﻿using CommandDotNet;
 
-using FsTag.Attributes;
 using FsTag.Data;
 using FsTag.Helpers;
 using FsTag.Resources;
+
+using Microsoft.VisualBasic.FileIO;
+
+using FileSystem = Microsoft.VisualBasic.FileIO.FileSystem;
 
 namespace FsTag;
 
@@ -33,19 +36,19 @@ public partial class Program
                 
                 foreach (var file in files)
                 {
-                    if (App.FileSystem.FileExists(file))
+                    if (App.FileSystem.File.Exists(file))
                     {
                         try
                         {
                             if (recycle)
                             {
-                                if (!DryRun)
-                                    App.FileSystem.RecycleFile(file);
+                                if (!DryRun) // Cannot be reasonably abstracted to my knowledge
+                                    FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                             }
                             else
                             {
                                 if (!DryRun)
-                                    App.FileSystem.DeleteFile(file);
+                                    App.FileSystem.File.Delete(file);
 
                                 WriteFormatter.Info(string.Format(CommandOutput.BulkDeletedFile, file));
                             }
