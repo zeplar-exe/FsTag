@@ -2,9 +2,9 @@
 
 using FsTag.Data.Builtin;
 
-namespace FsTag.Tests.IntegrationTests;
+namespace FsTag.Tests.Integration;
 
-public class IntegrationBase
+public class IntegrationTestBase
 {
     public static TestConsole TestConsole { get; set; }
     
