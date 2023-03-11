@@ -1,4 +1,6 @@
-﻿using FsTag.Data;
+﻿using System.IO.Abstractions.TestingHelpers;
+
+using FsTag.Data;
 using FsTag.Tests.Extensions;
 using FsTag.Tests.Unit.Mocks;
 
@@ -7,12 +9,17 @@ namespace FsTag.Tests.Unit;
 [TestFixture]
 public class Tag : UnitTestBase
 {
-    private const string TestFileName = "test/test1.txt";
+    private const string TestFileName = "C:/test/test1.txt";
 
     [SetUp]
     public void TagSetup()
     {
         App.FileIndex = new MockIndex();
+
+        var mockFileSystem = new MockFileSystem();
+        App.FileSystem = mockFileSystem;
+        
+        mockFileSystem.AddFile(TestFileName, new MockFileData(""));
     }
     
     [Test]

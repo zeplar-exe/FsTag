@@ -23,8 +23,6 @@ public class MockIndex : IFileIndex
         foreach (var item in items)
         {
             Items.Add(item);
-                
-            Program.IConsole.WriteLine($"{item}");
         }
     }
 
@@ -33,8 +31,6 @@ public class MockIndex : IFileIndex
         foreach (var item in items)
         {
             Items.Remove(item);
-                
-            Program.IConsole.WriteLine($"{item}");
         }
     }
 
