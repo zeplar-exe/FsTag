@@ -9,29 +9,16 @@ namespace FsTag.Tests.Unit;
 [TestFixture]
 public class Tag : UnitTestBase
 {
-    private const string TestFileName = "C:/test/test1.txt";
-
-    [SetUp]
-    public void TagSetup()
-    {
-        App.FileIndex = new MockIndex();
-
-        var mockFileSystem = new MockFileSystem();
-        App.FileSystem = mockFileSystem;
-        
-        mockFileSystem.AddFile(TestFileName, new MockFileData(""));
-    }
-    
     [Test]
     public void TestTag()
     {
-        AssertIndexCountAfterRun(1, "tag", TestFileName);
+        AssertIndexCountAfterRun(1, "tag", "C:/test1.txt");
     }
     
     [Test]
     public void TestTagAsDefaultCommand()
     {
-        AssertIndexCountAfterRun(1, TestFileName);
+        AssertIndexCountAfterRun(1, "C:/test1.txt");
     }
 
     private void AssertIndexCountAfterRun(int count, params string[] args)

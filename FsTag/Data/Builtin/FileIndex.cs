@@ -31,7 +31,7 @@ public class FileIndex : IFileIndex
 
         using var writer = new StreamWriter(BuiltinPaths.IndexFilePath, append: true);
         
-        // By this point, all items in `set` will be unique
+        // By this point, all items in `set` will be unique to the index
         foreach (var item in itemsSet)
         {
             if (!App.FileSystem.File.Exists(item))

@@ -14,9 +14,8 @@ public class Configuration
     
     [JsonProperty("format_json_output")] public bool FormatJsonOutput { get; set; }
     [JsonProperty("session_name")] public string? SessionName { get; set; }
-    
-    [JsonExtensionData]
-    public JObject OtherProperties { get; set; }
+
+    [JsonExtensionData] public JObject OtherProperties { get; set; } = new();
 
     static Configuration()
     {
@@ -31,12 +30,12 @@ public class Configuration
         }
     }
     
-    public void Set(string name, object? value)
+    public void Set(string name, JToken value)
     {
         if (JsonBindings.TryGetValue(name, out var property))
-        {
-            property.SetValue(this, value);
-        }
+            property.SetValue(this, value.ToObject(property.PropertyType));
+        else
+            OtherProperties[name] = value;
     }
 
     /// <summary>

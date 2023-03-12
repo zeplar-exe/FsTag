@@ -9,38 +9,25 @@ namespace FsTag.Tests.Unit;
 [TestFixture]
 public class Remove : UnitTestBase
 {
-    private const string TestFileName = "C:/test/test1.txt";
-    
-    [SetUp]
-    public void RemoveSetUp()
-    {
-        App.FileIndex = new MockIndex();
-
-        var mockFileSystem = new MockFileSystem();
-        App.FileSystem = mockFileSystem;
-        
-        mockFileSystem.AddFile(TestFileName, new MockFileData(""));
-    }
-    
     [Test]
     public void TestRemove()
     {
-        App.FileIndex.Add(new[] { TestFileName, "test2", "test3" });
+        App.FileIndex.Add(new[] { "C:/test1.txt", "C:/test2.txt", "C:/test3.txt" });
         
-        Program.Runner.RunAndAssertExitCode(0, "rm", TestFileName);
+        Program.Runner.RunAndAssertExitCode(0, "rm", "C:/test1.txt");
 
         var items = App.FileIndex.EnumerateItems().ToArray();
         
         Assert.That(items, Has.Length.EqualTo(2));
-        Assert.That(items, Does.Not.Contain(TestFileName));
-        Assert.That(items, Does.Contain("test2"));
-        Assert.That(items, Does.Contain("test3"));
+        Assert.That(items, Does.Not.Contain("C:/test1.txt"));
+        Assert.That(items, Does.Contain("C:/test2.txt"));
+        Assert.That(items, Does.Contain("C:/test3.txt"));
     }
 
     [Test]
     public void TestRemoveAll()
     {
-        App.FileIndex.Add(new[] { "test1", "test2", "test3" });
+        App.FileIndex.Add(new[] { "C:/test1.txt", "C:/test2.txt", "C:/test3.txt" });
         
         Program.Runner.RunAndAssertExitCode(0, "rm", "all");
 
