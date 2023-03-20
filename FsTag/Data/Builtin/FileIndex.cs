@@ -1,4 +1,6 @@
-﻿using FsTag.Data.Interfaces;
+﻿using System.Text;
+
+using FsTag.Data.Interfaces;
 using FsTag.Helpers;
 using FsTag.Resources;
 
@@ -56,7 +58,7 @@ public class FileIndex : IFileIndex
         var itemsSet = items.ToHashSet();
         var removedAny = false;
 
-        using var indexWriter = new StreamWriter(new MemoryStream());
+        var indexBuilder = new StringBuilder();
 
         using (var reader = new StreamReader(BuiltinPaths.IndexFilePath))
         {
@@ -71,11 +73,9 @@ public class FileIndex : IFileIndex
                 }
                 else
                 {
-                    indexWriter.WriteLine(line);
+                    indexBuilder.AppendLine(line);
                 }
             }
-            
-            indexWriter.Flush();
         }
         
         if (!removedAny)
@@ -83,10 +83,10 @@ public class FileIndex : IFileIndex
             WriteFormatter.Info(CommandOutput.FileIndexRemoveNone);
         }
 
-        using var indexStream = App.FileSystem.File.OpenWrite(BuiltinPaths.IndexFilePath);
-        indexWriter.BaseStream.CopyTo(indexStream);
-
-        indexStream.Flush();
+        if (!Program.DryRun)
+        {
+            App.FileSystem.File.WriteAllText(BuiltinPaths.IndexFilePath, indexBuilder.ToString());
+        }
     }
 
     public void Clean(uint verbosity)
