@@ -1,5 +1,6 @@
 ﻿using CommandDotNet;
 
+using FsTag.Attributes;
 using FsTag.Data;
 using FsTag.Resources;
 
@@ -12,9 +13,9 @@ public partial class Program
     public class CleanCommand
     {
         [DefaultCommand]
-        public int Execute()
+        public int Execute([VerbosityOption] uint verbosity = 0)
         {
-            App.FileIndex.Clean();
+            App.FileIndex.Clean(verbosity);
 
             return 0;
         }

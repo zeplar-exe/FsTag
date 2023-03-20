@@ -159,6 +159,15 @@ namespace FsTag.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to For every supported command, prompts are ignored and assumed to evaluate to a positive response (i.e, yes in yes/no). Note that --quiet has the same effect in this regard..
+        /// </summary>
+        internal static string NoPromptOption {
+            get {
+                return ResourceManager.GetString("NoPromptOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Print the specified keys sequentially. Outputs the list of valid keys if given no arguments..
         /// </summary>
         internal static string PrintCommand {
@@ -177,7 +186,7 @@ namespace FsTag.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Suppress all terminal output *including input prompts*..
+        ///   Looks up a localized string similar to Suppress all terminal output *including input prompts*. That is, prompts will be answered positiviely (i.e, yes in yes/no)..
         /// </summary>
         internal static string QuietOption {
             get {
@@ -285,11 +294,11 @@ namespace FsTag.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to For every supported command, create detailed output messages..
+        ///   Looks up a localized string similar to Output verbosity for this command..
         /// </summary>
-        internal static string VerboseOption {
+        internal static string VerbosityOperand {
             get {
-                return ResourceManager.GetString("VerboseOption", resourceCulture);
+                return ResourceManager.GetString("VerbosityOperand", resourceCulture);
             }
         }
     }

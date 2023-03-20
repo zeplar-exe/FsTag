@@ -6,7 +6,7 @@ public static class Confirmation
 {
     public static bool Prompt(string text)
     {
-        if (Program.Quiet)
+        if (Program.Quiet || Program.NoPrompt)
             return true;
         
         var prompt = new Prompter(Program.IConsole);

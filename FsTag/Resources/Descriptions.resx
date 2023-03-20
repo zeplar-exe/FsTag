@@ -64,13 +64,13 @@
         <value>Delete every tagged file.</value>
     </data>
     <data name="QuietOption" xml:space="preserve">
-        <value>Suppress all terminal output *including input prompts*.</value>
+        <value>Suppress all terminal output *including input prompts*. That is, prompts will be answered positiviely (i.e, yes in yes/no).</value>
     </data>
     <data name="DryrunOption" xml:space="preserve">
         <value>For every supported command, avoid permanent changes (such as filesystem edits).</value>
     </data>
-    <data name="VerboseOption" xml:space="preserve">
-        <value>For every supported command, create detailed output messages.</value>
+    <data name="NoPromptOption" xml:space="preserve">
+        <value>For every supported command, prompts are ignored and assumed to evaluate to a positive response (i.e, yes in yes/no). Note that --quiet has the same effect in this regard.</value>
     </data>
     <data name="FilterOperand" xml:space="preserve">
         <value>The path filter to use. "See fstag print filters" for details.</value>
@@ -95,5 +95,8 @@
     </data>
     <data name="SetConfigValue" xml:space="preserve">
         <value>Json value to set to the specified configuration key.</value>
+    </data>
+    <data name="VerbosityOperand" xml:space="preserve">
+        <value>Output verbosity for this command.</value>
     </data>
 </root>

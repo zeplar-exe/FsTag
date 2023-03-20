@@ -1,5 +1,6 @@
 ﻿using CommandDotNet;
 
+using FsTag.Attributes;
 using FsTag.Data;
 using FsTag.Helpers;
 using FsTag.Resources;
@@ -20,7 +21,8 @@ public partial class Program
         {
             [DefaultCommand]
             public int Execute(
-                [Option('r', "recycle", Description = nameof(Descriptions.DeleteRecycle))] bool recycle)
+                [Option('r', "recycle", Description = nameof(Descriptions.DeleteRecycle))] bool recycle,
+                [VerbosityOption] uint verbosity = 0)
             {
                 var files = App.FileIndex.EnumerateItems().ToArray();
                 var sessionName = App.SessionData.CurrentSessionName;
@@ -51,7 +53,7 @@ public partial class Program
                                 if (!DryRun)
                                     App.FileSystem.File.Delete(file);
 
-                                if (Verbose)
+                                if (verbosity >= 1)
                                     WriteFormatter.Info(string.Format(CommandOutput.BulkDeletedFile, file));
                             }
                             
@@ -68,8 +70,8 @@ public partial class Program
                     }
                 }
 
-                App.FileIndex.Remove(removed);
-                WriteFormatter.Info(string.Format(CommandOutput.BulkDeleteCompleted, removed.Count, removed.Count));
+                App.FileIndex.Remove(removed, verbosity);
+                WriteFormatter.Info(string.Format(CommandOutput.BulkDeleteCompleted, removed.Count, files.Length));
 
                 return 0;
             }

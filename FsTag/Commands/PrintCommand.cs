@@ -31,6 +31,10 @@ public partial class Program
                     WriteFormatter.Plain(item);
                 }
             }),
+            new("index_size", PrintKeyDescriptions.Index, () =>
+            {
+                WriteFormatter.Plain(App.FileIndex.EnumerateItems().ToArray().Length.ToString());
+            }),
             new("raw_config", PrintKeyDescriptions.RawConfig, () =>
             {
                 var config = App.ConfigData.Read();

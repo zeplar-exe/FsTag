@@ -17,9 +17,10 @@ public partial class Program
         [DefaultCommand]
         public int Execute(
             [PathFilterOperand] PathFilter filter,
-            [RecurseOption] uint recurseDepth = 0)
+            [RecurseOption] uint recurseDepth = 0,
+            [VerbosityOption] uint verbosity = 0)
         {
-            return FilterHelper.ExecuteOnFilterItems(filter, recurseDepth, App.FileIndex.Remove);
+            return FilterHelper.ExecuteOnFilterItems(filter, recurseDepth, enumerable => App.FileIndex.Remove(enumerable, verbosity));
         }
 
         [Command("all", Description = nameof(Descriptions.RemoveAllCommand))]

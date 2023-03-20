@@ -17,8 +17,8 @@ public partial class Program
     /// A CommandDotNet-injected IConsole, should be used over Console.WriteXXX.
     /// </summary>
     public static IConsole IConsole { get; set; }
-    public static bool Verbose { get; set; }
     public static bool Quiet { get; set; }
+    public static bool NoPrompt { get; set; }
     public static bool DryRun { get; set; }
     
     public static int Main(string[] args)
@@ -35,14 +35,14 @@ public partial class Program
         IConsole console,
         [Option('q', "quiet", Description = nameof(Descriptions.QuietOption),
             AssignToExecutableSubcommands = true)] bool quiet,
-        [Option('v', "verbose", Description = nameof(Descriptions.VerboseOption),
-            AssignToExecutableSubcommands = true)] bool verbose,
+        [Option("no-prompt", Description = nameof(Descriptions.NoPromptOption),
+            AssignToExecutableSubcommands = true)] bool noPrompt,
         [Option("dryrun", Description = nameof(Descriptions.DryrunOption), 
             AssignToExecutableSubcommands = true)] bool dryRun)
     {
         IConsole = console;
         Quiet = quiet;
-        Verbose = verbose;
+        NoPrompt = noPrompt;
         DryRun = dryRun;
         
         try

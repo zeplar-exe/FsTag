@@ -51,7 +51,7 @@ public class FileIndex : IFileIndex
             writer.Flush();
     }
 
-    public void Remove(IEnumerable<string> items)
+    public void Remove(IEnumerable<string> items, uint verbosity)
     {
         var itemsSet = items.ToHashSet();
         var removedAny = false;
@@ -64,7 +64,9 @@ public class FileIndex : IFileIndex
             {
                 if (itemsSet.Contains(line))
                 {
-                    WriteFormatter.Info(string.Format(CommandOutput.FileIndexRemoveItem, line));
+                    if (verbosity >= 1)
+                        WriteFormatter.Info(string.Format(CommandOutput.FileIndexRemoveItem, line));
+                    
                     removedAny = true;
                 }
                 else
@@ -87,11 +89,11 @@ public class FileIndex : IFileIndex
         indexStream.Flush();
     }
 
-    public void Clean()
+    public void Clean(uint verbosity)
     {
         var removed = EnumerateItems().Where(tag => !App.FileSystem.File.Exists(tag));
         
-        Remove(removed);
+        Remove(removed, verbosity);
     }
 
     public void Clear()
