@@ -11,12 +11,14 @@ public class UnitTestBase
 {
     public static TestConsole TestConsole { get; set; }
     public static MockFileSystem MockFileSystem { get; set; }
-
+    
     [SetUp]
     public void SetUp()
     {
         TestConsole = new TestConsole();
         Program.IConsole = TestConsole;
+
+        Program.Runner.Configure(c => c.Console = TestConsole);
         
         App.FileIndex = new MockIndex();
 

@@ -58,18 +58,19 @@ public class Config : UnitTestBase
 
         var config = MockConfig.Read();
         
+        Assert.That(config.OtherProperties, Contains.Key("c"));
         Assert.That(config.OtherProperties["c"]!.Value<int>(), Is.EqualTo(5));
     }
 
     [Test]
     public void TestSetBuiltin()
     {
-        Program.Runner.RunAndAssertExitCode(0, "config", "set", "session_name", "\"hello world\"");
+        Program.Runner.VerifyExitCode(0, "config", "set", "session_name", "\"hello world\"");
     }
 
     [Test]
     public void TestSetBuiltinInvalid()
     {
-        Program.Runner.RunAndAssertExitCode(1, "config", "set", "format_json_output", "{}");
+        Program.Runner.VerifyExitCode(1, "config", "set", "format_json_output", "{}");
     }
 }

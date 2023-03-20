@@ -60,7 +60,7 @@ namespace FsTag.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete {0} files? (Session: {1})? (yes/no): .
+        ///   Looks up a localized string similar to Are you sure you want to delete {0} files? (Session: {1})? (yes/no).
         /// </summary>
         internal static string BulkDelete {
             get {

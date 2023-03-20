@@ -54,15 +54,12 @@ public class FileIndex : IFileIndex
     public void Remove(IEnumerable<string> items)
     {
         var itemsSet = items.ToHashSet();
-        
-        var tempIndex = Path.GetTempFileName();
         var removedAny = false;
+
+        using var indexWriter = new StreamWriter(new MemoryStream());
 
         using (var reader = new StreamReader(BuiltinPaths.IndexFilePath))
         {
-            var stream = App.FileSystem.File.Open(tempIndex, FileMode.Append, FileAccess.Write);
-            using var writer = new StreamWriter(stream);
-
             while (reader.ReadLine() is {} line)
             {
                 if (itemsSet.Contains(line))
@@ -72,26 +69,22 @@ public class FileIndex : IFileIndex
                 }
                 else
                 {
-                    if (!Program.DryRun)
-                        writer.WriteLine(line);
+                    indexWriter.WriteLine(line);
                 }
             }
             
-            if (!Program.DryRun)
-                writer.Flush();
+            indexWriter.Flush();
         }
-
+        
         if (!removedAny)
         {
             WriteFormatter.Info(CommandOutput.FileIndexRemoveNone);
-            
-            return;
         }
 
-        if (!Program.DryRun)
-        {
-            App.FileSystem.File.Move(tempIndex, BuiltinPaths.IndexFilePath);
-        }
+        using var indexStream = App.FileSystem.File.OpenWrite(BuiltinPaths.IndexFilePath);
+        indexWriter.BaseStream.CopyTo(indexStream);
+
+        indexStream.Flush();
     }
 
     public void Clean()

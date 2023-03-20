@@ -1,13 +1,22 @@
 ﻿using CommandDotNet;
+using CommandDotNet.TestTools.Scenarios;
 
 namespace FsTag.Tests.Extensions;
 
 public static class AppRunnerExtensions
 {
-    public static void RunAndAssertExitCode(this AppRunner runner, int code, params string[] args)
+    public static void VerifyExitCode(this AppRunner runner, int code, params string[] args)
     {
-        var result = runner.Run(args);
-        
-        Assert.That(result, Is.EqualTo(code), $"Expected exit code of {code}, got {result}.");
+        runner.Verify(new Scenario
+        {
+            When =
+            {
+                ArgsArray = args
+            },
+            Then =
+            {
+                ExitCode = code
+            }
+        });
     }
 }

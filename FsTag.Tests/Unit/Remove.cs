@@ -14,7 +14,7 @@ public class Remove : UnitTestBase
     {
         App.FileIndex.Add(new[] { "C:/test1.txt", "C:/test2.txt", "C:/test3.txt" });
         
-        Program.Runner.RunAndAssertExitCode(0, "rm", "C:/test1.txt");
+        Program.Runner.VerifyExitCode(0, "rm", "C:/test1.txt");
 
         var items = App.FileIndex.EnumerateItems().ToArray();
         
@@ -29,7 +29,7 @@ public class Remove : UnitTestBase
     {
         App.FileIndex.Add(new[] { "C:/test1.txt", "C:/test2.txt", "C:/test3.txt" });
         
-        Program.Runner.RunAndAssertExitCode(0, "rm", "all");
+        Program.Runner.VerifyExitCode(0, "rm", "all");
 
         var items = App.FileIndex.EnumerateItems().ToArray();
         

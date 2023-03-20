@@ -18,7 +18,9 @@ public class DocumentationData : IDocumentationData
             .UseYamlFrontMatter()
             .EnableTrackTrivia()
             .Build();
-        var yamlDeserializer = new DeserializerBuilder().Build();
+        var yamlDeserializer = new DeserializerBuilder()
+            .IgnoreUnmatchedProperties()
+            .Build();
 
         foreach (var file in Directory.EnumerateFiles(DirectoryPath, "*.md"))
         {
@@ -41,7 +43,7 @@ public class DocumentationData : IDocumentationData
 
                 aliasNames.AddRange(metadata.Alias);
                 
-                moduleContent = moduleContent.Remove(0, yamlMetadata.Span.Length);
+                moduleContent = moduleContent.Remove(yamlMetadata.Span.Start, yamlMetadata.Span.Length);
             }
                 
             yield return new DocumentationModule(aliasNames.ToArray(), moduleContent);

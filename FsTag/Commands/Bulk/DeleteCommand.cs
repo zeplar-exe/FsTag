@@ -42,7 +42,8 @@ public partial class Program
                         {
                             if (recycle)
                             {
-                                if (!DryRun) // Cannot be reasonably abstracted to my knowledge
+                                if (!DryRun) 
+                                    // Cannot be reasonably abstracted to my knowledge, also windows-only?
                                     FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                             }
                             else
@@ -50,7 +51,8 @@ public partial class Program
                                 if (!DryRun)
                                     App.FileSystem.File.Delete(file);
 
-                                WriteFormatter.Info(string.Format(CommandOutput.BulkDeletedFile, file));
+                                if (Verbose)
+                                    WriteFormatter.Info(string.Format(CommandOutput.BulkDeletedFile, file));
                             }
                             
                             removed.Add(file);
@@ -67,6 +69,7 @@ public partial class Program
                 }
 
                 App.FileIndex.Remove(removed);
+                WriteFormatter.Info(string.Format(CommandOutput.BulkDeleteCompleted, removed.Count, removed.Count));
 
                 return 0;
             }

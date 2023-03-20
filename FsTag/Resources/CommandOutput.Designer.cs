@@ -60,6 +60,15 @@ namespace FsTag.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deleted {0}/{1} files..
+        /// </summary>
+        internal static string BulkDeleteCompleted {
+            get {
+                return ResourceManager.GetString("BulkDeleteCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deleted &apos;{0}&apos;..
         /// </summary>
         internal static string BulkDeletedFile {

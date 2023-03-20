@@ -72,4 +72,7 @@
     <data name="SessionMissing" xml:space="preserve">
         <value>The session '{0}' does not exist.</value>
     </data>
+    <data name="BulkDeleteCompleted" xml:space="preserve">
+        <value>Deleted {0}/{1} files.</value>
+    </data>
 </root>

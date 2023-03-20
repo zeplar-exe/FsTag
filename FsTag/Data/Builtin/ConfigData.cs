@@ -12,11 +12,7 @@ public class ConfigData : IConfigData
     {
         var parsedJson = DataFileHelper.ParseJson(BuiltinPaths.ConfigFilePath);
 
-        if (parsedJson == null)
-            return null;
-
-        return parsedJson.ToObject<Configuration>() ?? new Configuration();
-        // If null for whatever reason, return the default
+        return parsedJson?.ToObject<Configuration>();
     }
 
     public void SetProperty(string key, JToken? value)
