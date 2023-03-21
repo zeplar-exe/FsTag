@@ -62,7 +62,7 @@ public partial class Program
     
     [DefaultCommand]
     public int Execute([PathFilterOperand] PathFilter filter, 
-        [RecurseOption] uint recurseDepth = 0)
+        [RecurseOption] int recurseDepth = 0)
     {
         return new TagCommand().Execute(filter, recurseDepth);
     }

@@ -22,7 +22,7 @@ public partial class Program
             [DefaultCommand]
             public int Execute(
                 [Option('r', "recycle", Description = nameof(Descriptions.DeleteRecycle))] bool recycle,
-                [VerbosityOption] uint verbosity = 0)
+                [VerbosityOption] int verbosity = 0)
             {
                 var files = App.FileIndex.EnumerateItems().ToArray();
                 var sessionName = App.SessionData.CurrentSessionName;

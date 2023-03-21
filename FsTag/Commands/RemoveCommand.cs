@@ -17,8 +17,8 @@ public partial class Program
         [DefaultCommand]
         public int Execute(
             [PathFilterOperand] PathFilter filter,
-            [RecurseOption] uint recurseDepth = 0,
-            [VerbosityOption] uint verbosity = 0)
+            [RecurseOption] int recurseDepth = 0,
+            [VerbosityOption] int verbosity = 0)
         {
             return FilterHelper.ExecuteOnFilterItems(filter, recurseDepth, enumerable => App.FileIndex.Remove(enumerable, verbosity));
         }

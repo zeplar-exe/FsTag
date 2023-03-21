@@ -26,7 +26,7 @@ public class MockIndex : IFileIndex
         }
     }
 
-    public void Remove(IEnumerable<string> items, uint verbosity)
+    public void Remove(IEnumerable<string> items, int verbosity)
     {
         foreach (var item in items)
         {
@@ -34,7 +34,7 @@ public class MockIndex : IFileIndex
         }
     }
 
-    public void Clean(uint verbosity)
+    public void Clean(int verbosity)
     {
         Program.IConsole.WriteLine("Cleaned index.");
     }

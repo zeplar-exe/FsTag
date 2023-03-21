@@ -53,7 +53,7 @@ public class FileIndex : IFileIndex
             writer.Flush();
     }
 
-    public void Remove(IEnumerable<string> items, uint verbosity)
+    public void Remove(IEnumerable<string> items, int verbosity)
     {
         var itemsSet = items.ToHashSet();
         var removedAny = false;
@@ -89,7 +89,7 @@ public class FileIndex : IFileIndex
         }
     }
 
-    public void Clean(uint verbosity)
+    public void Clean(int verbosity)
     {
         var removed = EnumerateItems().Where(tag => !App.FileSystem.File.Exists(tag));
         

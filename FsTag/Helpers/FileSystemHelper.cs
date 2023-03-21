@@ -4,7 +4,7 @@ namespace FsTag.Helpers;
 
 public static class FileSystemHelper
 {
-    public static IEnumerable<string> EnumerateFilesToDepth(string directory, uint targetDepth)
+    public static IEnumerable<string> EnumerateFilesToDepth(string directory, int targetDepth)
     {
         foreach (var file in EnumerateFilesToDepth(directory, targetDepth, 0))
         {
@@ -12,7 +12,7 @@ public static class FileSystemHelper
         }
     }
         
-    private static IEnumerable<string> EnumerateFilesToDepth(string directory, uint maxDepth, uint depth)
+    private static IEnumerable<string> EnumerateFilesToDepth(string directory, int maxDepth, int depth)
     {
         if (depth > maxDepth)
             yield break;

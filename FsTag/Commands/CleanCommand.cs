@@ -13,7 +13,7 @@ public partial class Program
     public class CleanCommand
     {
         [DefaultCommand]
-        public int Execute([VerbosityOption] uint verbosity = 0)
+        public int Execute([VerbosityOption] int verbosity = 0)
         {
             App.FileIndex.Clean(verbosity);
 
