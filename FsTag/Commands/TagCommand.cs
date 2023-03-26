@@ -17,9 +17,10 @@ public partial class Program
         [DefaultCommand]
         public int Execute(
             [PathFilterOperand] PathFilter filter, 
-            [RecurseOption] int recurseDepth = 0)
+            [RecurseOption] int recurseDepth = 0,
+            [IncludeDirectoriesOption] bool includeDirectories = false)
         {
-            return FilterHelper.ExecuteOnFilterItems(filter, recurseDepth, App.FileIndex.Add);
+            return FilterHelper.ExecuteOnFilterItems(filter, recurseDepth, includeDirectories, App.FileIndex.Add);
         }
     }
 }

@@ -8,7 +8,7 @@ public class RegexFilterParser : PathFilterParser
 {
     public override string[] Identifiers => new[] { "re", "regex" };
     
-    public override IEnumerable<string> EnumerateFiles(string filter)
+    public override IEnumerable<string> EnumerateFiles(string filter, bool includeDirectories)
     {
         var regex = new Regex(filter);
 
@@ -16,7 +16,7 @@ public class RegexFilterParser : PathFilterParser
         {
             var relative = Path.GetRelativePath(CurrentDirectory, path);
 
-            return regex!.IsMatch(relative);
+            return regex.IsMatch(relative);
         }
 
         var files = App.FileSystem.Directory.EnumerateFiles(CurrentDirectory, "*");
@@ -27,12 +27,15 @@ public class RegexFilterParser : PathFilterParser
                 yield return file;
         }
 
-        var dirs = App.FileSystem.Directory.EnumerateDirectories(CurrentDirectory);
-
-        foreach (var dir in dirs)
+        if (includeDirectories)
         {
-            if (IsMatch(dir))
-                yield return dir;
+            var dirs = App.FileSystem.Directory.EnumerateDirectories(CurrentDirectory);
+
+            foreach (var dir in dirs)
+            {
+                if (IsMatch(dir))
+                    yield return dir;
+            }
         }
     }
 }

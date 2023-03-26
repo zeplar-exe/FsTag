@@ -7,7 +7,7 @@ public class GlobFilterParser : PathFilterParser
 {
     public override string[] Identifiers => new[] { "f", "formatted", "g", "glob" };
     
-    public override IEnumerable<string> EnumerateFiles(string filter)
+    public override IEnumerable<string> EnumerateFiles(string filter, bool includeDirectories)
     {
         var glob = DotNet.Globbing.Glob.Parse(filter);
         
@@ -26,12 +26,15 @@ public class GlobFilterParser : PathFilterParser
                 yield return file;
         }
 
-        var dirs = App.FileSystem.Directory.EnumerateDirectories(CurrentDirectory);
-
-        foreach (var dir in dirs)
+        if (includeDirectories)
         {
-            if (IsMatch(dir))
-                yield return dir;
+            var dirs = App.FileSystem.Directory.EnumerateDirectories(CurrentDirectory);
+
+            foreach (var dir in dirs)
+            {
+                if (IsMatch(dir))
+                    yield return dir;
+            }
         }
     }
 }

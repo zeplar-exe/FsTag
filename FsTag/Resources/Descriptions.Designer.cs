@@ -159,6 +159,15 @@ namespace FsTag.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Whether to include directories when filtering..
+        /// </summary>
+        internal static string IncludeDirsOp {
+            get {
+                return ResourceManager.GetString("IncludeDirsOp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to For every supported command, prompts are ignored and assumed to evaluate to a positive response (i.e, yes in yes/no). Note that --quiet has the same effect in this regard..
         /// </summary>
         internal static string NoPromptOption {

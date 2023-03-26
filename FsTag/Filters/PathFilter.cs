@@ -26,7 +26,7 @@ public class PathFilter : IArgumentModel
         ParserContainer.Add<RegexFilterParser>();
     }
 
-    public IEnumerable<string> EnumerateFiles()
+    public IEnumerable<string> EnumerateFiles(bool includeDirectories)
     {
         if (Filter == null)
         {
@@ -37,7 +37,7 @@ public class PathFilter : IArgumentModel
         foreach (var parser in ParserContainer.EnumerateParsers())
         {
             if (parser.Identifiers.Contains(Identifier))
-                return parser.EnumerateFiles(Filter);
+                return parser.EnumerateFiles(Filter, includeDirectories);
         }
 
         return Array.Empty<string>();

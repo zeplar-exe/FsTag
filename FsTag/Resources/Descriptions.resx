@@ -99,4 +99,7 @@
     <data name="VerbosityOperand" xml:space="preserve">
         <value>Output verbosity for this command.</value>
     </data>
+    <data name="IncludeDirsOp" xml:space="preserve">
+        <value>Whether to include directories when filtering.</value>
+    </data>
 </root>
