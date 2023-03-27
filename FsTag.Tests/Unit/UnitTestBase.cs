@@ -3,6 +3,7 @@
 using CommandDotNet.TestTools;
 
 using FsTag.Data;
+using FsTag.Data.Builtin;
 using FsTag.Tests.Unit.Mocks;
 
 namespace FsTag.Tests.Unit;
@@ -10,8 +11,11 @@ namespace FsTag.Tests.Unit;
 public class UnitTestBase
 {
     public static TestConsole TestConsole { get; set; }
+    public static MockFileIndex MockFileIndex { get; set; }
     public static MockFileSystem MockFileSystem { get; set; }
-    
+    public static MockConfig MockConfig { get; set; }
+    public static MockSessionData MockSessionData { get; set; }
+
     [SetUp]
     public void SetUp()
     {
@@ -20,10 +24,10 @@ public class UnitTestBase
 
         Program.Runner.Configure(c => c.Console = TestConsole);
         
-        App.FileIndex = new MockIndex();
-
-        MockFileSystem = new MockFileSystem();
-        App.FileSystem = MockFileSystem;
+        App.FileIndex = MockFileIndex = new MockFileIndex();
+        App.ConfigData = MockConfig = new MockConfig();
+        App.FileSystem = MockFileSystem = new MockFileSystem();
+        App.SessionData = MockSessionData = new MockSessionData();
         
         MockFileSystem.AddEmptyFile("C:/test1.txt");
         MockFileSystem.AddEmptyFile("C:/test2.txt");

@@ -22,7 +22,7 @@ public class DocumentationData : IDocumentationData
             .IgnoreUnmatchedProperties()
             .Build();
 
-        foreach (var file in Directory.EnumerateFiles(DirectoryPath, "*.md"))
+        foreach (var file in App.FileSystem.Directory.EnumerateFiles(DirectoryPath, "*.md"))
         {
             var content = App.FileSystem.File.ReadAllText(file);
             var md = Markdown.Parse(content, markdownPipeline);

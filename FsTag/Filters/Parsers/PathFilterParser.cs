@@ -1,8 +1,10 @@
-﻿namespace FsTag.Filters.Parsers;
+﻿using FsTag.Data;
+
+namespace FsTag.Filters.Parsers;
 
 public abstract class PathFilterParser
 {
-    protected string CurrentDirectory => Directory.GetCurrentDirectory();
+    protected string CurrentDirectory => App.FileSystem.Directory.GetCurrentDirectory();
     
     public abstract string[] Identifiers { get; }
     

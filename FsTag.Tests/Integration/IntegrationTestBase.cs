@@ -21,6 +21,5 @@ public class IntegrationTestBase
     public void TearDown()
     {
         Directory.Delete(BuiltinPaths.IntegrationRoot);
-        TestConsole.Clear();
     }
 }

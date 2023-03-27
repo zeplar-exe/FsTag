@@ -1,0 +1,9 @@
+﻿using NUnit.Framework;
+
+namespace FsTag.Tests.Unit;
+
+[TestFixture]
+public class Print : UnitTestBase
+{
+    
+}

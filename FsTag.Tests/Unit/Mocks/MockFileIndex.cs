@@ -4,11 +4,11 @@ using FsTag.Data.Interfaces;
 
 namespace FsTag.Tests.Unit.Mocks;
 
-public class MockIndex : IFileIndex
+public class MockFileIndex : IFileIndex
 {
     private List<string> Items { get; }
 
-    public MockIndex()
+    public MockFileIndex()
     {
         Items = new List<string>();
     }

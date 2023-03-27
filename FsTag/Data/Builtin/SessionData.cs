@@ -34,29 +34,36 @@ public class SessionData : ISessionData
         
         var fullPath = Path.Join(BuiltinPaths.SessionDirectoryPath, name);
         
-        Directory.CreateDirectory(fullPath);
+        App.FileSystem.Directory.CreateDirectory(fullPath);
 
         return true;
     }
 
     public bool RemoveSession(string name)
     {
+        if (CurrentSessionName == name)
+        {
+            WriteFormatter.Error("Cannot remove the current session. Switch to a different one.");
+
+            return false;
+        }
+        
         var directory = Path.Join(BuiltinPaths.SessionDirectoryPath, name);
 
-        if (!Directory.Exists(directory))
+        if (!App.FileSystem.Directory.Exists(directory))
         {
             WriteFormatter.Error(string.Format(CommandOutput.SessionMissing, name));
 
             return false;
         }
             
-        Directory.Delete(directory);
+        App.FileSystem.Directory.Delete(directory);
 
         return true;
     }
 
     public IEnumerable<string> GetExistingSessions()
     {
-        return Directory.EnumerateDirectories(BuiltinPaths.SessionDirectoryPath);
+        return App.FileSystem.Directory.EnumerateDirectories(BuiltinPaths.SessionDirectoryPath);
     }
 }

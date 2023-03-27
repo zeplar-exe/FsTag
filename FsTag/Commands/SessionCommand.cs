@@ -1,4 +1,6 @@
-﻿using CommandDotNet;
+﻿using System.Diagnostics;
+
+using CommandDotNet;
 
 using FsTag.Data;
 using FsTag.Helpers;
@@ -25,7 +27,7 @@ public partial class Program
                 }
                 else
                 {
-                    WriteFormatter.Plain(currentSession);
+                    WriteFormatter.Plain(currentSession!);
                 }
             }
 

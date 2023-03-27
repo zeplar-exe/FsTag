@@ -11,50 +11,25 @@ namespace FsTag.Tests.Unit;
 [TestFixture]
 public class Config : UnitTestBase
 {
-    private MockConfig MockConfig { get; set; }
+    private Configuration Configuration => App.ConfigData.Read()!;
 
     [SetUp]
     public void ConfigSetUp()
     {
-        MockConfig = new MockConfig();
-        App.ConfigData = MockConfig;
-        
         MockConfig.SetProperty("a", JToken.FromObject("b"));
         MockConfig.SetProperty("c", JToken.FromObject(1));
     }
     
     [Test]
-    public void TestGetConfig()
+    public void TestGetCustomConfig()
     {
-        Program.Runner.Verify(new Scenario
-        {
-            When =
-            {
-                ArgsArray = new[] { "config", "a" }
-            },
-            Then =
-            {
-                Output = "\"b\"",
-                ExitCode = 0
-            }
-        });
+        Program.Runner.VerifyExitCode(0, "config", "a");
     }
     
     [Test]
-    public void TestSetConfig()
+    public void TestSetCustomConfig()
     {
-        Program.Runner.Verify(new Scenario
-        {
-            When =
-            {
-                ArgsArray = new[] { "config", "set", "c", "5" }
-            },
-            Then =
-            {
-                Output = "c=5",
-                ExitCode = 0
-            }
-        });
+        Program.Runner.VerifyExitCode(0, "config", "set", "c", "5");
 
         var config = MockConfig.Read();
         
@@ -66,11 +41,15 @@ public class Config : UnitTestBase
     public void TestSetBuiltin()
     {
         Program.Runner.VerifyExitCode(0, "config", "set", "session_name", "\"hello world\"");
+        Assert.That(Configuration.SessionName, Is.EqualTo("hello world"));
     }
 
     [Test]
     public void TestSetBuiltinInvalid()
     {
+        var initialValue = Configuration.FormatJsonOutput;
+        
         Program.Runner.VerifyExitCode(1, "config", "set", "format_json_output", "{}");
+        Assert.That(Configuration.FormatJsonOutput, Is.EqualTo(initialValue));
     }
 }

@@ -13,7 +13,7 @@ public class PathFilter : IArgumentModel
     [Operand("Filter/Identifier")]
     public string Identifier { get; set; }
     
-    /// <remarks>When this is null, it's to be handled as if the identifier is a relative or absolute path.</remarks>
+    /// <remarks>When this is null, it is to be handled as if the identifier is a relative or absolute path.</remarks>
     [Operand("Filter")]
     public string? Filter { get; set; }
 
