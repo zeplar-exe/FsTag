@@ -60,6 +60,15 @@ namespace FsTag.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File path of the app&apos;s configuration file..
+        /// </summary>
+        internal static string ConfigFilePath {
+            get {
+                return ResourceManager.GetString("ConfigFilePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A list of all registered configurations..
         /// </summary>
         internal static string ConfigList {
@@ -69,11 +78,29 @@ namespace FsTag.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Directory path of the application&apos;s data files..
+        /// </summary>
+        internal static string DataDirectoryPath {
+            get {
+                return ResourceManager.GetString("DataDirectoryPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A list of all tagged files..
         /// </summary>
         internal static string Index {
             get {
                 return ResourceManager.GetString("Index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File path of the current index file..
+        /// </summary>
+        internal static string IndexFilePath {
+            get {
+                return ResourceManager.GetString("IndexFilePath", resourceCulture);
             }
         }
         
@@ -101,6 +128,15 @@ namespace FsTag.Resources {
         internal static string RawConfig {
             get {
                 return ResourceManager.GetString("RawConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Directory path of the current session..
+        /// </summary>
+        internal static string SessionDirectoryPath {
+            get {
+                return ResourceManager.GetString("SessionDirectoryPath", resourceCulture);
             }
         }
     }

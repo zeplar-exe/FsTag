@@ -33,4 +33,16 @@
     <data name="IntegrationDir" xml:space="preserve">
         <value />
     </data>
+    <data name="DataDirectoryPath" xml:space="preserve">
+        <value>Directory path of the application's data files.</value>
+    </data>
+    <data name="ConfigFilePath" xml:space="preserve">
+        <value>File path of the app's configuration file.</value>
+    </data>
+    <data name="IndexFilePath" xml:space="preserve">
+        <value>File path of the current index file.</value>
+    </data>
+    <data name="SessionDirectoryPath" xml:space="preserve">
+        <value>Directory path of the current session.</value>
+    </data>
 </root>

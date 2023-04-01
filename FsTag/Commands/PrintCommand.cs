@@ -1,6 +1,7 @@
 ﻿using CommandDotNet;
 
 using FsTag.Data;
+using FsTag.Data.Models;
 using FsTag.Helpers;
 using FsTag.Resources;
 
@@ -15,57 +16,6 @@ public partial class Program
     [Subcommand]
     public class PrintCommand
     {
-        private static readonly PrintKey[] Keys =
-        {
-            new("print_keys", PrintKeyDescriptions.PrintKeys, () =>
-            {
-                foreach (var key in Keys)
-                {
-                    WriteFormatter.Plain($"{key.Key} - {key.Description}");
-                }
-            }),
-            new("index", PrintKeyDescriptions.Index, () =>
-            {
-                foreach (var item in App.FileIndex.EnumerateItems())
-                {
-                    WriteFormatter.Plain(item);
-                }
-            }),
-            new("index_size", PrintKeyDescriptions.Index, () =>
-            {
-                WriteFormatter.Plain(App.FileIndex.EnumerateItems().ToArray().Length.ToString());
-            }),
-            new("raw_config", PrintKeyDescriptions.RawConfig, () =>
-            {
-                var config = App.ConfigData.Read();
-            
-                if (config == null)
-                    return;
-
-                var format = config.FormatJsonOutput ? Formatting.Indented : Formatting.None;
-                var json = JObject.FromObject(config);
-                
-                WriteFormatter.Plain(json.ToString(format));
-            }),
-            new("config_list", PrintKeyDescriptions.ConfigList, () =>
-            {
-                var config = App.ConfigData.Read();
-            
-                if (config == null)
-                    return;
-                
-                var json = JObject.FromObject(config);
-
-                foreach (var item in json)
-                {
-                    var formatting = JsonHelper.GetConfigJsonFormatting(config);
-                    var output = $"{item.Key}={item.Value?.ToString(formatting) ?? "null"}";
-                
-                    WriteFormatter.Plain(output);
-                }
-            }),
-        };
-        
         [DefaultCommand]
         public int Execute(
             [Operand("keys", Description = nameof(Descriptions.PrintKeysOperand))] 
@@ -79,7 +29,7 @@ public partial class Program
                 
                 WriteFormatter.NewLine();
                 
-                foreach (var key in Keys)
+                foreach (var key in App.PrintKeyProvider.EnumerateData())
                 {
                     WriteFormatter.Plain($"{key.Key} - {key.Description}");
                 }
@@ -91,14 +41,11 @@ public partial class Program
             
             foreach (var key in keys)
             {
-                foreach (var registered in Keys)
+                if (App.PrintKeyProvider.Get(key) is {} data) // not null
                 {
-                    if (registered.Key == key)
-                    {
-                        registered.Action.Invoke();
+                    data.Action.Invoke();
 
-                        return 0;
-                    }
+                    return 0;
                 }
                 
                 WriteFormatter.Error(string.Format(CommandOutput.PrintKeyNotFound, key));
@@ -109,6 +56,4 @@ public partial class Program
             return 0;
         }
     }
-    
-    private record PrintKey(string Key, string Description, Action Action);
 }
