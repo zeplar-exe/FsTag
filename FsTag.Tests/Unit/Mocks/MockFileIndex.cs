@@ -7,6 +7,8 @@ namespace FsTag.Tests.Unit.Mocks;
 public class MockFileIndex : IFileIndex
 {
     private List<string> Items { get; }
+    
+    public bool Cleaned { get; private set; }
 
     public MockFileIndex()
     {
@@ -36,7 +38,7 @@ public class MockFileIndex : IFileIndex
 
     public void Clean(int verbosity)
     {
-        Program.IConsole.WriteLine("Cleaned index.");
+        Cleaned = true;
     }
 
     public void Clear()

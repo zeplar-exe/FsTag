@@ -29,7 +29,7 @@ public partial class Program
                 
                 WriteFormatter.NewLine();
                 
-                foreach (var key in App.PrintKeyProvider.EnumerateData())
+                foreach (var key in App.PrintDataProvider.EnumerateData())
                 {
                     WriteFormatter.Plain($"{key.Key} - {key.Description}");
                 }
@@ -41,7 +41,7 @@ public partial class Program
             
             foreach (var key in keys)
             {
-                if (App.PrintKeyProvider.Get(key) is {} data) // not null
+                if (App.PrintDataProvider.Get(key) is {} data) // not null
                 {
                     data.Action.Invoke();
 

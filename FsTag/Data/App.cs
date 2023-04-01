@@ -11,6 +11,6 @@ public static class App
     public static IFileIndex FileIndex { get; set; } = new FileIndex();
     public static IConfigData ConfigData { get; set; } = new ConfigData();
     public static IDocumentationData DocumentationData { get; set; } = new DocumentationData();
-    public static IPrintKeyProvider PrintKeyProvider { get; set; } = new PrintKeyProvider();
+    public static IPrintDataProvider PrintDataProvider { get; set; } = new PrintDataProvider();
     public static IFileSystem FileSystem { get; set; } = new FileSystem();
 }

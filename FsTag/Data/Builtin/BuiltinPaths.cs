@@ -9,7 +9,7 @@ internal class BuiltinPaths
         Path.Join(Path.GetTempPath(), Path.GetRandomFileName() + "_integration_" + Constants.DataDirectoryName);
     
     public static string SessionDirectoryPath => 
-        DataFileHelper.EnsureDirectory(Path.Join(RootDataDirectory, $"sessions"));
+        DataFileHelper.EnsureDirectory(Path.Join(RootDataDirectory, "sessions", App.SessionData.CurrentSessionName));
     
     public static string IndexFilePath => 
         DataFileHelper.EnsureFile(

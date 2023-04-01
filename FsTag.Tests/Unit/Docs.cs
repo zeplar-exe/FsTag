@@ -1,9 +1,0 @@
-﻿using NUnit.Framework;
-
-namespace FsTag.Tests.Unit;
-
-[TestFixture]
-public class Docs : UnitTestBase
-{
-    
-}

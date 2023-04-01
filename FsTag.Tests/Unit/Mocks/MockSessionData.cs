@@ -6,7 +6,7 @@ public class MockSessionData : ISessionData
 {
     private HashSet<string> Sessions { get; }
 
-    public string? CurrentSessionName { get; private set; }
+    public string? CurrentSessionName { get; private set; } = "default_mock";
 
     public MockSessionData()
     {

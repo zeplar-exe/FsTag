@@ -2,7 +2,7 @@
 
 namespace FsTag.Data.Interfaces;
 
-public interface IPrintKeyProvider
+public interface IPrintDataProvider
 {
     public PrintData? Get(string key);
     public IEnumerable<PrintData> EnumerateData();

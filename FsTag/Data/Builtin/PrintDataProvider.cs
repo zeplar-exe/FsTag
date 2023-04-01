@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 
 namespace FsTag.Data.Builtin;
 
-public class PrintKeyProvider : IPrintKeyProvider
+public class PrintDataProvider : IPrintDataProvider
 {
     private static readonly PrintData[] PrintData =
    {

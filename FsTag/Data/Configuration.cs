@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 
+using FsTag.Data.Builtin;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -13,7 +15,7 @@ public class Configuration
     // All exposed JSON properties here should have snake_case JSON names can UpperCamelCase identifier names
     
     [JsonProperty("format_json_output")] public bool FormatJsonOutput { get; set; }
-    [JsonProperty("session_name")] public string? SessionName { get; set; }
+    [JsonProperty("session_name")] public string? SessionName { get; set; } = Constants.DefaultSessionName;
 
     [JsonExtensionData] public JObject OtherProperties { get; set; } = new();
 
