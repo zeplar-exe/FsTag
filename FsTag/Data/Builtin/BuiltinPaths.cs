@@ -5,7 +5,7 @@ internal class BuiltinPaths
     public static string RootDataDirectory { get; private set; } = 
         Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Constants.DataDirectoryName);
     
-    public static string IntegrationRoot { get; } = 
+    public static string IntegrationDirectoryRoot { get; } = 
         Path.Join(Path.GetTempPath(), Path.GetRandomFileName() + "_integration_" + Constants.DataDirectoryName);
     
     public static string SessionDirectoryPath => 
@@ -22,7 +22,7 @@ internal class BuiltinPaths
 
     public static void UseIntegrationRoot()
     {
-        RootDataDirectory = IntegrationRoot;
-        Directory.CreateDirectory(IntegrationRoot);
+        RootDataDirectory = IntegrationDirectoryRoot;
+        Directory.CreateDirectory(IntegrationDirectoryRoot);
     }
 }

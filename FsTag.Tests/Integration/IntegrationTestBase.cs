@@ -20,6 +20,6 @@ public class IntegrationTestBase
     [TearDown]
     public void TearDown()
     {
-        Directory.Delete(BuiltinPaths.IntegrationRoot);
+        Directory.Delete(BuiltinPaths.IntegrationDirectoryRoot);
     }
 }
