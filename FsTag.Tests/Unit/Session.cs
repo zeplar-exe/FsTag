@@ -22,9 +22,12 @@ public class Session : UnitTestBase
     [Test]
     public void TestRemove()
     {
-        Program.Runner.VerifyExitCode(0, "session", "switch", "abc");
-        Program.Runner.VerifyExitCode(0, "session", "switch", "abc2");
+        MockSessionData.EnsureSession("abc");
+        MockSessionData.EnsureSession("abc2");
+        MockSessionData.CurrentSessionName = "abc2";
+        
         Program.Runner.VerifyExitCode(0, "session", "rm", "abc");
+        
         Assert.Multiple(() =>
         {
             Assert.That(App.SessionData.CurrentSessionName, Is.EqualTo("abc2"));
@@ -36,8 +39,11 @@ public class Session : UnitTestBase
     [Test]
     public void TestRemoveCurrentInvalid()
     {
-        Program.Runner.VerifyExitCode(0, "session", "switch", "abc");
+        MockSessionData.EnsureSession("abc");
+        MockSessionData.CurrentSessionName = "abc";
+        
         Program.Runner.VerifyExitCode(1, "session", "rm", "abc");
+        
         Assert.Multiple(() =>
         {
             Assert.That(App.SessionData.CurrentSessionName, Is.EqualTo("abc"));

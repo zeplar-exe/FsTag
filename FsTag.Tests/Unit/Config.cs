@@ -41,6 +41,7 @@ public class Config : UnitTestBase
     public void TestSetBuiltin()
     {
         Program.Runner.VerifyExitCode(0, "config", "set", "session_name", "\"hello world\"");
+        
         Assert.That(Configuration.SessionName, Is.EqualTo("hello world"));
     }
 
@@ -50,6 +51,7 @@ public class Config : UnitTestBase
         var initialValue = Configuration.FormatJsonOutput;
         
         Program.Runner.VerifyExitCode(1, "config", "set", "format_json_output", "{}");
+        
         Assert.That(Configuration.FormatJsonOutput, Is.EqualTo(initialValue));
     }
 }

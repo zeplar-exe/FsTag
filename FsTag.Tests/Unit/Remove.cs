@@ -12,7 +12,7 @@ public class Remove : UnitTestBase
     [Test]
     public void TestRemove()
     {
-        App.FileIndex.Add(new[] { "C:/test1.txt", "C:/test2.txt", "C:/test3.txt" });
+        MockFileIndex.Add(new[] { "C:/test1.txt", "C:/test2.txt", "C:/test3.txt" });
         
         Program.Runner.VerifyExitCode(0, "rm", "C:/test1.txt");
 
@@ -27,7 +27,7 @@ public class Remove : UnitTestBase
     [Test]
     public void TestRemoveAll()
     {
-        App.FileIndex.Add(new[] { "C:/test1.txt", "C:/test2.txt", "C:/test3.txt" });
+        MockFileIndex.Add(new[] { "C:/test1.txt", "C:/test2.txt", "C:/test3.txt" });
         
         Program.Runner.VerifyExitCode(0, "rm", "all");
 
