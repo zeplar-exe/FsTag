@@ -39,8 +39,8 @@ public partial class Program
         {
             if (!App.SessionData.EnsureSession(name))
                 return 1;
-            
-            App.ConfigData.SetProperty("session_name", name);
+
+            App.SessionData.CurrentSessionName = name;
 
             return 0;
         }

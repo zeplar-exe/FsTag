@@ -40,9 +40,9 @@ public class Config : UnitTestBase
     [Test]
     public void TestSetBuiltin()
     {
-        Program.Runner.VerifyExitCode(0, "config", "set", "session_name", "\"hello world\"");
+        Program.Runner.VerifyExitCode(0, "config", "set", "format_json_output", "false");
         
-        Assert.That(Configuration.SessionName, Is.EqualTo("hello world"));
+        Assert.That(Configuration.FormatJsonOutput, Is.EqualTo(false));
     }
 
     [Test]

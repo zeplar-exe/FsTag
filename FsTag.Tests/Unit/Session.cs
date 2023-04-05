@@ -12,10 +12,11 @@ public class Session : UnitTestBase
     public void TestSwitch()
     {
         Program.Runner.VerifyExitCode(0, "session", "switch", "abc");
+        
         Assert.Multiple(() =>
         {
-            Assert.That(App.SessionData.CurrentSessionName, Is.EqualTo("abc"));
-            Assert.That(App.SessionData.GetExistingSessions(), Does.Contain("abc"));
+            Assert.That(MockSessionData.CurrentSessionName, Is.EqualTo("abc"));
+            Assert.That(MockSessionData.GetExistingSessions(), Does.Contain("abc"));
         });
     }
 

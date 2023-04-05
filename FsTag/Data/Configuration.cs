@@ -12,10 +12,9 @@ public class Configuration
     private static Dictionary<string, PropertyInfo> JsonBindings { get; } = new(); 
     // For Set() and Get() on arbitrary property names
 
-    // All exposed JSON properties here should have snake_case JSON names can UpperCamelCase identifier names
+    // All exposed JSON properties here should have snake_case JSON names and UpperCamelCase identifier names
     
     [JsonProperty("format_json_output")] public bool FormatJsonOutput { get; set; }
-    [JsonProperty("session_name")] public string? SessionName { get; set; } = Constants.DefaultSessionName;
 
     [JsonExtensionData] public JObject OtherProperties { get; set; } = new();
 

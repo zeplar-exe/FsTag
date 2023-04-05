@@ -2,21 +2,61 @@
 using FsTag.Helpers;
 using FsTag.Resources;
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 namespace FsTag.Data.Builtin;
 
 public class SessionData : ISessionData
 {
+    private static string SessionInfoFilePath => Path.Join(BuiltinPaths.SessionDirectoryPath, "info.json");
+    private const string DefaultSessionName = "__default";
+
     public string? CurrentSessionName
     {
         get
         {
-            var name = App.ConfigData.Read()?.SessionName;
+            var info = GetSessionInfo();
             
-            if (name != null)
-                App.SessionData.EnsureSession(name);
+            if (info.CurrentSession != null)
+            {
+                EnsureSession(info.CurrentSession);
+            }
+            else
+            {
+                info.CurrentSession = DefaultSessionName;
+                
+                DataFileHelper.WriteJson(SessionInfoFilePath, JObject.FromObject(info));
+            }
 
-            return name;
+            return info.CurrentSession;
         }
+        set
+        {
+            var info = GetSessionInfo();
+
+            info.CurrentSession = value;
+            
+            DataFileHelper.WriteJson(SessionInfoFilePath, JObject.FromObject(info));
+        }
+    }
+
+    private SessionInfo GetSessionInfo()
+    {
+        DataFileHelper.EnsureFile(SessionInfoFilePath);
+
+        var json = DataFileHelper.ParseJson(SessionInfoFilePath);
+        var info = json?.ToObject<SessionInfo>();
+
+        if (json == null || info == null)
+        {
+            info = new SessionInfo
+            {
+                CurrentSession = DefaultSessionName
+            };
+        }
+
+        return info;
     }
 
     public bool EnsureSession(string name)
@@ -65,5 +105,10 @@ public class SessionData : ISessionData
     public IEnumerable<string> GetExistingSessions()
     {
         return App.FileSystem.Directory.EnumerateDirectories(BuiltinPaths.SessionDirectoryPath);
+    }
+
+    private class SessionInfo
+    {
+        [JsonProperty("current_session")] public string? CurrentSession { get; set; }
     }
 }
