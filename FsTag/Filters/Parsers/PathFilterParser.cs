@@ -15,6 +15,6 @@ public abstract class PathFilterParser
     /// <param name="filter">The raw filter string from the user.</param>
     /// <param name="includeDirectories">If specified, this method should also
     /// match directories if possible.</param>
-    /// <returns></returns>
+    /// <returns>An enumerable of file paths matching the filter.</returns>
     public abstract IEnumerable<string> EnumerateFiles(string filter, bool includeDirectories);
 }

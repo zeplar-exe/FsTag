@@ -21,4 +21,13 @@
     <data name="BulkDelete" xml:space="preserve">
         <value>Are you sure you want to delete {0} files? (Session: {1})? (yes/no)</value>
     </data>
+    <data name="BulkMove" xml:space="preserve">
+        <value>Are you sure you want to move {0} files? (Session: {1})? (yes/no)</value>
+    </data>
+    <data name="BulkCopy" xml:space="preserve">
+        <value>Are you sure you want to copy {0} files? (Session: {1})? (yes/no)</value>
+    </data>
+    <data name="RetainStructureDepth" xml:space="preserve">
+        <value>Are you sure you want to retain a directory structure of depth {0}?</value>
+    </data>
 </root>

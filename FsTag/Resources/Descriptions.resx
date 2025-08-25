@@ -102,4 +102,25 @@
     <data name="IncludeDirsOp" xml:space="preserve">
         <value>Whether to include directories when filtering.</value>
     </data>
+    <data name="BulkMergeCommand" xml:space="preserve">
+        <value>Merge all tagged files into a single file, maintaining the order the files were tagged in.</value>
+    </data>
+    <data name="BulkCopyCommand" xml:space="preserve">
+        <value>Copy every tagged file to a target directory.</value>
+    </data>
+    <data name="BulkMoveCommand" xml:space="preserve">
+        <value>Move every tagged file to a target directory.</value>
+    </data>
+    <data name="CopyTargetDir" xml:space="preserve">
+        <value>Target directory to copy tagged files to.</value>
+    </data>
+    <data name="MoveTargetDir" xml:space="preserve">
+        <value>Target directory to move tagged files to.</value>
+    </data>
+    <data name="CopyRetain" xml:space="preserve">
+        <value>Flag whether to retain the directory structure of tagged files in the target directory.</value>
+    </data>
+    <data name="MoveRetain" xml:space="preserve">
+        <value>Flag whether to retain the directory structure of tagged files in the target directory.</value>
+    </data>
 </root>

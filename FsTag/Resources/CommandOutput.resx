@@ -75,4 +75,16 @@
     <data name="BulkDeleteCompleted" xml:space="preserve">
         <value>Deleted {0}/{1} files.</value>
     </data>
+    <data name="BulkMoveUnauthorized" xml:space="preserve">
+        <value>Not authorized to move '{0}', skipping.</value>
+    </data>
+    <data name="BulkCopyUnauthorized" xml:space="preserve">
+        <value>Not authorized to copy '{0}', skipping.</value>
+    </data>
+    <data name="BulkMoveCompleted" xml:space="preserve">
+        <value>Moved {0}/{1} files.</value>
+    </data>
+    <data name="BulkCopyCompleted" xml:space="preserve">
+        <value>Copied {0}/{1} files.</value>
+    </data>
 </root>
